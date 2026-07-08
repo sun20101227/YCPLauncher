@@ -148,22 +148,7 @@
                         <CheckBox Grid.Column="1" IsChecked="{Binding IsDarkMode}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="科幻扫描线 (Scanline Effect)" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
-                            <TextBlock Text="选择全局光影扫描的特效模式" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
-                        </StackPanel>
-                        
-                        <ComboBox Grid.Column="1" Width="140" SelectedIndex="{Binding ScanlineMode}" Background="{DynamicResource ItemBgBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush1}">
-                            <ComboBoxItem Content="关闭特效"/>
-                            <ComboBoxItem Content="上下雷达扫描"/>
-                            <ComboBoxItem Content="左右原神全息"/>
-                        </ComboBox>
-                    </Grid>
+
 
                     <Grid Margin="0,20,0,0">
                         <Grid.ColumnDefinitions>
@@ -171,11 +156,11 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Win10/Win11 原生亚克力与磁贴光效" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
-                            <TextBlock Text="启用原生 Reveal Highlight 悬浮跟随光晕 (需重启生效)" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
+                            <TextBlock Text="减轻动画效果" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
+                            <TextBlock Text="关闭部分非必要的 UI 动态缩放和特效以节省性能" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
                         
-                        <CheckBox Grid.Column="1" IsChecked="{Binding EnableFluentGlass}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding ReduceAnimations}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </Border>

@@ -43,6 +43,6 @@ public class AppConfig
     [JsonPropertyName("scanline_mode")]
     public int ScanlineMode { get; set; } = 1; // 0: Disabled, 1: Vertical, 2: Horizontal
 
-    [JsonPropertyName("enable_fluent_glass")]
-    public bool EnableFluentGlass { get; set; } = true;
+    [JsonPropertyName("reduce_animations")]
+    public bool ReduceAnimations { get; set; } = false;
 }

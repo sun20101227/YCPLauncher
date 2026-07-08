@@ -26,7 +26,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         TryAutoLogin();
-        UpdateScanline(ConfigService.GetConfig().ScanlineMode);
     }
 
     protected override void OnSourceInitialized(EventArgs e)
@@ -258,9 +257,4 @@ public partial class MainWindow : Window
 
     public void ShowToast(string msg, bool err = false) => Toast.Show(msg, err);
 
-    public void UpdateScanline(int mode)
-    {
-        ScanlineVertical.Visibility = mode == 1 ? Visibility.Visible : Visibility.Collapsed;
-        ScanlineHorizontal.Visibility = mode == 2 ? Visibility.Visible : Visibility.Collapsed;
-    }
 }

@@ -26,8 +26,8 @@ public partial class SettingsViewModel : ObservableObject
         _isDarkMode = cfg.IsDarkMode;
         _startOnBoot = cfg.StartOnBoot;
         _minimizeToTray = cfg.MinimizeToTray;
-        _scanlineMode = cfg.ScanlineMode;
-        _enableFluentGlass = cfg.EnableFluentGlass;
+
+        _reduceAnimations = cfg.ReduceAnimations;
     }
 
     [ObservableProperty] private bool _hardwareAcceleration = true;
@@ -93,32 +93,14 @@ public partial class SettingsViewModel : ObservableObject
         ConfigService.SaveConfig();
     }
 
-    [ObservableProperty]
-    private int _scanlineMode;
 
-    partial void OnScanlineModeChanged(int value)
-    {
-        ConfigService.GetConfig().ScanlineMode = value;
-        ConfigService.SaveConfig();
-
-        // Broadcast to main window to update scanline
-        Application.Current.MainWindow?.Dispatcher.Invoke(() =>
-        {
-            if (Application.Current.MainWindow is MainWindow window)
-            {
-                window.UpdateScanline(value);
-            }
-        });
-    }
 
     [ObservableProperty]
-    private bool _enableFluentGlass;
+    private bool _reduceAnimations;
 
-    partial void OnEnableFluentGlassChanged(bool value)
+    partial void OnReduceAnimationsChanged(bool value)
     {
-        ConfigService.GetConfig().EnableFluentGlass = value;
+        ConfigService.GetConfig().ReduceAnimations = value;
         ConfigService.SaveConfig();
-        
-        // Removed AcrylicWindow.SetEnabled to prevent DWM blur conflict and black borders.
     }
 }

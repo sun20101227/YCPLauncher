@@ -70,94 +70,13 @@
                     <SolidColorBrush Color="Transparent"/>
                 </Grid.Background>
 
-                <!-- High Quality Ken Burns Background -->
+                <!-- High Quality Background -->
                 <Image Source="/Assets/premium_bg.png" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5">
                     <Image.CacheMode><BitmapCache EnableClearType="False" RenderAtScale="1"/></Image.CacheMode>
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform x:Name="BgScale" ScaleX="1.0" ScaleY="1.0"/>
-                            <TranslateTransform x:Name="BgTrans" X="0" Y="0"/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                    <Image.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard>
-                                <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                                    <DoubleAnimation Storyboard.TargetName="BgScale" Storyboard.TargetProperty="ScaleX" From="1.0" To="1.08" Duration="0:0:30">
-                                        <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                    <DoubleAnimation Storyboard.TargetName="BgScale" Storyboard.TargetProperty="ScaleY" From="1.0" To="1.08" Duration="0:0:30">
-                                        <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                    <DoubleAnimation Storyboard.TargetName="BgTrans" Storyboard.TargetProperty="X" From="-15" To="15" Duration="0:0:25">
-                                        <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                    <DoubleAnimation Storyboard.TargetName="BgTrans" Storyboard.TargetProperty="Y" From="-10" To="10" Duration="0:0:28">
-                                        <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Image.Triggers>
                 </Image>
                 
                 <!-- Glass overlay -->
                 <Rectangle Fill="{DynamicResource BgOverlayBrush}"/>
-                
-                <!-- Vertical Scanline (Top to Bottom) -->
-                <Rectangle x:Name="ScanlineVertical" Height="80" VerticalAlignment="Top" IsHitTestVisible="False" Opacity="0" Visibility="Collapsed">
-                    <Rectangle.Fill>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="#00FF6B00" Offset="0"/>
-                            <GradientStop Color="#15FF6B00" Offset="0.5"/>
-                            <GradientStop Color="#33FF6B00" Offset="0.95"/>
-                            <GradientStop Color="#88FF6B00" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                    <Rectangle.RenderTransform>
-                        <TranslateTransform x:Name="ScanlineVerticalTrans" Y="-100"/>
-                    </Rectangle.RenderTransform>
-                    <Rectangle.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard>
-                                <Storyboard RepeatBehavior="Forever">
-                                    <DoubleAnimation Storyboard.TargetName="ScanlineVerticalTrans" Storyboard.TargetProperty="Y" From="-100" To="800" Duration="0:0:3"/>
-                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1" BeginTime="0:0:2"/>
-                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5" BeginTime="0:0:0"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Rectangle.Triggers>
-                </Rectangle>
-
-                <!-- Horizontal Holographic Scanline (Left to Right) -->
-                <Rectangle x:Name="ScanlineHorizontal" Width="120" HorizontalAlignment="Left" IsHitTestVisible="False" Opacity="0" Visibility="Collapsed">
-                    <Rectangle.Fill>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Color="#0000AFFF" Offset="0"/>
-                            <GradientStop Color="#1500AFFF" Offset="0.5"/>
-                            <GradientStop Color="#3300AFFF" Offset="0.95"/>
-                            <GradientStop Color="#8800AFFF" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                    <Rectangle.RenderTransform>
-                        <TransformGroup>
-                            <SkewTransform AngleX="-20"/>
-                            <TranslateTransform x:Name="ScanlineHorizontalTrans" X="-200"/>
-                        </TransformGroup>
-                    </Rectangle.RenderTransform>
-                    <Rectangle.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard>
-                                <Storyboard RepeatBehavior="Forever">
-                                    <DoubleAnimation Storyboard.TargetName="ScanlineHorizontalTrans" Storyboard.TargetProperty="X" From="-200" To="1200" Duration="0:0:4"/>
-                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1" BeginTime="0:0:3"/>
-                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5" BeginTime="0:0:0"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Rectangle.Triggers>
-                </Rectangle>
             </Grid>
 
             <Grid>
