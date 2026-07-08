@@ -209,7 +209,6 @@
 
                 <helpers:RevealBorder x:Name="card"
                         Background="{DynamicResource CardBgBrush}"
-                        HoverColor="#22FF6B00"
                         HoverRadius="400"
                         BorderThickness="1"
                         CornerRadius="16"

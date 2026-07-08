@@ -28,12 +28,46 @@ public partial class SettingsViewModel : ObservableObject
         _minimizeToTray = cfg.MinimizeToTray;
 
         _reduceAnimations = cfg.ReduceAnimations;
+        _launchNoVid = cfg.LaunchNoVid;
+        _launchHighFreq = cfg.LaunchHighFreq;
+        _launchConsole = cfg.LaunchConsole;
     }
 
     [ObservableProperty] private bool _hardwareAcceleration = true;
-    [ObservableProperty] private bool _autoUpdate = true;
+    partial void OnHardwareAccelerationChanged(bool value)
+    {
+        // Settings are conceptual right now, but we'll persist them
+        // ConfigService.GetConfig().HardwareAcceleration = value;
+        // ConfigService.SaveConfig();
+    }
+
     [ObservableProperty] private bool _networkOptimization = true;
-    [ObservableProperty] private bool _dynamicBackground = true;
+    partial void OnNetworkOptimizationChanged(bool value)
+    {
+        // ConfigService.GetConfig().NetworkOptimization = value;
+        // ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty] private bool _launchNoVid;
+    partial void OnLaunchNoVidChanged(bool value)
+    {
+        ConfigService.GetConfig().LaunchNoVid = value;
+        ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty] private bool _launchHighFreq;
+    partial void OnLaunchHighFreqChanged(bool value)
+    {
+        ConfigService.GetConfig().LaunchHighFreq = value;
+        ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty] private bool _launchConsole;
+    partial void OnLaunchConsoleChanged(bool value)
+    {
+        ConfigService.GetConfig().LaunchConsole = value;
+        ConfigService.SaveConfig();
+    }
 
     [RelayCommand]
     private void ClearCache()

@@ -45,4 +45,13 @@ public class AppConfig
 
     [JsonPropertyName("reduce_animations")]
     public bool ReduceAnimations { get; set; } = false;
+
+    [JsonPropertyName("launch_novid")]
+    public bool LaunchNoVid { get; set; } = true;
+
+    [JsonPropertyName("launch_highfreq")]
+    public bool LaunchHighFreq { get; set; } = true;
+
+    [JsonPropertyName("launch_console")]
+    public bool LaunchConsole { get; set; } = false;
 }

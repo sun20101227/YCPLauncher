@@ -25,14 +25,32 @@ public class GameLauncherService
     {
         try
         {
-            // The most reliable way to join a server in CS2 (works whether the game is running or not)
-            // is to use the steam://connect/ protocol.
-            var url = $"steam://connect/{ip}:{port}";
-            Process.Start(new ProcessStartInfo
+            var cfg = ConfigService.GetConfig();
+            string args = "";
+            if (cfg.LaunchNoVid) args += "-novid ";
+            if (cfg.LaunchHighFreq) args += "-freq 240 ";
+            if (cfg.LaunchConsole) args += "-console ";
+            
+            var steamExe = GetSteamExePath();
+            if (!string.IsNullOrEmpty(steamExe) && File.Exists(steamExe))
             {
-                FileName = url,
-                UseShellExecute = true
-            });
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = steamExe,
+                    Arguments = $"-applaunch 730 {args.Trim()} +connect {ip}:{port}",
+                    UseShellExecute = true
+                });
+            }
+            else
+            {
+                // Fallback to steam://connect if steam.exe path cannot be found in registry
+                var url = $"steam://connect/{ip}:{port}";
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                });
+            }
             return true;
         }
         catch

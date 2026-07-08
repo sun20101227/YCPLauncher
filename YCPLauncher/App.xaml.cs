@@ -7,14 +7,13 @@ namespace YCPLauncher;
 
 public partial class App : System.Windows.Application
 {
-    public static readonly string CurrentVersion = "1.0.0";
+    public static readonly string CurrentVersion = "1.0.3";
 
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        // Show full inner exception chain for diagnosis
         DispatcherUnhandledException += (_, ex) =>
         {
             var msg = BuildExceptionMessage(ex.Exception);

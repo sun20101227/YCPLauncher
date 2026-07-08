@@ -33,7 +33,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="24">
             <StackPanel Margin="32">
                 <!-- HERO SECTION -->
-                <Grid Margin="0,0,0,48">
+                <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" Margin="0,0,0,48" Padding="32">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <!-- Icon/Badge -->
                         <Border Width="64" Height="64" Background="{DynamicResource AccentBgBrush}" CornerRadius="12" HorizontalAlignment="Center" Margin="0,0,0,16">
@@ -56,34 +56,42 @@
                         
                         <TextBlock Text="VALORANT FRIENDSHIP TOURNAMENT" Foreground="{DynamicResource TextMutedBrush}" FontSize="16"  HorizontalAlignment="Center" Margin="0,8,0,0"/>
                     </StackPanel>
-                </Grid>
+                </helpers:RevealBorder>
 
                 <!-- STATS ROW -->
                 <Grid Margin="0,0,0,48">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="24"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="24"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                        <TextBlock Text="4" Style="{StaticResource StatNumberStyle}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="参赛战队" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
-                    </StackPanel>
+                    <helpers:RevealBorder Grid.Column="0" Style="{StaticResource TileRevealStyle}" Padding="20">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="4" Style="{StaticResource StatNumberStyle}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="参赛战队" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </helpers:RevealBorder>
 
-                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-                        <TextBlock Text="600,000 VND" Style="{StaticResource StatNumberStyle}" Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="{DynamicResource AccentColor}" BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
-                        <TextBlock Text="赛事总奖池" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
-                    </StackPanel>
+                    <helpers:RevealBorder Grid.Column="2" Style="{StaticResource TileRevealStyle}" Padding="20">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="600,000" Style="{StaticResource StatNumberStyle}" Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="{DynamicResource AccentColor}" BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock Text="赛事总奖池 (VND)" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </helpers:RevealBorder>
 
-                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
-                        <TextBlock Text="DongGuan" Style="{StaticResource StatNumberStyle}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="比赛地点" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
-                    </StackPanel>
+                    <helpers:RevealBorder Grid.Column="4" Style="{StaticResource TileRevealStyle}" Padding="20">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="DongGuan" Style="{StaticResource StatNumberStyle}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="比赛地点" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </helpers:RevealBorder>
                 </Grid>
 
                 <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,0,0,48"/>

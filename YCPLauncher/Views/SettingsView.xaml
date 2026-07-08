@@ -80,119 +80,84 @@
             </StackPanel>
 
             <!-- CARD 1: Appearance -->
-            <helpers:RevealBorder x:Name="Card1" Style="{StaticResource TileRevealStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
+            <helpers:RevealBorder x:Name="Card1" Style="{StaticResource TileRevealStyle}" Margin="0,0,0,24" Opacity="0">
                 <StackPanel>
-                    <TextBlock Text="外观设置" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
+                    <TextBlock Text="外观与行为" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     
                     <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="深色模式 (Dark Mode)" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
                             <TextBlock Text="开启后界面将以深色为主，护眼且具电竞感" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
-                        
                         <CheckBox Grid.Column="1" IsChecked="{Binding IsDarkMode}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
 
-
-
-                    <Grid Margin="0,20,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="减轻动画效果" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
                             <TextBlock Text="关闭部分非必要的 UI 动态缩放和特效以节省性能" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
-                        
                         <CheckBox Grid.Column="1" IsChecked="{Binding ReduceAnimations}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
-                    <TextBlock Text="系统行为" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
-                    
                     <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="关闭时最小化到托盘" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
                             <TextBlock Text="开启后点击关闭按钮不会直接退出程序" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
-                        
                         <CheckBox Grid.Column="1" IsChecked="{Binding MinimizeToTray}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="开机自动启动" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
                         </StackPanel>
-                        
                         <CheckBox Grid.Column="1" IsChecked="{Binding StartOnBoot}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
+                </StackPanel>
+            </helpers:RevealBorder>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="硬件加速 (GPU渲染)" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
-                            <TextBlock Text="开启后将显著提升粒子动画和特效帧率" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
-                        </StackPanel>
-                        
-                        <CheckBox Grid.Column="1" IsChecked="True" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
-                    </Grid>
-
-                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
+            <!-- CARD 2: Game Launch Parameters -->
+            <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" Margin="0,0,0,24">
+                <StackPanel>
                     <TextBlock Text="游戏启动参数" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     
                     <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="跳过启动动画 (-novid)" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
                             <TextBlock Text="加速游戏加载速度" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
-                        <CheckBox Grid.Column="1" IsChecked="True" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding LaunchNoVid}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="高频刷新率 (-freq 240)" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
                             <TextBlock Text="强制游戏以 240Hz 运行" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
-                        <CheckBox Grid.Column="1" IsChecked="True" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding LaunchHighFreq}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="控制台 (-console)" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
                             <TextBlock Text="在游戏启动时自动打开控制台" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
-                        <CheckBox Grid.Column="1" IsChecked="False" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding LaunchConsole}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
+                </StackPanel>
+            </helpers:RevealBorder>
 
-                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
+            <!-- CARD 3: Advanced Performance -->
+            <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" Margin="0,0,0,24">
+                <StackPanel>
                     <TextBlock Text="高级性能" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
@@ -202,7 +167,7 @@
                         </StackPanel>
                         <CheckBox Grid.Column="1" IsChecked="{Binding HardwareAcceleration}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
-                    <Grid Margin="0,0,0,20">
+                    <Grid>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="CS2 启动参数预加载" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
@@ -210,9 +175,13 @@
                         </StackPanel>
                         <CheckBox Grid.Column="1" IsChecked="{Binding NetworkOptimization}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
+                </StackPanel>
+            </helpers:RevealBorder>
 
-                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
-                    <TextBlock Text="存储与缓存" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
+            <!-- CARD 4: Storage & Uninstall -->
+            <helpers:RevealBorder Style="{StaticResource TileRevealStyle}">
+                <StackPanel>
+                    <TextBlock Text="存储与管理" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">

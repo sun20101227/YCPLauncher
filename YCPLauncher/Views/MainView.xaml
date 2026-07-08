@@ -77,14 +77,9 @@
 
                 <!-- Profile Card -->
                 <helpers:RevealBorder Grid.Column="0" Margin="0,0,20,0" Style="{StaticResource TileRevealStyle}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
+                    <StackPanel>
                         <!-- Player Identity -->
-                        <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <Grid Margin="0,0,0,20">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -115,14 +110,14 @@
                         </Grid>
 
                         <!-- Identity Details -->
-                        <StackPanel Grid.Row="1">
+                        <StackPanel>
                             <TextBlock Text="STEAM ID" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,4"/>
                             <TextBlock Text="{Binding Player.SteamId}" Foreground="{DynamicResource TextMutedBrush}" FontSize="13" FontFamily="Consolas" Margin="0,0,0,12"/>
                             
                             <TextBlock Text="战队全称" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,4"/>
                             <TextBlock Text="{Binding Player.TeamName}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI" TextWrapping="Wrap"/>
                         </StackPanel>
-                    </Grid>
+                    </StackPanel>
                 </helpers:RevealBorder>
 
                 <!-- Stats Card -->
