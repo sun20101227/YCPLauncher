@@ -101,7 +101,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- DL Gaming -->
-                    <helpers:RevealBorder Grid.Column="0" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderThickness="1" CornerRadius="8" Padding="20">
+                    <helpers:RevealBorder Grid.Column="0" Style="{StaticResource TileRevealStyle}" Background="{DynamicResource ItemBgBrush}" CornerRadius="8" Padding="20">
                         <StackPanel>
                             <Border Width="60" Height="60" CornerRadius="30" Background="#44D40511" BorderBrush="#D40511" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
                                 <TextBlock Text="DL" Foreground="#FFD40511" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -112,7 +112,7 @@
                     </helpers:RevealBorder>
 
                     <!-- JH Gaming -->
-                    <helpers:RevealBorder Grid.Column="2" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderThickness="1" CornerRadius="8" Padding="20">
+                    <helpers:RevealBorder Grid.Column="2" Style="{StaticResource TileRevealStyle}" Background="{DynamicResource ItemBgBrush}" CornerRadius="8" Padding="20">
                         <StackPanel>
                             <Border Width="60" Height="60" CornerRadius="30" Background="#441a4dcc" BorderBrush="#1a4dcc" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
                                 <TextBlock Text="JH" Foreground="#FF1a4dcc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -123,7 +123,7 @@
                     </helpers:RevealBorder>
 
                     <!-- CY Gaming -->
-                    <helpers:RevealBorder Grid.Column="4" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderThickness="1" CornerRadius="8" Padding="20">
+                    <helpers:RevealBorder Grid.Column="4" Style="{StaticResource TileRevealStyle}" Background="{DynamicResource ItemBgBrush}" CornerRadius="8" Padding="20">
                         <StackPanel>
                             <Border Width="60" Height="60" CornerRadius="30" Background="#4400875a" BorderBrush="#00875a" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
                                 <TextBlock Text="CY" Foreground="#FF00875a" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>

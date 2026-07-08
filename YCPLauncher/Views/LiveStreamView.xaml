@@ -90,7 +90,7 @@
 
         <!-- ══ VIDEO PLAYER AREA (WebView2) ══ -->
         <Grid Grid.Column="0" Margin="24">
-            <helpers:RevealBorder CornerRadius="16" ClipToBounds="True" Background="Black" HoverColor="#22FF6B00" HoverRadius="400">
+            <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" CornerRadius="16" ClipToBounds="True" Background="Black">
                 <helpers:RevealBorder.BorderBrush>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#33FFFFFF" Offset="0"/>
