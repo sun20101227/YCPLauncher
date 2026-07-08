@@ -38,20 +38,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border x:Name="LoginCard" Grid.Row="1"
+        <helpers:RevealBorder x:Name="LoginCard" Grid.Row="1"
                 Width="480"
                 Background="{DynamicResource CardBgBrush}"
+                HoverColor="#22FF6B00"
+                HoverRadius="400"
                 BorderBrush="{DynamicResource BorderBrush2}"
                 BorderThickness="1"
                 CornerRadius="16"
                 Padding="54,48"
                 RenderTransformOrigin="0.5,0.5">
-            <Border.RenderTransform>
+            <helpers:RevealBorder.RenderTransform>
                 <ScaleTransform x:Name="LoginCardScale" ScaleX="1" ScaleY="1"/>
-            </Border.RenderTransform>
-            <Border.Effect>
+            </helpers:RevealBorder.RenderTransform>
+            <helpers:RevealBorder.Effect>
                 <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="80" ShadowDepth="0" Opacity="0.4"/>
-            </Border.Effect>
+            </helpers:RevealBorder.Effect>
 
             <StackPanel>
                 <!-- Logo -->
@@ -82,7 +84,7 @@
                 <!-- Username field -->
                 <TextBlock Text="账号" Foreground="{DynamicResource TextDimBrush}" FontSize="14" FontWeight="SemiBold"
                            FontFamily="Segoe UI" Margin="0,0,0,10"/>
-                <Border x:Name="UserBorder" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}"
+                <helpers:RevealBorder x:Name="UserBorder" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderBrush="{DynamicResource BorderBrush2}"
                         BorderThickness="1" CornerRadius="8" Margin="0,0,0,24" Height="50">
                     <Grid>
                         <TextBlock Text="👤" FontSize="18" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="16,0,0,0"/>
@@ -95,12 +97,12 @@
                                  KeyDown="Input_KeyDown"
                                  GotFocus="Field_GotFocus" LostFocus="Field_LostFocus"/>
                     </Grid>
-                </Border>
+                </helpers:RevealBorder>
 
                 <!-- Password field -->
                 <TextBlock Text="密码" Foreground="{DynamicResource TextDimBrush}" FontSize="14" FontWeight="SemiBold"
                            FontFamily="Segoe UI" Margin="0,0,0,10"/>
-                <Border x:Name="PassBorder" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}"
+                <helpers:RevealBorder x:Name="PassBorder" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderBrush="{DynamicResource BorderBrush2}"
                         BorderThickness="1" CornerRadius="8" Margin="0,0,0,32" Height="50">
                     <Grid>
                         <TextBlock Text="🔒" FontSize="18" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="16,0,0,0"/>
@@ -113,7 +115,7 @@
                                      PasswordChanged="PasswordBox_PasswordChanged"
                                      GotFocus="Field_GotFocus" LostFocus="Field_LostFocus"/>
                     </Grid>
-                </Border>
+                </helpers:RevealBorder>
 
                 <!-- Error Message -->
                 <TextBlock Text="{Binding ErrorMessage}" Foreground="{DynamicResource ErrorBrush}" FontSize="12"
@@ -152,6 +154,6 @@
                     </Grid>
                 </Button>
             </StackPanel>
-        </Border>
+        </helpers:RevealBorder>
     </Grid>
 </UserControl>

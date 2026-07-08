@@ -206,23 +206,25 @@
                     </EventTrigger>
                 </Grid.Triggers>
 
-                <Border x:Name="card"
+                <helpers:RevealBorder x:Name="card"
                         Background="{DynamicResource CardBgBrush}"
+                        HoverColor="#22FF6B00"
+                        HoverRadius="400"
                         BorderThickness="1"
                         CornerRadius="16"
                         Padding="0"
                         Width="460"
                         Cursor="Hand">
-                    <Border.BorderBrush>
+                    <helpers:RevealBorder.BorderBrush>
                         <LinearGradientBrush x:Name="AnimatedCardBorder" StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#00FF6B00" Offset="0"/>
                             <GradientStop Color="#FFFF6B00" Offset="0.5"/>
                             <GradientStop Color="#00FF6B00" Offset="1"/>
                         </LinearGradientBrush>
-                    </Border.BorderBrush>
+                    </helpers:RevealBorder.BorderBrush>
                     
                     <!-- Glowing Flowing Outline Animation -->
-                    <Border.Triggers>
+                    <helpers:RevealBorder.Triggers>
                         <EventTrigger RoutedEvent="Loaded">
                             <BeginStoryboard>
                                 <Storyboard RepeatBehavior="Forever" AutoReverse="False">
@@ -231,10 +233,10 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                    </Border.Triggers>
+                    </helpers:RevealBorder.Triggers>
 
-                    <Border.Style>
-                        <Style TargetType="Border">
+                    <helpers:RevealBorder.Style>
+                        <Style TargetType="helpers:RevealBorder">
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background">
@@ -245,10 +247,10 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </Border.Style>
-                    <Border.Effect>
+                    </helpers:RevealBorder.Style>
+                    <helpers:RevealBorder.Effect>
                         <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="30" Opacity="0.5" ShadowDepth="10"/>
-                    </Border.Effect>
+                    </helpers:RevealBorder.Effect>
 
                     <Grid>
                         <!-- Holo Corner Glow -->
@@ -341,7 +343,7 @@
                             </Grid>
                         </Grid>
                     </Grid>
-                </Border>
+                </helpers:RevealBorder>
             </Grid>
         </Grid>
     </Grid>
