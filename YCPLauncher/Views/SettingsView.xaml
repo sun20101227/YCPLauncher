@@ -171,8 +171,8 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="全局 Fluent 光追与液态玻璃" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
-                            <TextBlock Text="启用苹果级实时折射材质及全组件磁力光效 (需系统支持)" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
+                            <TextBlock Text="Win10/Win11 原生亚克力与磁贴光效" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
+                            <TextBlock Text="启用原生 Reveal Highlight 悬浮跟随光晕 (需重启生效)" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                         </StackPanel>
                         
                         <CheckBox Grid.Column="1" IsChecked="{Binding EnableFluentGlass}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>

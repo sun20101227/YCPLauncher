@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="YCPLauncher/Assets/logo.png" alt="YCP Launcher Logo" width="120"/>
-  <h1>YCP 电竞启动器</h1>
-  <p>YACHIYO CUP 2026 CS2 官方赛事启动器</p>
+  <img src="YCPLauncher/Assets/logo.png" alt="Logo" width="120"/>
+  <h1>基于php和net的cs2社区服启动和管理系统</h1>
+  <p>CS2 社区服官方赛事启动器</p>
 
-  ![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)
+  ![Version](https://img.shields.io/badge/version-1.0.1-blue?style=flat-square)
   ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey?style=flat-square)
   ![Framework](https://img.shields.io/badge/.NET-8.0-purple?style=flat-square)
   ![License](https://img.shields.io/badge/license-Private-red?style=flat-square)
@@ -13,7 +13,7 @@
 
 ## 简介
 
-**YCP 电竞启动器**是 YACHIYO CUP 2026 CS2 赛事的官方客户端程序。基于现代化的 WPF 与 .NET 8 构建，专为电竞选手打造。它集成了选手认证、赛事服务器直连、数据统计看板、以及实时直播观看等功能，为您提供稳定、流畅的一站式电竞体验。
+**基于php和net的cs2社区服启动和管理系统** 是 CS2 赛事的官方客户端程序。基于现代化的 WPF 与 .NET 8 构建，专为电竞选手打造。它集成了选手认证、赛事服务器直连、数据统计看板、以及实时直播观看等功能，为您提供稳定、流畅的一站式电竞体验。
 
 ## 功能特性
 

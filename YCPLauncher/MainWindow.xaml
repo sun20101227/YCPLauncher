@@ -314,7 +314,7 @@
 
                     <Border Grid.Row="0" Background="Transparent" MouseLeftButtonDown="DragBorder_MouseLeftButtonDown">
                         <Grid>
-                            <TextBlock Text="YCPLauncher · CS2 电竞启动器" Foreground="{DynamicResource TextMutedBrush}"
+                            <TextBlock Text="基于php和net的CS2社区服启动和管理系统" Foreground="{DynamicResource TextMutedBrush}"
                                        FontSize="12" FontFamily="Segoe UI" VerticalAlignment="Center" Margin="24,0,0,0"/>
                             
                             <!-- Window Controls -->
