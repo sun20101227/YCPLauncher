@@ -67,17 +67,11 @@
             </StackPanel.RenderTransform>
 
             <!-- Logo -->
-            <Border Width="80" Height="80" CornerRadius="40" Margin="0,0,0,24" HorizontalAlignment="Center">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#FF6B00" Offset="0"/>
-                        <GradientStop Color="#FFAA00" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
+            <Border Width="80" Height="80" CornerRadius="16" Background="#22FFFFFF" BorderBrush="#33FFFFFF" BorderThickness="1" Margin="0,0,0,24" HorizontalAlignment="Center">
                 <Border.Effect>
                     <DropShadowEffect Color="#FF6B00" BlurRadius="24" ShadowDepth="4" Opacity="0.4"/>
                 </Border.Effect>
-                <TextBlock Text="Y" Foreground="White" FontSize="36" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                <Image Source="/Assets/logo.png" Width="64" Height="64" RenderOptions.BitmapScalingMode="HighQuality"/>
             </Border>
 
             <!-- App Name -->

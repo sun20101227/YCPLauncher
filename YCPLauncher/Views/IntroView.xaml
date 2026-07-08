@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
 
@@ -100,7 +101,7 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- DL Gaming -->
-                    <Border Grid.Column="0" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="8" Padding="20">
+                    <helpers:RevealBorder Grid.Column="0" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderThickness="1" CornerRadius="8" Padding="20">
                         <StackPanel>
                             <Border Width="60" Height="60" CornerRadius="30" Background="#44D40511" BorderBrush="#D40511" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
                                 <TextBlock Text="DL" Foreground="#FFD40511" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -108,10 +109,10 @@
                             <TextBlock Text="DL Gaming" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
                             <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                         </StackPanel>
-                    </Border>
+                    </helpers:RevealBorder>
 
                     <!-- JH Gaming -->
-                    <Border Grid.Column="2" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="8" Padding="20">
+                    <helpers:RevealBorder Grid.Column="2" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderThickness="1" CornerRadius="8" Padding="20">
                         <StackPanel>
                             <Border Width="60" Height="60" CornerRadius="30" Background="#441a4dcc" BorderBrush="#1a4dcc" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
                                 <TextBlock Text="JH" Foreground="#FF1a4dcc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -119,10 +120,10 @@
                             <TextBlock Text="JH Gaming" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
                             <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                         </StackPanel>
-                    </Border>
+                    </helpers:RevealBorder>
 
                     <!-- CY Gaming -->
-                    <Border Grid.Column="4" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="8" Padding="20">
+                    <helpers:RevealBorder Grid.Column="4" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderThickness="1" CornerRadius="8" Padding="20">
                         <StackPanel>
                             <Border Width="60" Height="60" CornerRadius="30" Background="#4400875a" BorderBrush="#00875a" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
                                 <TextBlock Text="CY" Foreground="#FF00875a" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -130,7 +131,7 @@
                             <TextBlock Text="CY Gaming" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
                             <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                         </StackPanel>
-                    </Border>
+                    </helpers:RevealBorder>
                 </Grid>
 
                 <!-- ABOUT -->

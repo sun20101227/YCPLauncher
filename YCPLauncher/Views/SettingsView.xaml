@@ -101,17 +101,6 @@
                     <DoubleAnimation Storyboard.TargetName="Card1" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.1"/>
                     <ThicknessAnimation Storyboard.TargetName="Card1" Storyboard.TargetProperty="Margin" From="0,20,0,24" To="0,0,0,24" Duration="0:0:0.5" BeginTime="0:0:0.1"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
 
-                    <DoubleAnimation Storyboard.TargetName="Card2" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.2"/>
-                    <ThicknessAnimation Storyboard.TargetName="Card2" Storyboard.TargetProperty="Margin" From="0,20,0,24" To="0,0,0,24" Duration="0:0:0.5" BeginTime="0:0:0.2"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
-
-                    <DoubleAnimation Storyboard.TargetName="Card3" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.3"/>
-                    <ThicknessAnimation Storyboard.TargetName="Card3" Storyboard.TargetProperty="Margin" From="0,20,0,24" To="0,0,0,24" Duration="0:0:0.5" BeginTime="0:0:0.3"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
-
-                    <DoubleAnimation Storyboard.TargetName="Card4" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.4"/>
-                    <ThicknessAnimation Storyboard.TargetName="Card4" Storyboard.TargetProperty="Margin" From="0,20,0,24" To="0,0,0,24" Duration="0:0:0.5" BeginTime="0:0:0.4"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
-                    
-                    <DoubleAnimation Storyboard.TargetName="Card5" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.5"/>
-                    <ThicknessAnimation Storyboard.TargetName="Card5" Storyboard.TargetProperty="Margin" From="0,20,0,24" To="0,0,0,24" Duration="0:0:0.5" BeginTime="0:0:0.5"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
@@ -163,12 +152,8 @@
                         
                         <CheckBox Grid.Column="1" IsChecked="{Binding ReduceAnimations}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
-                </StackPanel>
-            </helpers:RevealBorder>
 
-            <!-- CARD 2: System -->
-            <helpers:RevealBorder x:Name="Card2" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
-                <StackPanel>
+                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
                     <TextBlock Text="系统行为" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     
                     <Grid Margin="0,0,0,20">
@@ -208,12 +193,8 @@
                         
                         <CheckBox Grid.Column="1" IsChecked="True" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
-                </StackPanel>
-            </helpers:RevealBorder>
 
-            <!-- CARD 3: Account -->
-            <helpers:RevealBorder x:Name="Card3" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
-                <StackPanel>
+                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
                     <TextBlock Text="游戏启动参数" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     
                     <Grid Margin="0,0,0,20">
@@ -251,12 +232,8 @@
                         </StackPanel>
                         <CheckBox Grid.Column="1" IsChecked="False" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
-                </StackPanel>
-            </helpers:RevealBorder>
 
-            <!-- CARD 4: Performance & Network -->
-            <helpers:RevealBorder x:Name="Card4" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
-                <StackPanel>
+                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
                     <TextBlock Text="高级性能" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
@@ -274,12 +251,8 @@
                         </StackPanel>
                         <CheckBox Grid.Column="1" IsChecked="{Binding NetworkOptimization}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
-                </StackPanel>
-            </helpers:RevealBorder>
 
-            <!-- CARD 5: Data & Cache -->
-            <helpers:RevealBorder x:Name="Card5" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
-                <StackPanel>
+                    <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,24,0,24"/>
                     <TextBlock Text="存储与缓存" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>

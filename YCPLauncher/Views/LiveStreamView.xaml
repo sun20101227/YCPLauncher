@@ -11,9 +11,8 @@
     <UserControl.Resources>
         <!-- Chat Message Template -->
         <DataTemplate x:Key="ChatMessageTemplate">
-            <Border Margin="0,0,0,12" CornerRadius="8" Padding="12,8">
-                <!-- Entrance Animation -->
-                <Border.Triggers>
+            <helpers:RevealBorder Margin="0,0,0,12" CornerRadius="8" Padding="12,8" Background="Transparent" HoverColor="#22FFFFFF" HoverRadius="150" BorderThickness="1" BorderBrush="Transparent">
+                <helpers:RevealBorder.Triggers>
                     <EventTrigger RoutedEvent="Loaded">
                         <BeginStoryboard>
                             <Storyboard>
@@ -46,14 +45,10 @@
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
-                </Border.Triggers>
-                <Border.RenderTransform>
+                </helpers:RevealBorder.Triggers>
+                <helpers:RevealBorder.RenderTransform>
                     <TranslateTransform X="0" Y="20"/>
-                </Border.RenderTransform>
-                <Border.Background>
-                    <SolidColorBrush Color="Transparent"/>
-                </Border.Background>
-
+                </helpers:RevealBorder.RenderTransform>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                         <Border Width="26" Height="26" CornerRadius="13" Margin="0,0,10,0">
@@ -72,7 +67,7 @@
                     </StackPanel>
                     <TextBlock Text="{Binding Message}" Foreground="#EAEAEA" FontSize="13" TextWrapping="Wrap" Margin="36,0,0,0" LineHeight="20"/>
                 </StackPanel>
-            </Border>
+            </helpers:RevealBorder>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -95,16 +90,16 @@
 
         <!-- ══ VIDEO PLAYER AREA (WebView2) ══ -->
         <Grid Grid.Column="0" Margin="24">
-            <Border CornerRadius="16" ClipToBounds="True" Background="Black">
-                <Border.BorderBrush>
+            <helpers:RevealBorder CornerRadius="16" ClipToBounds="True" Background="Black" HoverColor="#22FF6B00" HoverRadius="400">
+                <helpers:RevealBorder.BorderBrush>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#33FFFFFF" Offset="0"/>
                         <GradientStop Color="#05FFFFFF" Offset="1"/>
                     </LinearGradientBrush>
-                </Border.BorderBrush>
-                <Border.BorderThickness>
+                </helpers:RevealBorder.BorderBrush>
+                <helpers:RevealBorder.BorderThickness>
                     <Thickness>1</Thickness>
-                </Border.BorderThickness>
+                </helpers:RevealBorder.BorderThickness>
 
                 <Grid>
                     <!-- WebView2 Player -->
@@ -118,7 +113,7 @@
                         </StackPanel>
                     </Border>
                 </Grid>
-            </Border>
+            </helpers:RevealBorder>
         </Grid>
 
         <!-- ══ CHAT SIDEBAR ══ -->

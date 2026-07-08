@@ -60,10 +60,5 @@
                 <ScaleTransform ScaleX="1" ScaleY="1"/>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#15ffffff"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>

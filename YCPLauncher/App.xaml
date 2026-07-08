@@ -182,7 +182,6 @@
                             </helpers:RevealBorder>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bd" Property="Background"   Value="{DynamicResource ItemBgHoverBrush}"/>
                                     <Setter TargetName="bd" Property="BorderBrush"  Value="{DynamicResource AccentBrush}"/>
                                     <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
                                 </Trigger>
@@ -238,7 +237,6 @@
                             </helpers:RevealBorder>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bd" Property="Background" Value="{DynamicResource ItemBgHoverBrush}"/>
                                     <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
@@ -294,7 +292,6 @@
                             </helpers:RevealBorder>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="bd" Property="Background" Value="{DynamicResource ItemBgHoverBrush}"/>
                                     <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -328,7 +325,6 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ItemBgHoverBrush}"/>
                                     <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="True">
