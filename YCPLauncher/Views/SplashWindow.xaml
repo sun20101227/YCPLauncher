@@ -11,114 +11,31 @@
         Loaded="Window_Loaded">
     <Window.Resources>
         <Storyboard x:Key="IntroAnimation">
-            <!-- Background Fade In -->
-            <DoubleAnimation Storyboard.TargetName="BgBorder"
+            <!-- Fade In -->
+            <DoubleAnimation Storyboard.TargetName="MainGrid"
                              Storyboard.TargetProperty="Opacity"
-                             From="0" To="1" Duration="0:0:1.5">
+                             From="0" To="1" Duration="0:0:0.6">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
 
-            <!-- Outer HUD Rings Spin -->
-            <DoubleAnimation Storyboard.TargetName="Spin1"
-                             Storyboard.TargetProperty="Angle"
-                             From="0" To="360" Duration="0:0:5" RepeatBehavior="Forever"/>
-            <DoubleAnimation Storyboard.TargetName="Spin2"
-                             Storyboard.TargetProperty="Angle"
-                             From="360" To="0" Duration="0:0:3" RepeatBehavior="Forever"/>
-
-            <!-- HUD Rings Fade In -->
-            <DoubleAnimation Storyboard.TargetName="OuterRing1"
-                             Storyboard.TargetProperty="Opacity"
-                             From="0" To="0.8" Duration="0:0:1"/>
-            <DoubleAnimation Storyboard.TargetName="OuterRing2"
-                             Storyboard.TargetProperty="Opacity"
-                             From="0" To="0.5" Duration="0:0:1.2"/>
-
-            <!-- Hexagon Drawing (Laser Tracing) -->
-            <DoubleAnimation Storyboard.TargetName="HexagonPath"
-                             Storyboard.TargetProperty="StrokeDashOffset"
-                             From="1000" To="0" Duration="0:0:1.2">
+            <!-- Slide Up gently -->
+            <DoubleAnimation Storyboard.TargetName="ContentTransform"
+                             Storyboard.TargetProperty="Y"
+                             From="20" To="0" Duration="0:0:0.8">
                 <DoubleAnimation.EasingFunction>
-                    <PowerEase Power="3" EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-
-            <!-- Inner Triangle Drawing -->
-            <DoubleAnimation Storyboard.TargetName="CoreTriangle"
-                             Storyboard.TargetProperty="StrokeDashOffset"
-                             From="500" To="0" Duration="0:0:1" BeginTime="0:0:0.4">
-                <DoubleAnimation.EasingFunction>
-                    <PowerEase Power="3" EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-
-            <!-- Glitch / Flash effect -->
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GlitchFlash" Storyboard.TargetProperty="Opacity" BeginTime="0:0:1.4">
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.05" Value="0"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="0.9"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.15" Value="0"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.2" Value="0.6"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MainScale" Storyboard.TargetProperty="ScaleX" BeginTime="0:0:1.4">
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.05"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.05" Value="0.98"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="1.0"/>
-            </DoubleAnimationUsingKeyFrames>
-
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MainScale" Storyboard.TargetProperty="ScaleY" BeginTime="0:0:1.4">
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.95"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.05" Value="1.02"/>
-                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="1.0"/>
-            </DoubleAnimationUsingKeyFrames>
-
-            <!-- Logo Text Explosive Fade In -->
-            <DoubleAnimation Storyboard.TargetName="LogoScale"
-                             Storyboard.TargetProperty="ScaleX"
-                             From="0.1" To="1.0" Duration="0:0:0.8" BeginTime="0:0:1.5">
-                <DoubleAnimation.EasingFunction>
-                    <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="3"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="LogoScale"
-                             Storyboard.TargetProperty="ScaleY"
-                             From="0.1" To="1.0" Duration="0:0:0.8" BeginTime="0:0:1.5">
-                <DoubleAnimation.EasingFunction>
-                    <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="3"/>
+                    <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
             
-            <DoubleAnimation Storyboard.TargetName="TextContainer"
-                             Storyboard.TargetProperty="Opacity"
-                             From="0" To="1" Duration="0:0:0.3" BeginTime="0:0:1.5"/>
-
-            <!-- HUD Elements zoom and fade out when text appears -->
-            <DoubleAnimation Storyboard.TargetName="HudContainer"
-                             Storyboard.TargetProperty="Opacity"
-                             From="1" To="0" Duration="0:0:0.3" BeginTime="0:0:1.5"/>
-            <DoubleAnimation Storyboard.TargetName="HudScale"
-                             Storyboard.TargetProperty="ScaleX"
-                             From="1" To="2" Duration="0:0:0.5" BeginTime="0:0:1.4">
-                <DoubleAnimation.EasingFunction>
-                    <CubicEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="HudScale"
-                             Storyboard.TargetProperty="ScaleY"
-                             From="1" To="2" Duration="0:0:0.5" BeginTime="0:0:1.4">
-                <DoubleAnimation.EasingFunction>
-                    <CubicEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-
+            <!-- Infinite Loading Spinner -->
+            <DoubleAnimation Storyboard.TargetName="SpinnerTransform"
+                             Storyboard.TargetProperty="Angle"
+                             From="0" To="360" Duration="0:0:1.5" RepeatBehavior="Forever"/>
         </Storyboard>
         
         <Storyboard x:Key="OutroAnimation" Completed="OutroAnimation_Completed">
-            <!-- Fade Out completely -->
             <DoubleAnimation Storyboard.TargetName="MainGrid"
                              Storyboard.TargetProperty="Opacity"
                              From="1" To="0" Duration="0:0:0.4">
@@ -126,17 +43,9 @@
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <!-- Zoom in while fading out -->
-            <DoubleAnimation Storyboard.TargetName="MainScale"
-                             Storyboard.TargetProperty="ScaleX"
-                             From="1" To="1.2" Duration="0:0:0.4">
-                <DoubleAnimation.EasingFunction>
-                    <CubicEase EasingMode="EaseIn"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation Storyboard.TargetName="MainScale"
-                             Storyboard.TargetProperty="ScaleY"
-                             From="1" To="1.2" Duration="0:0:0.4">
+            <DoubleAnimation Storyboard.TargetName="ContentTransform"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="-10" Duration="0:0:0.4">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -144,79 +53,44 @@
         </Storyboard>
     </Window.Resources>
 
-    <Grid x:Name="MainGrid" Opacity="1" RenderTransformOrigin="0.5,0.5">
-        <Grid.RenderTransform>
-            <ScaleTransform x:Name="MainScale" ScaleX="1" ScaleY="1"/>
-        </Grid.RenderTransform>
-        
-        <!-- Main Background -->
-        <Border x:Name="BgBorder" CornerRadius="16" Opacity="0" Background="#030303" BorderBrush="#111" BorderThickness="1">
+    <Grid x:Name="MainGrid" Opacity="0" Background="Transparent">
+        <!-- Glassmorphism Background -->
+        <Border CornerRadius="16" Background="#A0060A10" BorderBrush="#22FFFFFF" BorderThickness="1">
             <Border.Effect>
-                <DropShadowEffect Color="#FF3300" BlurRadius="100" ShadowDepth="0" Opacity="0.5"/>
+                <DropShadowEffect Color="#000" BlurRadius="40" ShadowDepth="10" Opacity="0.5"/>
             </Border.Effect>
         </Border>
 
-        <!-- SVG Cyber Drawing HUD Container -->
-        <Grid x:Name="HudContainer" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-            <Grid.RenderTransform>
-                <ScaleTransform x:Name="HudScale" ScaleX="1" ScaleY="1"/>
-            </Grid.RenderTransform>
-
-            <!-- Spinning Outer Ring -->
-            <Path x:Name="OuterRing1" Stroke="#FF5500" StrokeThickness="2" StrokeDashArray="8 12 2 12" Width="260" Height="260" Stretch="Uniform" Opacity="0" RenderTransformOrigin="0.5,0.5"
-                  Data="M 130,0 A 130,130 0 1 1 129.9,0 Z">
-                <Path.RenderTransform>
-                    <RotateTransform x:Name="Spin1" Angle="0"/>
-                </Path.RenderTransform>
-            </Path>
-
-            <!-- Spinning Inner Ring -->
-            <Path x:Name="OuterRing2" Stroke="#FF9900" StrokeThickness="1" StrokeDashArray="30 40 5 10" Width="220" Height="220" Stretch="Uniform" Opacity="0" RenderTransformOrigin="0.5,0.5"
-                  Data="M 110,0 A 110,110 0 1 1 109.9,0 Z">
-                <Path.RenderTransform>
-                    <RotateTransform x:Name="Spin2" Angle="0"/>
-                </Path.RenderTransform>
-            </Path>
-
-            <!-- Hexagon Core Drawing (Properly sized and centered) -->
-            <Path x:Name="HexagonPath" Stroke="#FF3300" StrokeThickness="3" StrokeDashArray="1000" StrokeDashOffset="1000" 
-                  Width="140" Height="160" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Data="M 70,0 L 140,40 L 140,120 L 70,160 L 0,120 L 0,40 Z">
-                <Path.Effect>
-                    <DropShadowEffect Color="#FF3300" BlurRadius="20" ShadowDepth="0" Opacity="1"/>
-                </Path.Effect>
-            </Path>
-            
-            <!-- Inner Core Triangle -->
-            <Path x:Name="CoreTriangle" Stroke="#FFF" StrokeThickness="2" StrokeDashArray="500" StrokeDashOffset="500"
-                  Width="60" Height="50" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Data="M 30,0 L 60,50 L 0,50 Z">
-                <Path.Effect>
-                    <DropShadowEffect Color="#FFF" BlurRadius="10" ShadowDepth="0" Opacity="1"/>
-                </Path.Effect>
-            </Path>
-
-            <!-- Glitch White Flash -->
-            <Ellipse x:Name="GlitchFlash" Width="300" Height="300" Fill="#FFF" Opacity="0">
-                <Ellipse.Effect>
-                    <BlurEffect Radius="60"/>
-                </Ellipse.Effect>
-            </Ellipse>
-        </Grid>
-
-        <!-- Foreground Logo -->
-        <StackPanel x:Name="TextContainer" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0" RenderTransformOrigin="0.5,0.5">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
-                <ScaleTransform x:Name="LogoScale" ScaleX="0.1" ScaleY="0.1"/>
+                <TranslateTransform x:Name="ContentTransform" Y="20"/>
             </StackPanel.RenderTransform>
-            
-            <TextBlock Text="YCP" Foreground="{StaticResource AccentBrush}" FontSize="96" FontWeight="Black" HorizontalAlignment="Center" Margin="0,0,0,-15">
-                <TextBlock.Effect>
-                    <DropShadowEffect Color="#FF3300" BlurRadius="30" ShadowDepth="0" Opacity="1"/>
-                </TextBlock.Effect>
-            </TextBlock>
-            <TextBlock Text="C O R E" Foreground="#CCC" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,0"/>
-            <TextBlock Text="V E R S I O N  0.0.10 Beta" Foreground="#666" FontSize="11" FontWeight="Normal" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+
+            <!-- Logo -->
+            <Border Width="80" Height="80" CornerRadius="40" Margin="0,0,0,24" HorizontalAlignment="Center">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FF6B00" Offset="0"/>
+                        <GradientStop Color="#FFAA00" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.Effect>
+                    <DropShadowEffect Color="#FF6B00" BlurRadius="24" ShadowDepth="4" Opacity="0.4"/>
+                </Border.Effect>
+                <TextBlock Text="Y" Foreground="White" FontSize="36" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,0,0"/>
+            </Border>
+
+            <!-- App Name -->
+            <TextBlock Text="YCP Launcher" Foreground="White" FontSize="24" FontWeight="Bold" FontFamily="Microsoft YaHei UI, Segoe UI" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+            <TextBlock Text="正在连接服务器并验证环境..." Foreground="#A0AAB5" FontSize="13" FontFamily="Microsoft YaHei UI, Segoe UI" HorizontalAlignment="Center" Margin="0,0,0,32"/>
+
+            <!-- Modern Spinner -->
+            <Path Stroke="{DynamicResource AccentBrush}" StrokeThickness="3" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Width="30" Height="30" Stretch="Uniform" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5"
+                  Data="M 15,0 A 15,15 0 1 1 0,15">
+                <Path.RenderTransform>
+                    <RotateTransform x:Name="SpinnerTransform" Angle="0"/>
+                </Path.RenderTransform>
+            </Path>
         </StackPanel>
     </Grid>
 </Window>

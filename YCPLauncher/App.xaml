@@ -22,6 +22,19 @@
             <conv:PingToTextConverter               x:Key="PingToText"/>
             <conv:ZeroToCollapsedConverter          x:Key="ZeroToCollapsed"/>
 
+            <!-- ── Global Typography ─────────────────────────────────────── -->
+            <Style TargetType="Window">
+                <Setter Property="FontFamily" Value="Microsoft YaHei UI, Segoe UI, -apple-system, BlinkMacSystemFont, sans-serif"/>
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Microsoft YaHei UI, Segoe UI, -apple-system, BlinkMacSystemFont, sans-serif"/>
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+            </Style>
+
             <!-- ── Modern ScrollBar Style ────────────────────────────── -->
             <Style TargetType="ScrollBar">
                 <Setter Property="Background" Value="Transparent"/>

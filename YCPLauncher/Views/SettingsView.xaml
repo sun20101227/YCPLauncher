@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
              mc:Ignorable="d" 
              Background="Transparent"
              d:DesignHeight="800" d:DesignWidth="800">
@@ -131,7 +132,7 @@
             </StackPanel>
 
             <!-- CARD 1: Appearance -->
-            <Border x:Name="Card1" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
+            <helpers:RevealBorder x:Name="Card1" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
                 <StackPanel>
                     <TextBlock Text="外观设置" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     
@@ -163,10 +164,10 @@
                         <CheckBox Grid.Column="1" IsChecked="{Binding ReduceAnimations}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
-            </Border>
+            </helpers:RevealBorder>
 
             <!-- CARD 2: System -->
-            <Border x:Name="Card2" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
+            <helpers:RevealBorder x:Name="Card2" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
                 <StackPanel>
                     <TextBlock Text="系统行为" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     
@@ -208,10 +209,10 @@
                         <CheckBox Grid.Column="1" IsChecked="True" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
-            </Border>
+            </helpers:RevealBorder>
 
             <!-- CARD 3: Account -->
-            <Border x:Name="Card3" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
+            <helpers:RevealBorder x:Name="Card3" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
                 <StackPanel>
                     <TextBlock Text="游戏启动参数" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     
@@ -251,10 +252,10 @@
                         <CheckBox Grid.Column="1" IsChecked="False" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
-            </Border>
+            </helpers:RevealBorder>
 
             <!-- CARD 4: Performance & Network -->
-            <Border x:Name="Card4" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
+            <helpers:RevealBorder x:Name="Card4" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
                 <StackPanel>
                     <TextBlock Text="高级性能" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     <Grid Margin="0,0,0,20">
@@ -274,10 +275,10 @@
                         <CheckBox Grid.Column="1" IsChecked="{Binding NetworkOptimization}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
                     </Grid>
                 </StackPanel>
-            </Border>
+            </helpers:RevealBorder>
 
             <!-- CARD 5: Data & Cache -->
-            <Border x:Name="Card5" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
+            <helpers:RevealBorder x:Name="Card5" Style="{StaticResource HoverCardStyle}" Background="{DynamicResource CardBgBrush}" HoverColor="#44FF6B00" HoverRadius="400" BorderThickness="1" CornerRadius="12" Padding="24" Margin="0,0,0,24" Opacity="0">
                 <StackPanel>
                     <TextBlock Text="存储与缓存" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="0,0,0,16"/>
                     <Grid Margin="0,0,0,20">
@@ -298,7 +299,7 @@
                         <Button Grid.Column="1" Command="{Binding UninstallLauncherCommand}" Content="卸载" Style="{StaticResource GhostButton}" Foreground="#EF4444" BorderBrush="#EF4444" Height="30" Padding="15,0"/>
                     </Grid>
                 </StackPanel>
-            </Border>
+            </helpers:RevealBorder>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
