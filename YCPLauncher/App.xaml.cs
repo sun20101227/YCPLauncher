@@ -7,7 +7,8 @@ namespace YCPLauncher;
 
 public partial class App : System.Windows.Application
 {
-    public static readonly string CurrentVersion = "0.0.10 Beta";
+    public static readonly string CurrentVersion = "1.0.0";
+
 
     protected override void OnStartup(StartupEventArgs e)
     {

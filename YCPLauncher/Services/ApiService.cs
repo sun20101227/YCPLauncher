@@ -90,14 +90,51 @@ public class ApiService
     {
         try
         {
-            // Note: Update API is on cs2.yachiyo8000.cn domain as specified by user
-            var request = new HttpRequestMessage(HttpMethod.Get, $"https://cs2.yachiyo8000.cn/api/v1/launcher/version.php?current={currentVersion}");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.github.com/repos/sun20101227/YCPLauncher/releases/latest");
+            request.Headers.Add("User-Agent", "YCPLauncher");
             var response = await _http.SendAsync(request);
             if (!response.IsSuccessStatusCode)
                 return null;
 
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<UpdateResponse>(json, JsonOpts);
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            
+            string tagName = root.GetProperty("tag_name").GetString() ?? "";
+            string body = root.GetProperty("body").GetString() ?? "";
+            string latestVersion = tagName.TrimStart('v', 'V');
+            
+            // 简单比较版本号
+            string cleanCurrent = currentVersion.Replace(" Beta", "").TrimStart('v', 'V');
+            bool updateAvailable = false;
+            if (Version.TryParse(latestVersion, out var latest) && Version.TryParse(cleanCurrent, out var current))
+            {
+                updateAvailable = latest > current;
+            }
+            else
+            {
+                updateAvailable = latestVersion != cleanCurrent;
+            }
+
+            var assets = root.GetProperty("assets");
+            string downloadUrl = "";
+            long fileSize = 0;
+            if (assets.GetArrayLength() > 0)
+            {
+                var asset = assets[0];
+                downloadUrl = asset.GetProperty("browser_download_url").GetString() ?? "";
+                fileSize = asset.GetProperty("size").GetInt64();
+            }
+
+            return new UpdateResponse
+            {
+                Code = 200,
+                UpdateAvailable = updateAvailable,
+                LatestVersion = latestVersion,
+                DownloadUrl = downloadUrl,
+                FileSize = fileSize,
+                ReleaseNotes = body
+            };
         }
         catch
         {
