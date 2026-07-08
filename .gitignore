@@ -34,3 +34,7 @@ desktop.ini
 
 # Test scripts
 test_*.ps1
+
+# Ignore PHP and website folders as requested
+ycp-php/
+ycp-website/
