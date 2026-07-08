@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
       mc:Ignorable="d"
       Background="Transparent">
 
@@ -85,7 +86,7 @@
                     <StackPanel Orientation="Horizontal">
 
                         <!-- Team -->
-                        <Border Style="{StaticResource TileRevealStyle}" Padding="16,12" Margin="0,0,12,0">
+                        <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" Padding="16,12" Margin="0,0,12,0">
                             <StackPanel>
                                 <TextBlock Text="所属战队" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
                                 <StackPanel Orientation="Horizontal">
@@ -96,16 +97,16 @@
                                                Foreground="White" FontSize="16" FontWeight="SemiBold" FontFamily="Segoe UI"/>
                                 </StackPanel>
                             </StackPanel>
-                        </Border>
+                        </helpers:RevealBorder>
 
                         <!-- Steam ID -->
-                        <Border Style="{StaticResource TileRevealStyle}" Padding="16,12">
+                        <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" Padding="16,12">
                             <StackPanel>
                                 <TextBlock Text="Steam ID" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
                                 <TextBlock Text="{Binding Player.SteamId}"
                                            Foreground="#4FC3F7" FontSize="16" FontWeight="SemiBold" FontFamily="Consolas"/>
                             </StackPanel>
-                        </Border>
+                        </helpers:RevealBorder>
 
                     </StackPanel>
 

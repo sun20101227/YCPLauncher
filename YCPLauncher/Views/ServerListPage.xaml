@@ -4,6 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:YCPLauncher.Converters"
+      xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
       mc:Ignorable="d"
       Background="Transparent">
 
@@ -74,7 +75,7 @@
             <ItemsControl ItemsSource="{Binding Servers}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource TileRevealStyle}"
+                        <helpers:RevealBorder Style="{StaticResource TileRevealStyle}"
                                 Padding="20,16"
                                 Margin="0,0,0,12"
                                 Tag="{Binding}">
@@ -147,7 +148,7 @@
                                         FontSize="13"
                                         Cursor="Hand"/>
                             </Grid>
-                        </Border>
+                        </helpers:RevealBorder>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

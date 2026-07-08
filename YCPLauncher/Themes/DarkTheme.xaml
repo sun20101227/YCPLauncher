@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF">
+                    xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+                    xmlns:helpers="clr-namespace:YCPLauncher.Helpers">
     <!-- Dark Theme Brushes -->
     <SolidColorBrush x:Key="AccentBrush"      Color="#FF6B00"/>
     
@@ -46,10 +47,11 @@
     <!-- Shadow Colors -->
     <Color x:Key="ShadowColor">#000000</Color>
 
-    <!-- Win10 Tile Reveal Style for Borders -->
-    <Style x:Key="TileRevealStyle" TargetType="Border">
-        <Setter Property="fw:RevealElement.BorderRadius" Value="12"/>
-        <Setter Property="BorderBrush" Value="{fw:RevealBrush}"/>
+    <!-- Win10 Tile Reveal Style for RevealBorder -->
+    <Style x:Key="TileRevealStyle" TargetType="helpers:RevealBorder">
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="HoverColor" Value="#66FF6B00"/>
+        <Setter Property="HoverRadius" Value="200"/>
         <Setter Property="BorderThickness" Value="1.5"/>
         <Setter Property="Background" Value="#0Affffff"/>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
