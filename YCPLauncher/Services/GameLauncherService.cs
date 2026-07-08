@@ -25,22 +25,12 @@ public class GameLauncherService
     {
         try
         {
-            var steamExe = GetSteamExePath();
-            if (string.IsNullOrEmpty(steamExe) || !File.Exists(steamExe))
-            {
-                // Fallback to URL protocol if steam.exe not found
-                var url = $"steam://rungameid/{Cs2AppId}//+connect {ip}:{port}";
-                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
-                return true;
-            }
-
-            // Using steam.exe -applaunch is the most reliable way to pass startup arguments to CS2
-            // It also works seamlessly if the game is already running
-            var args = $"-applaunch {Cs2AppId} -novid +connect {ip}:{port}";
+            // The most reliable way to join a server in CS2 (works whether the game is running or not)
+            // is to use the steam://connect/ protocol.
+            var url = $"steam://connect/{ip}:{port}";
             Process.Start(new ProcessStartInfo
             {
-                FileName = steamExe,
-                Arguments = args,
+                FileName = url,
                 UseShellExecute = true
             });
             return true;

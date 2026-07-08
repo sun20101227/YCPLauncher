@@ -12,6 +12,13 @@ public partial class MainViewModel : ObservableObject
     private readonly Action _onLogout;
     private readonly ApiService _apiService;
 
+    [RelayCommand]
+    private void JoinMatch()
+    {
+        // 自动进入对局 - frp-leg.com:16042
+        GameLauncherService.LaunchDirect("frp-leg.com", 16042, "YCP Server");
+    }
+
     [ObservableProperty]
     private PlayerInfo _player;
 

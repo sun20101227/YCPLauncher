@@ -173,7 +173,7 @@
 
                         <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,20"/>
                         
-                        <Button Command="{Binding NavigateToServersCommand}"
+                        <Button Command="{Binding JoinMatchCommand}"
                                 Height="40" Style="{StaticResource OrangeButton}">
                             <!-- Pulse Animation for button content -->
                             <Button.Triggers>
@@ -187,7 +187,7 @@
                             </Button.Triggers>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="▶" FontSize="12" Foreground="White" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="快速匹配服务器" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                <TextBlock Text="自动进入对局" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
