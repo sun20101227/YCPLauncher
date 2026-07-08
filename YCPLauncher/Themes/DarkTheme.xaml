@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF">
     <!-- Dark Theme Brushes -->
     <SolidColorBrush x:Key="AccentBrush"      Color="#FF6B00"/>
     
@@ -44,4 +45,23 @@
 
     <!-- Shadow Colors -->
     <Color x:Key="ShadowColor">#000000</Color>
+
+    <!-- Win10 Tile Reveal Style for Borders -->
+    <Style x:Key="TileRevealStyle" TargetType="Border">
+        <Setter Property="fw:RevealElement.BorderRadius" Value="12"/>
+        <Setter Property="BorderBrush" Value="{fw:RevealBrush}"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="Background" Value="#0Affffff"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1" ScaleY="1"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#15ffffff"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

@@ -85,7 +85,7 @@
                     <StackPanel Orientation="Horizontal">
 
                         <!-- Team -->
-                        <Border Background="#0D1117" BorderBrush="#FF6B00" BorderThickness="1" CornerRadius="8" Padding="16,12" Margin="0,0,12,0">
+                        <Border Style="{StaticResource TileRevealStyle}" Padding="16,12" Margin="0,0,12,0">
                             <StackPanel>
                                 <TextBlock Text="所属战队" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
                                 <StackPanel Orientation="Horizontal">
@@ -99,7 +99,7 @@
                         </Border>
 
                         <!-- Steam ID -->
-                        <Border Background="#0D1117" BorderBrush="#30363D" BorderThickness="1" CornerRadius="8" Padding="16,12">
+                        <Border Style="{StaticResource TileRevealStyle}" Padding="16,12">
                             <StackPanel>
                                 <TextBlock Text="Steam ID" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
                                 <TextBlock Text="{Binding Player.SteamId}"
