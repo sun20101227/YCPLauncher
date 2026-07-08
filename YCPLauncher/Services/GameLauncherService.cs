@@ -25,14 +25,42 @@ public class GameLauncherService
     {
         try
         {
-            var encodedName = Uri.EscapeDataString(serverName);
-            var url = $"steam://rungameid/{Cs2AppId}//+connect {ip}:{port} +name \"{encodedName}\"";
-            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            var steamExe = GetSteamExePath();
+            if (string.IsNullOrEmpty(steamExe) || !File.Exists(steamExe))
+            {
+                // Fallback to URL protocol if steam.exe not found
+                var url = $"steam://rungameid/{Cs2AppId}//+connect {ip}:{port}";
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                return true;
+            }
+
+            // Using steam.exe -applaunch is the most reliable way to pass startup arguments to CS2
+            // It also works seamlessly if the game is already running
+            var args = $"-applaunch {Cs2AppId} -novid +connect {ip}:{port}";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = steamExe,
+                Arguments = args,
+                UseShellExecute = true
+            });
             return true;
         }
         catch
         {
             return false;
+        }
+    }
+
+    private static string? GetSteamExePath()
+    {
+        try
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
+            return key?.GetValue("SteamExe") as string;
+        }
+        catch
+        {
+            return null;
         }
     }
 
