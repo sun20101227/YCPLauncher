@@ -1,0 +1,125 @@
+<Page x:Class="YCPLauncher.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="Transparent">
+
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <Rectangle Width="4" Height="28" Fill="#FF6B00" RadiusX="2" RadiusY="2" Margin="0,0,12,0">
+                    <Rectangle.Effect>
+                        <DropShadowEffect Color="#FF6B00" BlurRadius="8" ShadowDepth="0"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+                <TextBlock Text="选手信息" FontSize="22" FontWeight="Bold" Foreground="White" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Logout Button -->
+            <Button Grid.Column="1"
+                    Command="{Binding LogoutCommand}"
+                    Style="{StaticResource GhostButton}"
+                    Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="⬡  " Foreground="#8B9AB0" FontSize="13" VerticalAlignment="Center"/>
+                    <TextBlock Text="退出登录" Foreground="#8B9AB0" FontSize="13" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!-- Player Card -->
+        <Border Grid.Row="1" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Team Logo -->
+                <Border Grid.Column="0" Width="160" Height="160" CornerRadius="12" 
+                        Background="#161B22" BorderBrush="#30363D" BorderThickness="1"
+                        Margin="0,0,32,0">
+                    <Grid>
+                        <Image Source="{Binding Player.TeamLogo}" 
+                               Width="120" Height="120"
+                               Stretch="Uniform"
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <!-- Fallback icon if no logo -->
+                        <TextBlock Text="🛡" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Visibility="{Binding Player.TeamLogo, Converter={StaticResource NullToVisibility}}"/>
+                    </Grid>
+                </Border>
+
+                <!-- Info -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+
+                    <!-- Display Name -->
+                    <TextBlock Text="{Binding Player.DisplayName}"
+                               FontSize="36"
+                               FontWeight="Black"
+                               FontFamily="Segoe UI Black"
+                               Foreground="White"/>
+
+                    <!-- Username -->
+                    <TextBlock Text="{Binding Player.Username, StringFormat='@{0}'}"
+                               FontSize="14"
+                               Foreground="#8B9AB0"
+                               FontFamily="Segoe UI"
+                               Margin="0,4,0,20"/>
+
+                    <!-- Info Cards Row -->
+                    <StackPanel Orientation="Horizontal">
+
+                        <!-- Team -->
+                        <Border Background="#0D1117" BorderBrush="#FF6B00" BorderThickness="1" CornerRadius="8" Padding="16,12" Margin="0,0,12,0">
+                            <StackPanel>
+                                <TextBlock Text="所属战队" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Player.TeamShort, StringFormat='[{0}] '}"
+                                               Foreground="#FF6B00" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"
+                                               Visibility="{Binding Player.TeamShort, Converter={StaticResource NullToVisibilityInverse}}"/>
+                                    <TextBlock Text="{Binding Player.TeamName}"
+                                               Foreground="White" FontSize="16" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Steam ID -->
+                        <Border Background="#0D1117" BorderBrush="#30363D" BorderThickness="1" CornerRadius="8" Padding="16,12">
+                            <StackPanel>
+                                <TextBlock Text="Steam ID" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding Player.SteamId}"
+                                           Foreground="#4FC3F7" FontSize="16" FontWeight="SemiBold" FontFamily="Consolas"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+
+                    <!-- Navigate to Servers -->
+                    <Button Content="查看服务器列表  →"
+                            Command="{Binding NavigateToServersCommand}"
+                            Height="44" Width="200"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource OrangeButton}"
+                            Margin="0,24,0,0"
+                            Cursor="Hand"
+                            FontSize="14" FontFamily="Segoe UI"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

@@ -1,0 +1,122 @@
+<Window x:Class="YCPInstaller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="YCPLauncher 安装程序" Height="400" Width="600" Icon="app.ico"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="BgBrush" Color="#0B0F19"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#FF6B00"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#121827"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#1E293B"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#94A3B8"/>
+        
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="24,12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.98" ScaleY="0.98" CenterX="50" CenterY="20"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource BgBrush}" CornerRadius="12" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+        <Grid>
+            <!-- Close Button -->
+            <Button x:Name="BtnClose" Content="✕" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                    Margin="10" Background="Transparent" Foreground="{StaticResource TextMuted}" BorderThickness="0" 
+                    Cursor="Hand" Click="BtnClose_Click" FontSize="16">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="YCP" Foreground="{StaticResource AccentBrush}" FontSize="42" FontWeight="Black" HorizontalAlignment="Center"/>
+                <TextBlock Text="L A U N C H E R" Foreground="{StaticResource TextMuted}" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+                
+                <TextBlock Text="安装 YCP 电竞启动器" Foreground="{StaticResource TextPrimary}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                <TextBlock Text="将安装到您的本地应用程序目录" Foreground="{StaticResource TextMuted}" FontSize="12" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                
+                <!-- Path Selection -->
+                <Grid Margin="0,0,0,20" Width="360">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Background="{StaticResource CardBrush}" CornerRadius="6" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Grid.Column="0" Margin="0,0,10,0">
+                        <TextBox x:Name="TxtInstallPath" Background="Transparent" Foreground="{StaticResource TextPrimary}" BorderThickness="0" VerticalAlignment="Center" Margin="10,0" IsReadOnly="True" FontSize="12" Height="20"/>
+                    </Border>
+                    <Button x:Name="BtnBrowse" Content="更改路径" Grid.Column="1" Background="{StaticResource BorderBrush}" Foreground="{StaticResource TextPrimary}" BorderThickness="0" Padding="15,8" Cursor="Hand" Click="BtnBrowse_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background" Value="#334155"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+                
+                <!-- Install Button -->
+                <Button x:Name="BtnInstall" Content="一键极速安装" Style="{StaticResource PrimaryButton}" Click="BtnInstall_Click" Width="200"/>
+                
+                <!-- Progress -->
+                <StackPanel x:Name="ProgressPanel" Visibility="Collapsed" Margin="0,10,0,0" Width="300">
+                    <TextBlock x:Name="TxtStatus" Text="正在解压核心组件..." Foreground="{StaticResource TextPrimary}" FontSize="12" Margin="0,0,0,8" HorizontalAlignment="Center"/>
+                    <ProgressBar x:Name="ProgressBar" Height="6" Background="{StaticResource CardBrush}" Foreground="{StaticResource AccentBrush}" BorderThickness="0"/>
+                </StackPanel>
+                
+                <!-- Done -->
+                <StackPanel x:Name="DonePanel" Visibility="Collapsed" Margin="0,10,0,0">
+                    <TextBlock Text="✔ 安装完成" Foreground="#10B981" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,16"/>
+                    <Button x:Name="BtnLaunch" Content="立即启动" Style="{StaticResource PrimaryButton}" Click="BtnLaunch_Click" Width="200"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,146 @@
+<UserControl x:Class="YCPLauncher.Views.IntroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="TitleStyle">
+            <Setter Property="FontFamily" Value="Arial Black, Segoe UI, sans-serif"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="StatNumberStyle">
+            <Setter Property="FontFamily" Value="Impact, Arial Black, sans-serif"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="StatLabelStyle">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- Overlay for full glass effect over the content area -->
+        <Border Background="#44000000" CornerRadius="8" Margin="24"/>
+        
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="24">
+            <StackPanel Margin="32">
+                <!-- HERO SECTION -->
+                <Grid Margin="0,0,0,48">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <!-- Icon/Badge -->
+                        <Border Width="64" Height="64" Background="{DynamicResource AccentBgBrush}" CornerRadius="12" HorizontalAlignment="Center" Margin="0,0,0,16">
+                            <Image Source="/Assets/logo.png" Width="48" Height="48" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Border>
+                        
+                        <TextBlock Text="EPT Masters" Foreground="{DynamicResource AccentBrush}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" />
+                        
+                        <TextBlock Text="YACHIYO CUP" Style="{StaticResource TitleStyle}" FontSize="56" HorizontalAlignment="Center" Margin="0,4,0,0">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="{DynamicResource AccentColor}" BlurRadius="15" ShadowDepth="0" Opacity="0.6"/>
+                            </TextBlock.Effect>
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#FFFF6B00" Offset="0"/>
+                                    <GradientStop Color="#FFFFD500" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        
+                        <TextBlock Text="VALORANT FRIENDSHIP TOURNAMENT" Foreground="{DynamicResource TextMutedBrush}" FontSize="16"  HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- STATS ROW -->
+                <Grid Margin="0,0,0,48">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="4" Style="{StaticResource StatNumberStyle}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="参赛战队" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                        <TextBlock Text="600,000 VND" Style="{StaticResource StatNumberStyle}" Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="{DynamicResource AccentColor}" BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text="赛事总奖池" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                        <TextBlock Text="DongGuan" Style="{StaticResource StatNumberStyle}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="比赛地点" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+                <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,0,0,48"/>
+
+                <!-- TEAMS SECTION -->
+                <TextBlock Text="参赛战队" Style="{StaticResource TitleStyle}" FontSize="24" Margin="0,0,0,24"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- DL Gaming -->
+                    <Border Grid.Column="0" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="8" Padding="20">
+                        <StackPanel>
+                            <Border Width="60" Height="60" CornerRadius="30" Background="#44D40511" BorderBrush="#D40511" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
+                                <TextBlock Text="DL" Foreground="#FFD40511" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="DL Gaming" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- JH Gaming -->
+                    <Border Grid.Column="2" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="8" Padding="20">
+                        <StackPanel>
+                            <Border Width="60" Height="60" CornerRadius="30" Background="#441a4dcc" BorderBrush="#1a4dcc" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
+                                <TextBlock Text="JH" Foreground="#FF1a4dcc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="JH Gaming" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- CY Gaming -->
+                    <Border Grid.Column="4" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1" CornerRadius="8" Padding="20">
+                        <StackPanel>
+                            <Border Width="60" Height="60" CornerRadius="30" Background="#4400875a" BorderBrush="#00875a" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,16">
+                                <TextBlock Text="CY" Foreground="#FF00875a" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="CY Gaming" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- ABOUT -->
+                <TextBlock Text="关于 Yachiyo Cup" Style="{StaticResource TitleStyle}" FontSize="24" Margin="0,48,0,16"/>
+                <TextBlock Text="Yachiyo Cup（YCP）是由同学们自发组织的无畏契约友谊赛。我们相信竞技的乐趣在于参与和成长，无论水平高低，每个人都能在比赛中找到属于自己的高光时刻。" 
+                           Foreground="{DynamicResource TextMutedBrush}" FontSize="14" TextWrapping="Wrap" LineHeight="24"/>
+                <TextBlock Text="所有队伍间轮打一圈积分得出胜者组和败者组，一直打到不平局。然后败者组和胜者组各决出一队晋级决赛。总决赛 BO5，其余比赛 BO3。" 
+                           Foreground="{DynamicResource TextMutedBrush}" FontSize="14" TextWrapping="Wrap" LineHeight="24" Margin="0,16,0,0"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
