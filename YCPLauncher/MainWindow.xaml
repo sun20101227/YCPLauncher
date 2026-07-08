@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         xmlns:local="clr-namespace:YCPLauncher"
+        xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
         xmlns:viewmodels="clr-namespace:YCPLauncher.ViewModels"
         xmlns:views="clr-namespace:YCPLauncher.Views"
         xmlns:tb="http://www.hardcodet.net/taskbar"
@@ -86,10 +87,10 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- ══════════ SIDEBAR ══════════ -->
-                <Border Grid.Column="0"
+                <helpers:RevealBorder Grid.Column="0"
                         Background="{DynamicResource BgSidebarBrush}"
                         CornerRadius="14,0,0,14"
-                        BorderBrush="{fw:RevealBrush}"
+                        HoverColor="#44FF6B00" HoverRadius="300"
                         BorderThickness="0,0,1,0">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -222,7 +223,7 @@
                         </Border>
                     </StackPanel>
                 </Grid>
-                </Border>
+                </helpers:RevealBorder>
 
                 <!-- ══════════ MAIN CONTENT ══════════ -->
                 <Grid Grid.Column="1">

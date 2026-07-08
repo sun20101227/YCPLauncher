@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:conv="clr-namespace:YCPLauncher.Converters"
              xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+             xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
              StartupUri="Views\SplashWindow.xaml"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
@@ -159,13 +160,13 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="bd"
+                            <helpers:RevealBorder x:Name="bd"
                                     Background="{TemplateBinding Background}"
-                                    BorderBrush="{fw:RevealBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    HoverColor="#44FF6B00" HoverRadius="150"
                                     CornerRadius="7" Padding="{TemplateBinding Padding}">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
+                            </helpers:RevealBorder>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="bd" Property="Background"   Value="{DynamicResource ItemBgHoverBrush}"/>
@@ -217,11 +218,11 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="bd" Background="{TemplateBinding Background}"
+                            <helpers:RevealBorder x:Name="bd" Background="{TemplateBinding Background}"
                                     CornerRadius="8" Padding="{TemplateBinding Padding}"
-                                    BorderBrush="{fw:RevealBrush}" BorderThickness="1">
+                                    HoverColor="#44FF6B00" HoverRadius="150" BorderThickness="1">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
+                            </helpers:RevealBorder>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="bd" Property="Background" Value="{DynamicResource ItemBgHoverBrush}"/>
@@ -273,10 +274,11 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="bd" Background="{TemplateBinding Background}"
-                                    CornerRadius="16" BorderBrush="{fw:RevealBrush}" BorderThickness="1">
+                            <helpers:RevealBorder x:Name="bd" Background="{TemplateBinding Background}"
+                                    CornerRadius="16" BorderThickness="1"
+                                    HoverColor="#44FF6B00" HoverRadius="80">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
+                            </helpers:RevealBorder>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="bd" Property="Background" Value="{DynamicResource ItemBgHoverBrush}"/>

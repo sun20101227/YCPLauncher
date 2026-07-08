@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+             xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
              xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1080">
@@ -161,8 +162,8 @@
                 <!-- Chat Input Area -->
                 <Border Grid.Row="2" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="0,1,0,0" Padding="16,16,16,24" Background="Transparent">
                     <!-- Glowing Input Capsule (Integrated Send Button) -->
-                    <Border CornerRadius="22" BorderThickness="1.5" x:Name="InputContainer" Background="Transparent" 
-                            BorderBrush="{fw:RevealBrush}">
+                    <helpers:RevealBorder CornerRadius="22" BorderThickness="1.5" x:Name="InputContainer" Background="Transparent" 
+                            HoverColor="#44FF6B00" HoverRadius="200">
                         
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -233,7 +234,7 @@
                                 </Button.RenderTransform>
                             </Button>
                         </Grid>
-                    </Border>
+                    </helpers:RevealBorder>
                 </Border>
             </Grid>
         </Border>
