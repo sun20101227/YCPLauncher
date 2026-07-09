@@ -7,11 +7,23 @@ namespace YCPLauncher;
 
 public partial class App : System.Windows.Application
 {
-    public static readonly string CurrentVersion = "1.0.4";
+    public static readonly string CurrentVersion = "1.0.5";
 
+    private static System.Threading.Mutex? _mutex;
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        const string appName = "YCPLauncher_SingleInstance_Mutex";
+        bool createdNew;
+        _mutex = new System.Threading.Mutex(true, appName, out createdNew);
+
+        if (!createdNew)
+        {
+            MessageBox.Show("YCP CS2 启动器已经在运行中！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.Application.Current.Shutdown();
+            return;
+        }
+
         base.OnStartup(e);
 
         DispatcherUnhandledException += (_, ex) =>

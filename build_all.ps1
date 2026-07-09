@@ -12,7 +12,7 @@ if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
 Compress-Archive -Path ".\YCPLauncher\dist\*" -DestinationPath $zipPath -Force
 
 Write-Host "4. Building YCPInstaller (Single-File, Self-Contained)..."
-dotnet publish .\YCPInstaller\YCPInstaller.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o .\SetupOutput
+dotnet publish .\YCPInstaller\YCPInstaller.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o .\SetupOutput
 
 Write-Host ""
 Write-Host "===== Build Complete! =====" -ForegroundColor Green

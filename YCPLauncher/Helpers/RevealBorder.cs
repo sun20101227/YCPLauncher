@@ -55,8 +55,6 @@ public class RevealBorder : Border
             Opacity = 0.0
         };
 
-        this.BorderBrush = _hoverBrush;
-        
         this.MouseMove += OnMouseMove;
         this.MouseEnter += OnMouseEnter;
         this.MouseLeave += OnMouseLeave;
@@ -64,15 +62,29 @@ public class RevealBorder : Border
 
     protected override void OnRender(DrawingContext dc)
     {
-        base.OnRender(dc);
+        base.OnRender(dc); // Draws standard Background and static BorderBrush if any
+
+        // Draw background hover glow
         if (_bgHoverBrush.Opacity > 0 && CornerRadius.TopLeft > 0)
         {
-            // Draw background hover
             dc.DrawRoundedRectangle(_bgHoverBrush, null, new Rect(0, 0, ActualWidth, ActualHeight), CornerRadius.TopLeft, CornerRadius.TopLeft);
         }
         else if (_bgHoverBrush.Opacity > 0)
         {
             dc.DrawRectangle(_bgHoverBrush, null, new Rect(0, 0, ActualWidth, ActualHeight));
+        }
+
+        // Draw border hover glow on top
+        if (_hoverBrush.Opacity > 0 && BorderThickness.Top > 0)
+        {
+            var hoverPen = new System.Windows.Media.Pen(_hoverBrush, BorderThickness.Top);
+            double halfThickness = hoverPen.Thickness / 2.0;
+            Rect rect = new Rect(halfThickness, halfThickness, ActualWidth - hoverPen.Thickness, ActualHeight - hoverPen.Thickness);
+            
+            if (CornerRadius.TopLeft > 0)
+                dc.DrawRoundedRectangle(null, hoverPen, rect, CornerRadius.TopLeft, CornerRadius.TopLeft);
+            else
+                dc.DrawRectangle(null, hoverPen, rect);
         }
     }
 
@@ -106,6 +118,7 @@ public class RevealBorder : Border
             _hoverBrush.GradientOrigin = mousePos;
             _bgHoverBrush.Center = mousePos;
             _bgHoverBrush.GradientOrigin = mousePos;
+            InvalidateVisual();
         }
     }
 
@@ -116,11 +129,13 @@ public class RevealBorder : Border
             _hoverBrush.Opacity = 1.0;
             _bgHoverBrush.Opacity = 1.0;
         }
+        InvalidateVisual();
     }
 
     private void OnMouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
     {
         _hoverBrush.Opacity = 0.0;
         _bgHoverBrush.Opacity = 0.0;
+        InvalidateVisual();
     }
 }

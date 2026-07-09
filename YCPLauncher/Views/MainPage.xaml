@@ -41,86 +41,216 @@
             </Button>
         </Grid>
 
-        <!-- Player Card -->
-        <Border Grid.Row="1" VerticalAlignment="Top">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="0,0,16,0" Margin="0,0,-16,0">
+            <StackPanel>
+                
+                <!-- Player Profile Header -->
+                <Grid Margin="0,0,0,48">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <!-- Team Logo -->
-                <Border Grid.Column="0" Width="160" Height="160" CornerRadius="12" 
-                        Background="#161B22" BorderBrush="#30363D" BorderThickness="1"
-                        Margin="0,0,32,0">
-                    <Grid>
-                        <Image Source="{Binding Player.TeamLogo}" 
-                               Width="120" Height="120"
-                               Stretch="Uniform"
-                               RenderOptions.BitmapScalingMode="HighQuality"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <!-- Fallback icon if no logo -->
-                        <TextBlock Text="🛡" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Visibility="{Binding Player.TeamLogo, Converter={StaticResource NullToVisibility}}"/>
-                    </Grid>
-                </Border>
+                    <!-- Team Logo -->
+                    <helpers:RevealBorder Grid.Column="0" Width="140" Height="140" CornerRadius="24" 
+                            Style="{StaticResource TileRevealStyle}"
+                            Margin="0,0,32,0">
+                        <Grid>
+                            <Image Source="{Binding Player.TeamLogo}" 
+                                   Width="100" Height="100"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="🛡" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#4A5568"
+                                       Visibility="{Binding Player.TeamLogo, Converter={StaticResource NullToVisibility}}"/>
+                        </Grid>
+                    </helpers:RevealBorder>
 
-                <!-- Info -->
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <!-- Player Info -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <!-- Display Name -->
+                        <TextBlock Text="{Binding Player.DisplayName}"
+                                   FontSize="36" FontWeight="Black" FontFamily="Segoe UI Black" Foreground="White" Margin="0,0,0,4"/>
 
-                    <!-- Display Name -->
-                    <TextBlock Text="{Binding Player.DisplayName}"
-                               FontSize="36"
-                               FontWeight="Black"
-                               FontFamily="Segoe UI Black"
-                               Foreground="White"/>
+                        <!-- Username -->
+                        <TextBlock Text="{Binding Player.Username, StringFormat='@{0}'}"
+                                   FontSize="15" Foreground="#8B9AB0" FontFamily="Segoe UI" Margin="0,0,0,24"/>
 
-                    <!-- Username -->
-                    <TextBlock Text="{Binding Player.Username, StringFormat='@{0}'}"
-                               FontSize="14"
-                               Foreground="#8B9AB0"
-                               FontFamily="Segoe UI"
-                               Margin="0,4,0,20"/>
-
-                    <!-- Info Cards Row -->
-                    <StackPanel Orientation="Horizontal">
-
-                        <!-- Team -->
-                        <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" Padding="16,12" Margin="0,0,12,0">
-                            <StackPanel>
-                                <TextBlock Text="所属战队" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Player.TeamShort, StringFormat='[{0}] '}"
-                                               Foreground="#FF6B00" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"
-                                               Visibility="{Binding Player.TeamShort, Converter={StaticResource NullToVisibilityInverse}}"/>
-                                    <TextBlock Text="{Binding Player.TeamName}"
-                                               Foreground="White" FontSize="16" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                        <!-- Info Cards Row -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                            <!-- Team -->
+                            <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" CornerRadius="16" Padding="24,20" Margin="0,0,16,0" MinWidth="160">
+                                <StackPanel>
+                                    <TextBlock Text="所属战队" Foreground="#8B9AB0" FontSize="13" Margin="0,0,0,8"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Player.TeamShort, StringFormat='[{0}] '}"
+                                                   Foreground="#A0ABC0" FontSize="18" FontWeight="SemiBold" FontFamily="Segoe UI"
+                                                   Visibility="{Binding Player.TeamShort, Converter={StaticResource NullToVisibilityInverse}}"/>
+                                        <TextBlock Text="{Binding Player.TeamName}"
+                                                   Foreground="White" FontSize="18" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </helpers:RevealBorder>
+                            </helpers:RevealBorder>
 
-                        <!-- Steam ID -->
-                        <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" Padding="16,12">
-                            <StackPanel>
-                                <TextBlock Text="Steam ID" Foreground="#8B9AB0" FontSize="11" FontFamily="Segoe UI" Margin="0,0,0,4"/>
-                                <TextBlock Text="{Binding Player.SteamId}"
-                                           Foreground="#4FC3F7" FontSize="16" FontWeight="SemiBold" FontFamily="Consolas"/>
-                            </StackPanel>
-                        </helpers:RevealBorder>
+                            <!-- Steam ID -->
+                            <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" CornerRadius="16" Padding="24,20" MinWidth="160">
+                                <StackPanel>
+                                    <TextBlock Text="Steam ID" Foreground="#8B9AB0" FontSize="13" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding Player.SteamId}"
+                                               Foreground="White" FontSize="18" FontWeight="SemiBold" FontFamily="Consolas"/>
+                                </StackPanel>
+                            </helpers:RevealBorder>
+                        </StackPanel>
 
+                        <!-- Navigate to Servers -->
+                        <Button Content="查看服务器列表  →"
+                                Command="{Binding NavigateToServersCommand}"
+                                Height="40" Width="200"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource OrangeButton}"
+                                Cursor="Hand"
+                                FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI"/>
                     </StackPanel>
+                </Grid>
 
-                    <!-- Navigate to Servers -->
-                    <Button Content="查看服务器列表  →"
-                            Command="{Binding NavigateToServersCommand}"
-                            Height="44" Width="200"
-                            HorizontalAlignment="Left"
-                            Style="{StaticResource OrangeButton}"
-                            Margin="0,24,0,0"
-                            Cursor="Hand"
-                            FontSize="14" FontFamily="Segoe UI"/>
-                </StackPanel>
-            </Grid>
-        </Border>
+                <!-- Data & Matches Sections -->
+                <Grid Margin="0,0,0,32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 生涯数据统计 -->
+                    <helpers:RevealBorder Grid.Column="0" Style="{StaticResource TileRevealStyle}" CornerRadius="20" Padding="32">
+                        <StackPanel>
+                            <!-- Section Title -->
+                            <TextBlock Text="生涯数据统计" Foreground="White" FontSize="18" FontWeight="SemiBold" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                            <TextBlock Text="本赛季核心数据指标" Foreground="#8B9AB0" FontSize="13" Margin="0,0,0,36"/>
+                            
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Rating 2.0 -->
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,16,0">
+                                    <TextBlock Text="RATING 2.0" Foreground="#8B9AB0" FontSize="12" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding StatRating}" Foreground="White" FontSize="32" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                                    <ProgressBar Value="{Binding BarRating}" Maximum="100" Height="4" Margin="0,16,0,0"
+                                                 Background="#2A303C" Foreground="White" BorderThickness="0"/>
+                                </StackPanel>
+
+                                <!-- K/D Ratio -->
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="16,0,0,0">
+                                    <TextBlock Text="K/D RATIO" Foreground="#8B9AB0" FontSize="12" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding StatKd}" Foreground="White" FontSize="32" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                                    <ProgressBar Value="{Binding BarKd}" Maximum="100" Height="4" Margin="0,16,0,0"
+                                                 Background="#2A303C" Foreground="White" BorderThickness="0"/>
+                                </StackPanel>
+
+                                <!-- Headshot % -->
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,16,0">
+                                    <TextBlock Text="爆头率 (HS%)" Foreground="#8B9AB0" FontSize="12" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding StatHs}" Foreground="White" FontSize="32" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                                    <ProgressBar Value="{Binding BarHs}" Maximum="100" Height="4" Margin="0,16,0,0"
+                                                 Background="#2A303C" Foreground="White" BorderThickness="0"/>
+                                </StackPanel>
+
+                                <!-- Total Matches -->
+                                <StackPanel Grid.Row="2" Grid.Column="1" Margin="16,0,0,0">
+                                    <TextBlock Text="总场次 (MATCHES)" Foreground="#8B9AB0" FontSize="12" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding StatMatches}" Foreground="White" FontSize="32" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                                    <Path Data="M 0,16 L 15,10 L 30,20 L 45,8 L 60,14 L 75,2" Stroke="#8B9AB0" StrokeThickness="2" Margin="0,16,0,0" Stretch="Fill" Height="12" HorizontalAlignment="Left" Width="80"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </helpers:RevealBorder>
+
+                    <!-- 最近比赛 -->
+                    <helpers:RevealBorder Grid.Column="2" Style="{StaticResource TileRevealStyle}" CornerRadius="20" Padding="32">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,32">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="最近比赛" Foreground="White" FontSize="18" FontWeight="SemiBold" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                                    <TextBlock Text="近 5 场排位与匹配战绩" Foreground="#8B9AB0" FontSize="13"/>
+                                </StackPanel>
+                            </Grid>
+                            
+                            <!-- Match List -->
+                            <ItemsControl ItemsSource="{Binding RecentMatches}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" CornerRadius="12" Padding="20,16" Margin="0,0,0,12">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="56"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Result badge -->
+                                                <Border Grid.Column="0" Height="28" CornerRadius="6" VerticalAlignment="Center">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background" Value="#1A10B981"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Result}" Value="LOSS">
+                                                                    <Setter Property="Background" Value="#1AEF4444"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <TextBlock Text="{Binding Result}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="#34D399"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Result}" Value="LOSS">
+                                                                        <Setter Property="Foreground" Value="#F87171"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Border>
+
+                                                <!-- Info -->
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16,0,0,0">
+                                                    <TextBlock Text="{Binding MapName}" Foreground="White" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                                    <TextBlock Text="{Binding Date}" Foreground="#8B9AB0" FontSize="12"/>
+                                                </StackPanel>
+
+                                                <!-- Score -->
+                                                <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                                    <TextBlock Text="{Binding Score}" Foreground="White" FontSize="15" FontWeight="SemiBold" FontFamily="Segoe UI" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+                                                    <TextBlock FontSize="12" FontFamily="Segoe UI" HorizontalAlignment="Right">
+                                                        <Run Text="K/D " Foreground="#64748B"/>
+                                                        <Run Text="{Binding Kd}" Foreground="#8B9AB0"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </helpers:RevealBorder>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            
+                        </StackPanel>
+                    </helpers:RevealBorder>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

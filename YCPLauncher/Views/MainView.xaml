@@ -56,14 +56,14 @@
                         </Rectangle.Effect>
                     </Rectangle>
                     <TextBlock Text="控制面板" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"
-                               FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                               VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <Button Grid.Column="1" Command="{Binding LogoutCommand}"
                         Style="{StaticResource GhostButton}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="⇥" FontSize="14" Foreground="{DynamicResource TextMutedBrush}" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="退出登录" FontSize="12" FontFamily="Segoe UI" Foreground="{DynamicResource TextMutedBrush}"/>
+                        <TextBlock Text="退出登录" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
                     </StackPanel>
                 </Button>
             </Grid>
@@ -100,10 +100,10 @@
                                     <Border Background="{DynamicResource AccentBgBrush}" CornerRadius="4" Padding="6,2" Margin="0,0,6,0">
                                         <TextBlock Text="{Binding Player.TeamShort}"
                                                    Foreground="{DynamicResource AccentBrush}" FontSize="11" FontWeight="Bold"
-                                                   FontFamily="Segoe UI"/>
+                                                  />
                                     </Border>
                                     <TextBlock Text="{Binding Player.Username, StringFormat='@{0}'}"
-                                               Foreground="{DynamicResource TextMutedBrush}" FontSize="12" FontFamily="Segoe UI"
+                                               Foreground="{DynamicResource TextMutedBrush}" FontSize="12"
                                                VerticalAlignment="Center"/>
                                 </StackPanel>
                             </StackPanel>
@@ -111,11 +111,11 @@
 
                         <!-- Identity Details -->
                         <StackPanel>
-                            <TextBlock Text="STEAM ID" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,4"/>
+                            <TextBlock Text="STEAM ID" Foreground="{DynamicResource TextDimBrush}" FontSize="10" Margin="0,0,0,4"/>
                             <TextBlock Text="{Binding Player.SteamId}" Foreground="{DynamicResource TextMutedBrush}" FontSize="13" FontFamily="Consolas" Margin="0,0,0,12"/>
                             
-                            <TextBlock Text="战队全称" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,4"/>
-                            <TextBlock Text="{Binding Player.TeamName}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI" TextWrapping="Wrap"/>
+                            <TextBlock Text="战队全称" Foreground="{DynamicResource TextDimBrush}" FontSize="10" Margin="0,0,0,4"/>
+                            <TextBlock Text="{Binding Player.TeamName}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" TextWrapping="Wrap"/>
                         </StackPanel>
                     </StackPanel>
                 </helpers:RevealBorder>
@@ -123,7 +123,7 @@
                 <!-- Stats Card -->
                 <helpers:RevealBorder Grid.Column="1" Style="{StaticResource TileRevealStyle}">
                     <StackPanel>
-                        <TextBlock Text="生涯数据统计 (本赛季)" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" FontFamily="Segoe UI" Margin="0,0,0,16"/>
+                        <TextBlock Text="生涯数据统计 (本赛季)" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,16"/>
                         
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -135,7 +135,7 @@
 
                             <!-- Stat 1 -->
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="RATING 2.0" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                                <TextBlock Text="RATING 2.0" Foreground="{DynamicResource TextDimBrush}" FontSize="10" Margin="0,0,0,6"/>
                                 <TextBlock Text="{Binding StatRating}" Foreground="{DynamicResource SuccessBrush}" FontSize="20" FontWeight="Black" FontFamily="Consolas"/>
                                 <ProgressBar Value="{Binding BarRating}" Maximum="100" Height="4" Margin="0,10,20,0"
                                              Background="{DynamicResource BorderBrush1}" Foreground="{DynamicResource SuccessBrush}" BorderThickness="0"/>
@@ -143,7 +143,7 @@
 
                             <!-- Stat 2 -->
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="K/D RATIO" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                                <TextBlock Text="K/D RATIO" Foreground="{DynamicResource TextDimBrush}" FontSize="10" Margin="0,0,0,6"/>
                                 <TextBlock Text="{Binding StatKd}" Foreground="{DynamicResource AccentBrush}" FontSize="20" FontWeight="Black" FontFamily="Consolas"/>
                                 <ProgressBar Value="{Binding BarKd}" Maximum="100" Height="4" Margin="0,10,20,0"
                                              Background="{DynamicResource BorderBrush1}" Foreground="{DynamicResource AccentBrush}" BorderThickness="0"/>
@@ -151,7 +151,7 @@
 
                             <!-- Stat 3 -->
                             <StackPanel Grid.Column="2">
-                                <TextBlock Text="爆头率" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                                <TextBlock Text="爆头率" Foreground="{DynamicResource TextDimBrush}" FontSize="10" Margin="0,0,0,6"/>
                                 <TextBlock Text="{Binding StatHs}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="20" FontWeight="Black" FontFamily="Consolas"/>
                                 <ProgressBar Value="{Binding BarHs}" Maximum="100" Height="4" Margin="0,10,20,0"
                                              Background="{DynamicResource BorderBrush1}" Foreground="{DynamicResource TextPrimaryBrush}" BorderThickness="0"/>
@@ -159,7 +159,7 @@
 
                             <!-- Stat 4 -->
                             <StackPanel Grid.Column="3">
-                                <TextBlock Text="总场次" Foreground="{DynamicResource TextDimBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,6"/>
+                                <TextBlock Text="总场次" Foreground="{DynamicResource TextDimBrush}" FontSize="10" Margin="0,0,0,6"/>
                                 <TextBlock Text="{Binding StatMatches}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="20" FontWeight="Black" FontFamily="Consolas"/>
                                 <!-- Fake graph -->
                                 <Path Data="M 0,10 L 10,8 L 20,12 L 30,5 L 40,9 L 50,2" Stroke="{DynamicResource TextMutedBrush}" StrokeThickness="2" Margin="0,10,20,0" Stretch="Fill" Height="14"/>
@@ -199,7 +199,7 @@
                 <!-- Recent Matches -->
                 <helpers:RevealBorder Grid.Column="0" Margin="0,0,20,0" Style="{StaticResource TileRevealStyle}">
                     <StackPanel>
-                        <TextBlock Text="近期战绩" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" FontFamily="Segoe UI" Margin="0,0,0,16"/>
+                        <TextBlock Text="近期战绩" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,16"/>
                         
                         <ItemsControl ItemsSource="{Binding RecentMatches}">
                             <ItemsControl.ItemTemplate>
@@ -226,7 +226,7 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Border.Style>
-                                                <TextBlock Text="{Binding Result}" FontSize="10" FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Result}" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/>
@@ -242,8 +242,8 @@
 
                                             <!-- Info -->
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                <TextBlock Text="{Binding MapName}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI"/>
-                                                <TextBlock Text="{Binding Date}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" FontFamily="Segoe UI" Margin="0,2,0,0"/>
+                                                <TextBlock Text="{Binding MapName}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Date}" Foreground="{DynamicResource TextMutedBrush}" FontSize="10" Margin="0,2,0,0"/>
                                             </StackPanel>
 
                                             <!-- Score -->
@@ -265,7 +265,7 @@
                 <!-- News / Banners -->
                 <helpers:RevealBorder Grid.Column="1" Style="{StaticResource TileRevealStyle}">
                     <StackPanel>
-                        <TextBlock Text="赛事新闻" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" FontFamily="Segoe UI" Margin="0,0,0,16"/>
+                        <TextBlock Text="赛事新闻" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,16"/>
                         
                         <!-- Glowing Animated Banner -->
                         <Border x:Name="NewsBanner" Height="140" CornerRadius="8" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1" Margin="0,0,0,12" ClipToBounds="True">
@@ -278,10 +278,10 @@
                                 </Ellipse>
                                 <StackPanel VerticalAlignment="Bottom" Margin="16">
                                     <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="6,2" HorizontalAlignment="Left" Margin="0,0,0,6">
-                                        <TextBlock Text="{Binding NewsBanner.Tag}" Foreground="White" FontSize="10" FontWeight="Bold" FontFamily="Segoe UI"/>
+                                        <TextBlock Text="{Binding NewsBanner.Tag}" Foreground="White" FontSize="10" FontWeight="Bold"/>
                                     </Border>
-                                    <TextBlock Text="{Binding NewsBanner.Title}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
-                                    <TextBlock Text="{Binding NewsBanner.Subtitle}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" FontFamily="Segoe UI" Margin="0,4,0,0"/>
+                                    <TextBlock Text="{Binding NewsBanner.Title}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding NewsBanner.Subtitle}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -289,8 +289,8 @@
                         <Border Height="80" CornerRadius="8" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1">
                             <Grid Margin="16">
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding NewsAnnouncement.Title}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI"/>
-                                    <TextBlock Text="{Binding NewsAnnouncement.Content}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" FontFamily="Segoe UI" Margin="0,4,0,0"/>
+                                    <TextBlock Text="{Binding NewsAnnouncement.Title}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding NewsAnnouncement.Content}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,4,0,0"/>
                                 </StackPanel>
                                 <TextBlock Text="📢" FontSize="20" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                     <TextBlock.RenderTransform>
@@ -322,7 +322,7 @@
                 <!-- Daily Missions -->
                 <helpers:RevealBorder Grid.Column="0" Margin="0,0,20,0" Style="{StaticResource TileRevealStyle}">
                     <StackPanel>
-                        <TextBlock Text="每日电竞任务" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" FontFamily="Segoe UI" Margin="0,0,0,16"/>
+                        <TextBlock Text="每日电竞任务" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,16"/>
                         <ItemsControl ItemsSource="{Binding DailyMissions}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -332,7 +332,7 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0" Margin="0,0,0,4">
-                                            <TextBlock Text="{Binding Title}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13" FontFamily="Segoe UI"/>
+                                            <TextBlock Text="{Binding Title}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="13"/>
                                             <TextBlock Text="{Binding ProgressText}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" FontFamily="Consolas" HorizontalAlignment="Right"/>
                                         </Grid>
                                         <Border Grid.Row="1" Height="6" CornerRadius="3" Background="{DynamicResource BorderBrush1}">
@@ -351,7 +351,7 @@
                 <!-- Live Esports Matches -->
                 <helpers:RevealBorder Grid.Column="1" Style="{StaticResource TileRevealStyle}">
                     <StackPanel>
-                        <TextBlock Text="近期顶级赛事" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" FontFamily="Segoe UI" Margin="0,0,0,16"/>
+                        <TextBlock Text="近期顶级赛事" Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,16"/>
                         <ItemsControl ItemsSource="{Binding LiveMatches}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -364,7 +364,7 @@
                                             </Grid.ColumnDefinitions>
                                             
                                             <!-- Team 1 -->
-                                            <TextBlock Grid.Column="0" Text="{Binding Team1}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="0" Text="{Binding Team1}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             
                                             <!-- Score/Status -->
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -380,11 +380,11 @@
                                                         </EventTrigger>
                                                     </TextBlock.Triggers>
                                                 </TextBlock>
-                                                <TextBlock Text="{Binding EventName}" Foreground="{DynamicResource TextMutedBrush}" FontSize="9" FontFamily="Segoe UI" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                                                <TextBlock Text="{Binding EventName}" Foreground="{DynamicResource TextMutedBrush}" FontSize="9" HorizontalAlignment="Center" Margin="0,2,0,0"/>
                                             </StackPanel>
                                             
                                             <!-- Team 2 -->
-                                            <TextBlock Grid.Column="2" Text="{Binding Team2}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Team2}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
@@ -415,7 +415,7 @@
                         </Path.Triggers>
                     </Path>
                 </Grid>
-                <TextBlock Text="正在同步数据..." Foreground="{DynamicResource TextMutedBrush}" FontSize="13" FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                <TextBlock Text="正在同步数据..." Foreground="{DynamicResource TextMutedBrush}" FontSize="13" HorizontalAlignment="Center"/>
             </StackPanel>
         </Border>
     </Grid>

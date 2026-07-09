@@ -35,7 +35,7 @@ public class ApiService
         var response = await _http.PostAsync($"{_baseUrl}/api/auth.php", content);
         var json = await response.Content.ReadAsStringAsync();
 
-        return JsonSerializer.Deserialize<LoginResponse>(json, JsonOpts) ?? new LoginResponse { Error = "解析响应失败" };
+        return JsonSerializer.Deserialize<LoginResponse>(json, JsonOpts) ?? new LoginResponse { Message = "解析响应失败", Code = 500 };
     }
 
     public async Task<ServersResponse> GetServersAsync(string token)
@@ -139,6 +139,28 @@ public class ApiService
         catch
         {
             return null;
+        }
+    }
+
+    public async Task<ChangePasswordResponse> ChangePasswordAsync(string oldPassword, string newPassword, string token)
+    {
+        try
+        {
+            var payload = JsonSerializer.Serialize(new { oldPassword, newPassword });
+            var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}/api/v1/password.php");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            request.Content = content;
+
+            var response = await _http.SendAsync(request);
+            var json = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<ChangePasswordResponse>(json, JsonOpts) ?? new ChangePasswordResponse { Code = 500, Message = "解析响应失败" };
+        }
+        catch (Exception ex)
+        {
+            return new ChangePasswordResponse { Code = 500, Message = ex.Message };
         }
     }
 }

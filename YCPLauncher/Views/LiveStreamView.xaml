@@ -90,17 +90,7 @@
 
         <!-- ══ VIDEO PLAYER AREA (WebView2) ══ -->
         <Grid Grid.Column="0" Margin="24">
-            <helpers:RevealBorder Style="{StaticResource TileRevealStyle}" CornerRadius="16" ClipToBounds="True" Background="Black">
-                <helpers:RevealBorder.BorderBrush>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#33FFFFFF" Offset="0"/>
-                        <GradientStop Color="#05FFFFFF" Offset="1"/>
-                    </LinearGradientBrush>
-                </helpers:RevealBorder.BorderBrush>
-                <helpers:RevealBorder.BorderThickness>
-                    <Thickness>1</Thickness>
-                </helpers:RevealBorder.BorderThickness>
-
+            <Border CornerRadius="12" Background="Black" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" Padding="8">
                 <Grid>
                     <!-- WebView2 Player -->
                     <wv2:WebView2 x:Name="PlayerWebView" DefaultBackgroundColor="Black"/>
@@ -108,12 +98,12 @@
                     <!-- Loading Overlay -->
                     <Border x:Name="LoadingOverlay" Background="Black" Opacity="0.8">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="连接中..." FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                            <TextBlock Text="CONNECTING TO ULTRA-LOW LATENCY STREAM" FontSize="12" Foreground="#888" HorizontalAlignment="Center"/>
+                            <TextBlock Text="正在连接 Bilibili 直播..." Foreground="White" FontSize="16" Margin="0,0,0,16"/>
+                            <ProgressBar IsIndeterminate="True" Width="200" Height="4" Foreground="{DynamicResource AccentBrush}" Background="#33FFFFFF" BorderThickness="0"/>
                         </StackPanel>
                     </Border>
                 </Grid>
-            </helpers:RevealBorder>
+            </Border>
         </Grid>
 
         <!-- ══ CHAT SIDEBAR ══ -->

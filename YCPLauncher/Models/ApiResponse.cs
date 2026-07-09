@@ -4,14 +4,33 @@ namespace YCPLauncher.Models;
 
 public class LoginResponse
 {
+    [JsonPropertyName("code")]
+    public int Code { get; set; }
+
+    [JsonPropertyName("message")]
+    public string Message { get; set; } = string.Empty;
+
+    [JsonPropertyName("data")]
+    public LoginData? Data { get; set; }
+
+    // Helper properties to maintain compatibility with existing code
+    [JsonIgnore]
+    public string? Error => Code == 200 ? null : Message;
+    
+    [JsonIgnore]
+    public string? Token => Data?.Token;
+    
+    [JsonIgnore]
+    public PlayerInfo? Player => Data?.Player;
+}
+
+public class LoginData
+{
     [JsonPropertyName("token")]
     public string? Token { get; set; }
 
     [JsonPropertyName("player")]
     public PlayerInfo? Player { get; set; }
-
-    [JsonPropertyName("error")]
-    public string? Error { get; set; }
 }
 
 public class ServersResponse
@@ -54,4 +73,16 @@ public class AppConfig
 
     [JsonPropertyName("launch_console")]
     public bool LaunchConsole { get; set; } = false;
+}
+
+public class ChangePasswordResponse
+{
+    [JsonPropertyName("code")]
+    public int Code { get; set; }
+
+    [JsonPropertyName("message")]
+    public string Message { get; set; } = string.Empty;
+
+    [JsonIgnore]
+    public bool IsSuccess => Code == 200;
 }

@@ -72,7 +72,7 @@
                         </TextBlock.Effect>
                     </TextBlock>
                     <TextBlock Text="CS2 LAUNCHER" FontSize="12" FontWeight="SemiBold"
-                               FontFamily="Segoe UI" Foreground="{DynamicResource TextMutedBrush}"
+                               Foreground="{DynamicResource TextMutedBrush}"
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                     <Rectangle Height="2" Width="60" Fill="{DynamicResource AccentBrush}" HorizontalAlignment="Center"
                                Margin="0,14,0,0" Opacity="0.8">
@@ -84,7 +84,7 @@
 
                 <!-- Username field -->
                 <TextBlock Text="账号" Foreground="{DynamicResource TextDimBrush}" FontSize="14" FontWeight="SemiBold"
-                           FontFamily="Segoe UI" Margin="0,0,0,10"/>
+                           Margin="0,0,0,10"/>
                 <helpers:RevealBorder x:Name="UserBorder" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderBrush="{DynamicResource BorderBrush2}"
                         BorderThickness="1" CornerRadius="8" Margin="0,0,0,24" Height="50">
                     <Grid>
@@ -93,7 +93,7 @@
                                  Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                                  Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource AccentBrush}"
                                  BorderThickness="0" Margin="46,0,16,0"
-                                 FontSize="16" FontFamily="Segoe UI"
+                                 FontSize="16"
                                  VerticalAlignment="Center"
                                  KeyDown="Input_KeyDown"
                                  GotFocus="Field_GotFocus" LostFocus="Field_LostFocus"/>
@@ -102,7 +102,7 @@
 
                 <!-- Password field -->
                 <TextBlock Text="密码" Foreground="{DynamicResource TextDimBrush}" FontSize="14" FontWeight="SemiBold"
-                           FontFamily="Segoe UI" Margin="0,0,0,10"/>
+                           Margin="0,0,0,10"/>
                 <helpers:RevealBorder x:Name="PassBorder" Background="{DynamicResource ItemBgBrush}" HoverColor="#44FF6B00" HoverRadius="200" BorderBrush="{DynamicResource BorderBrush2}"
                         BorderThickness="1" CornerRadius="8" Margin="0,0,0,32" Height="50">
                     <Grid>
@@ -110,7 +110,7 @@
                         <PasswordBox x:Name="PasswordBox"
                                      Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource AccentBrush}"
                                      BorderThickness="0" Margin="46,0,16,0"
-                                     FontSize="16" FontFamily="Segoe UI"
+                                     FontSize="16"
                                      VerticalAlignment="Center"
                                      KeyDown="Input_KeyDown"
                                      PasswordChanged="PasswordBox_PasswordChanged"
@@ -120,7 +120,7 @@
 
                 <!-- Error Message -->
                 <TextBlock Text="{Binding ErrorMessage}" Foreground="{DynamicResource ErrorBrush}" FontSize="12"
-                           FontFamily="Segoe UI" Margin="0,0,0,12" HorizontalAlignment="Center"
+                           Margin="0,0,0,12" HorizontalAlignment="Center"
                            Visibility="{Binding ErrorMessage, Converter={StaticResource NullToVisibilityInverse}}"/>
 
                 <!-- Login Button -->

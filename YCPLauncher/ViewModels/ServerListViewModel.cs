@@ -24,6 +24,8 @@ public partial class ServerListViewModel : ObservableObject
     [ObservableProperty] private ServerInfo? _bestServer;
     [ObservableProperty] private bool   _hasBestServer = false;
     
+    [ObservableProperty] private System.Collections.ObjectModel.ObservableCollection<ServerInfo> _servers = new();
+    
     [ObservableProperty] private bool   _isLoading     = false;
     [ObservableProperty] private bool   _isPingRefresh = false;
     [ObservableProperty] private string _errorMessage  = string.Empty;
@@ -67,11 +69,18 @@ public partial class ServerListViewModel : ObservableObject
                 BestServer = best;
                 HasBestServer = best != null;
                 LastUpdated = $"最后刷新：{DateTime.Now:HH:mm:ss}";
+
+                Servers.Clear();
+                foreach (var server in pinged.OrderBy(s => s.Ping))
+                {
+                    Servers.Add(server);
+                }
             }
             else
             {
                 BestServer = null;
                 HasBestServer = false;
+                Servers.Clear();
             }
         }
         catch (Exception ex)

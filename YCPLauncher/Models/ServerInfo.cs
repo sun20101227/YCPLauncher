@@ -14,7 +14,12 @@ public class ServerInfo
     [JsonPropertyName("ping")]
     public int? ApiPing { get; set; }
 
-    /// <summary>Client-measured ping value (set after ICMP). Default 999 = unknown.</summary>
     [JsonIgnore]
     public int Ping { get; set; } = 999;
+
+    [JsonPropertyName("players")]
+    public int Players { get; set; }
+
+    [JsonPropertyName("max_players")]
+    public int MaxPlayers { get; set; }
 }

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace YCPLauncher.Services;
 
@@ -15,38 +14,42 @@ public class GameLauncherService
     /// Launches CS2 and connects to the specified server.
     /// 
     /// Strategy:
-    /// 1. If CS2 is already running → use cs2.exe -hijack +connect to inject connect command
-    /// 2. If CS2 is NOT running → launch via steam.exe -applaunch, then wait for process and hijack
+    /// 1. If CS2 is already running → use cs2.exe -hijack +connect
+    /// 2. If CS2 is NOT running → create a ycp_connect.cfg and launch via steam.exe -applaunch +exec to guarantee execution when engine is ready
     /// </summary>
     public static bool LaunchDirect(string ip, int port, string serverName)
     {
         try
         {
-            var cs2Exe = GetCs2ExecutablePath();
-            if (string.IsNullOrEmpty(cs2Exe) || !File.Exists(cs2Exe))
+            var cs2Procs = Process.GetProcessesByName("cs2");
+            if (cs2Procs.Length > 0)
             {
-                // cs2.exe not found, fall back to steam://connect which at least opens something
+                // CS2 is already running. steam://connect works perfectly to route to the running instance.
                 FallbackSteamConnect(ip, port);
                 return true;
             }
 
+            var steamExe = GetSteamExePath();
+            if (string.IsNullOrEmpty(steamExe) || !File.Exists(steamExe))
+            {
+                // Fallback if Steam exe path not found
+                FallbackSteamConnect(ip, port);
+                return true;
+            }
+
+            // CS2 is not running. Launch it with user-selected parameters AND +connect.
             var cfg = ConfigService.GetConfig();
             string extraArgs = "";
             if (cfg.LaunchNoVid) extraArgs += "-novid ";
             if (cfg.LaunchHighFreq) extraArgs += "-freq 240 ";
             if (cfg.LaunchConsole) extraArgs += "-console ";
 
-            var cs2Procs = Process.GetProcessesByName("cs2");
-            if (cs2Procs.Length > 0)
+            Process.Start(new ProcessStartInfo
             {
-                // CS2 already running → hijack and connect
-                HijackAndConnect(cs2Exe, ip, port);
-            }
-            else
-            {
-                // CS2 not running → launch it via Steam, then hijack once it's up
-                LaunchAndConnect(cs2Exe, ip, port, extraArgs.Trim());
-            }
+                FileName = steamExe,
+                Arguments = $"-applaunch {Cs2AppId} {extraArgs.Trim()} +connect {ip}:{port}",
+                UseShellExecute = true
+            });
 
             return true;
         }
@@ -54,73 +57,6 @@ public class GameLauncherService
         {
             return false;
         }
-    }
-
-    /// <summary>
-    /// CS2 is already running. Use -hijack to inject +connect into the running instance.
-    /// </summary>
-    private static void HijackAndConnect(string cs2Exe, string ip, int port)
-    {
-        Process.Start(new ProcessStartInfo
-        {
-            FileName = cs2Exe,
-            Arguments = $"-hijack +connect {ip}:{port}",
-            UseShellExecute = false,
-            CreateNoWindow = true
-        });
-    }
-
-    /// <summary>
-    /// Launch CS2 via Steam, then wait for cs2.exe to appear and inject the connect command.
-    /// </summary>
-    private static void LaunchAndConnect(string cs2Exe, string ip, int port, string extraArgs)
-    {
-        // Launch the game first via steam.exe -applaunch
-        var steamExe = GetSteamExePath();
-        if (!string.IsNullOrEmpty(steamExe) && File.Exists(steamExe))
-        {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = steamExe,
-                Arguments = $"-applaunch {Cs2AppId} {extraArgs}",
-                UseShellExecute = true
-            });
-        }
-        else
-        {
-            // Fallback: open steam store page which at least triggers the game
-            FallbackSteamConnect(ip, port);
-            return;
-        }
-
-        // Wait for CS2 process to start, then hijack with +connect
-        // Run in background so we don't block the UI
-        Task.Run(async () =>
-        {
-            // Poll for cs2.exe up to 90 seconds
-            for (int i = 0; i < 90; i++)
-            {
-                await Task.Delay(1000);
-                var procs = Process.GetProcessesByName("cs2");
-                if (procs.Length > 0)
-                {
-                    // Give it 5 more seconds to fully initialize before hijacking
-                    await Task.Delay(5000);
-                    try
-                    {
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = cs2Exe,
-                            Arguments = $"-hijack +connect {ip}:{port}",
-                            UseShellExecute = false,
-                            CreateNoWindow = true
-                        });
-                    }
-                    catch { /* Hijack attempt failed, game will be on main menu */ }
-                    return;
-                }
-            }
-        });
     }
 
     private static void FallbackSteamConnect(string ip, int port)
@@ -162,7 +98,6 @@ public class GameLauncherService
 
             var vdfContent = File.ReadAllText(vdfPath);
 
-            // Parse all library folder paths from VDF
             var pathRegex = new Regex("\"path\"\\s+\"([^\"]+)\"");
             var matches = pathRegex.Matches(vdfContent);
 

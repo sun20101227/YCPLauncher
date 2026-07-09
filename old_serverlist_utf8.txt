@@ -1,0 +1,350 @@
+﻿<UserControl x:Class="YCPLauncher.Views.ServerListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
+             mc:Ignorable="d"
+             Background="Transparent">
+
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <!-- Perfectly centered spin animation -->
+            <BeginStoryboard x:Name="PingSpinStoryboard">
+                <Storyboard x:Name="PingSpinAnim" RepeatBehavior="Forever">
+                    <DoubleAnimation Storyboard.TargetName="PingRotate" Storyboard.TargetProperty="Angle" From="0" To="360" Duration="0:0:1" AutoReverse="False"/>
+                </Storyboard>
+            </BeginStoryboard>
+            
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="Header" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
+                    <ThicknessAnimation Storyboard.TargetName="Header" Storyboard.TargetProperty="Margin" From="0,20,0,0" To="0,0,0,0" Duration="0:0:0.4"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
+                    
+                    <DoubleAnimation Storyboard.TargetName="StatusBar" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.1"/>
+                    
+                    <DoubleAnimation Storyboard.TargetName="ContentArea" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.2"/>
+                    <ThicknessAnimation Storyboard.TargetName="ContentArea" Storyboard.TargetProperty="Margin" From="30,20,30,20" To="30,0,30,20" Duration="0:0:0.5" BeginTime="0:0:0.2"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- header -->
+            <RowDefinition Height="Auto"/>  <!-- legend + status bar -->
+            <RowDefinition Height="*"/>     <!-- best server card / loading / empty -->
+        </Grid.RowDefinitions>
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════ -->
+        <Border x:Name="Header" Grid.Row="0" Padding="30,22,30,0" Opacity="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Title -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Rectangle Width="4" Height="22" Fill="{DynamicResource AccentBrush}" RadiusX="2" RadiusY="2" Margin="0,0,12,0">
+                        <Rectangle.Effect>
+                            <DropShadowEffect Color="#FF6B00" BlurRadius="10" ShadowDepth="0"/>
+                        </Rectangle.Effect>
+                    </Rectangle>
+                    <TextBlock Text="最佳游戏服务器" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                    <Border Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1"
+                            CornerRadius="12" Padding="8,2" Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Foreground="{DynamicResource SuccessBrush}" FontSize="11" FontWeight="Bold" FontFamily="Segoe UI" Text="智能推荐延迟最低"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Action buttons -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Command="{Binding RefreshPingCommand}" Style="{StaticResource GhostButton}" Margin="0,0,8,0" Padding="12,7">
+                        <StackPanel Orientation="Horizontal">
+                            <Viewbox Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center">
+                                <Grid Width="24" Height="24">
+                                    <Path Data="M12,2 A10,10 0 1,0 22,12 A10,10 0 0,0 12,2 M12,4 A8,8 0 1,1 4,12 A8,8 0 0,1 12,4 M12,6 L16,9 L12,12 Z" Fill="{DynamicResource TextMutedBrush}">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="PingRotate" CenterX="12" CenterY="12"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+                            </Viewbox>
+                            <TextBlock Text="测速并刷新" FontSize="12" FontFamily="Segoe UI" VerticalAlignment="Center" Margin="0,0,0,2"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ══ STATUS BAR ══════════════════════════════════════════════ -->
+        <Border x:Name="StatusBar" Grid.Row="1" Padding="30,14,30,14" Opacity="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Ping legend -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse x:Name="LegendDot1" Width="7" Height="7" Fill="{DynamicResource SuccessBrush}" VerticalAlignment="Center" Margin="0,0,5,0">
+                        <Ellipse.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0.3" Duration="0:0:1.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                    <TextBlock Text="极低 &lt;50ms" Foreground="{DynamicResource TextDimBrush}" FontSize="11" FontFamily="Segoe UI" Margin="0,0,18,0"/>
+                    
+                    <Ellipse Width="7" Height="7" Fill="{DynamicResource WarningBrush}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="中等 50-120ms" Foreground="{DynamicResource TextDimBrush}" FontSize="11" FontFamily="Segoe UI" Margin="0,0,18,0"/>
+                    
+                    <Ellipse Width="7" Height="7" Fill="{DynamicResource ErrorBrush}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="较高 &gt;120ms" Foreground="{DynamicResource TextDimBrush}" FontSize="11" FontFamily="Segoe UI"/>
+                </StackPanel>
+
+                <!-- Last updated -->
+                <TextBlock Grid.Column="1" Text="{Binding LastUpdated}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- ══ CONTENT ══════════════════════════════════════════════════ -->
+        <Grid x:Name="ContentArea" Grid.Row="2" Margin="30,0,30,20" Opacity="0">
+
+            <!-- LOADING SPINNER -->
+            <StackPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Width="56" Height="56" Margin="0,0,0,20">
+                    <Ellipse Width="56" Height="56" Stroke="{DynamicResource BorderBrush1}" StrokeThickness="4" Fill="Transparent"/>
+                    <Ellipse Width="56" Height="56" Stroke="{DynamicResource AccentBrush}" StrokeThickness="4" Fill="Transparent" StrokeDashArray="22 50" RenderTransformOrigin="0.5,0.5">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform x:Name="SpinnerRotate"/>
+                        </Ellipse.RenderTransform>
+                        <Ellipse.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation Storyboard.TargetName="SpinnerRotate" Storyboard.TargetProperty="Angle" From="0" To="360" Duration="0:0:0.9"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                </Grid>
+                <TextBlock Text="正在寻找最佳服务器..." Foreground="{DynamicResource TextMutedBrush}" FontSize="13" FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- ERROR BANNER -->
+            <Border Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource ErrorBrush}" BorderThickness="1" CornerRadius="10" Padding="18,14" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="⚠" Foreground="{DynamicResource ErrorBrush}" FontSize="16" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <StackPanel>
+                        <TextBlock Text="加载失败" Foreground="{DynamicResource ErrorBrush}" FontSize="13" FontWeight="SemiBold" FontFamily="Segoe UI"/>
+                        <TextBlock Text="{Binding ErrorMessage}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" FontFamily="Segoe UI" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- EMPTY STATE -->
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsLoading}" Value="False"/>
+                                    <Condition Binding="{Binding HasError}"  Value="False"/>
+                                    <Condition Binding="{Binding HasBestServer}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Border Width="80" Height="80" CornerRadius="40" Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" Margin="0,0,0,16">
+                    <TextBlock Text="🖥" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="暂无可用服务器" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="15" FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                <TextBlock Text="请稍后点击「测速并刷新」重试" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" FontFamily="Segoe UI" HorizontalAlignment="Center" Margin="0,6,0,0"/>
+            </StackPanel>
+
+            <!-- BEST SERVER CARD (Centered) -->
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,40">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsLoading}" Value="False"/>
+                                    <Condition Binding="{Binding HasBestServer}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <!-- Floating Animation -->
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="CardFloat"/>
+                </Grid.RenderTransform>
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                <DoubleAnimation Storyboard.TargetName="CardFloat" Storyboard.TargetProperty="Y" From="-5" To="5" Duration="0:0:2">
+                                    <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
+
+                <helpers:RevealBorder x:Name="card"
+                        Background="{DynamicResource CardBgBrush}"
+                        HoverRadius="400"
+                        BorderThickness="1"
+                        CornerRadius="16"
+                        Padding="0"
+                        Width="460"
+                        Cursor="Hand">
+                    <helpers:RevealBorder.BorderBrush>
+                        <LinearGradientBrush x:Name="AnimatedCardBorder" StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#00FF6B00" Offset="0"/>
+                            <GradientStop Color="#FFFF6B00" Offset="0.5"/>
+                            <GradientStop Color="#00FF6B00" Offset="1"/>
+                        </LinearGradientBrush>
+                    </helpers:RevealBorder.BorderBrush>
+                    
+                    <!-- Glowing Flowing Outline Animation -->
+                    <helpers:RevealBorder.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever" AutoReverse="False">
+                                    <PointAnimation Storyboard.TargetName="AnimatedCardBorder" Storyboard.TargetProperty="StartPoint" From="0,0" To="1,1" Duration="0:0:3"/>
+                                    <PointAnimation Storyboard.TargetName="AnimatedCardBorder" Storyboard.TargetProperty="EndPoint" From="1,1" To="2,2" Duration="0:0:3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </helpers:RevealBorder.Triggers>
+
+                    <helpers:RevealBorder.Style>
+                        <Style TargetType="helpers:RevealBorder" BasedOn="{StaticResource TileRevealStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="#0D1525"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </helpers:RevealBorder.Style>
+                    <helpers:RevealBorder.Effect>
+                        <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="30" Opacity="0.5" ShadowDepth="10"/>
+                    </helpers:RevealBorder.Effect>
+
+                    <Grid>
+                        <!-- Holo Corner Glow -->
+                        <Border Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" CornerRadius="16,0,0,0">
+                            <Border.Background>
+                                <RadialGradientBrush Center="0,0" GradientOrigin="0,0" RadiusX="1" RadiusY="1">
+                                    <GradientStop Color="#66FF6B00" Offset="0"/>
+                                    <GradientStop Color="#00FF6B00" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Grid Margin="24,24,24,24" DataContext="{Binding BestServer}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="推荐服务器" Foreground="{DynamicResource AccentBrush}" FontSize="12" FontWeight="Bold" FontFamily="Segoe UI" Margin="0,0,0,4"/>
+                                    <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="20" FontWeight="Black" FontFamily="Segoe UI"/>
+                                </StackPanel>
+                                
+                                <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}"
+                                        BorderThickness="1" CornerRadius="8" Padding="12,6">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Ellipse x:Name="PingDot" Width="8" Height="8" Margin="0,0,6,0" Fill="{Binding Ping, Converter={StaticResource PingToColor}}">
+                                            <Ellipse.Effect>
+                                                <DropShadowEffect Color="{Binding Ping, Converter={StaticResource PingToColor}, ConverterParameter=color}" BlurRadius="8" ShadowDepth="0" Opacity="0.8"/>
+                                            </Ellipse.Effect>
+                                            <!-- Ping pulse -->
+                                            <Ellipse.Triggers>
+                                                <EventTrigger RoutedEvent="Loaded">
+                                                    <BeginStoryboard>
+                                                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0.2" Duration="0:0:0.8"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                        <TextBlock Text="{Binding Ping, Converter={StaticResource PingToText}}" FontSize="14" FontFamily="Consolas" FontWeight="Bold" Foreground="{Binding Ping, Converter={StaticResource PingToColor}}"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,16,0,24">
+                                <Border Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="6" Padding="8,4" Margin="0,0,12,0">
+                                    <TextBlock Text="{Binding Location, StringFormat='📍 {0}'}" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" FontFamily="Segoe UI"/>
+                                </Border>
+                                <Border Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="6" Padding="8,4">
+                                    <TextBlock Foreground="{DynamicResource TextDimBrush}" FontSize="12" FontFamily="Consolas" VerticalAlignment="Center">
+                                        <Run Text="{Binding Ip}"/>
+                                        <Run Text=":"/>
+                                        <Run Text="{Binding Port}"/>
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
+
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Style="{StaticResource GhostButton}" Margin="0,0,12,0" Height="44"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding DataContext.CopyIpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        ToolTip="复制 IP:Port">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="📋" FontSize="14" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="复制 IP" FontSize="13" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Grid.Column="1" Style="{StaticResource OrangeButton}" Height="44"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding DataContext.JoinServerCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="▶" FontSize="14" Foreground="White" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                        <TextBlock Text="立即进入该服务器" Foreground="White" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </helpers:RevealBorder>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
