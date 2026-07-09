@@ -7,7 +7,7 @@ namespace YCPLauncher;
 
 public partial class App : System.Windows.Application
 {
-    public static readonly string CurrentVersion = "1.0.3";
+    public static readonly string CurrentVersion = "1.0.4";
 
 
     protected override void OnStartup(StartupEventArgs e)
