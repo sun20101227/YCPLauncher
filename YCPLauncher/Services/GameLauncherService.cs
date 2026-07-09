@@ -42,17 +42,40 @@ public class GameLauncherService
                 return true;
             }
 
-            // CS2 is not running. Launch it with user-selected parameters AND +connect.
+            // CS2 is not running. Launch it with user-selected parameters.
             var cfg = ConfigService.GetConfig();
             string extraArgs = "";
             if (cfg.LaunchNoVid) extraArgs += "-novid ";
             if (cfg.LaunchHighFreq) extraArgs += "-freq 240 ";
             if (cfg.LaunchConsole) extraArgs += "-console ";
 
+            string connectArg = $"+connect {ip}:{port}";
+
+            // Try to write to cfg to ensure it executes
+            var cs2Exe = GetCs2ExecutablePath();
+            if (!string.IsNullOrEmpty(cs2Exe))
+            {
+                try
+                {
+                    var gameDir = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(cs2Exe)));
+                    if (gameDir != null)
+                    {
+                        var cfgDir = Path.Combine(gameDir, "csgo", "cfg");
+                        if (Directory.Exists(cfgDir))
+                        {
+                            var cfgFile = Path.Combine(cfgDir, "ycp_connect.cfg");
+                            File.WriteAllText(cfgFile, $"connect {ip}:{port}");
+                            connectArg = "+exec ycp_connect.cfg";
+                        }
+                    }
+                }
+                catch { }
+            }
+
             Process.Start(new ProcessStartInfo
             {
                 FileName = steamExe,
-                Arguments = $"-applaunch {Cs2AppId} {extraArgs.Trim()} +connect {ip}:{port}",
+                Arguments = $"-applaunch {Cs2AppId} {extraArgs.Trim()} {connectArg}",
                 UseShellExecute = true
             });
 
