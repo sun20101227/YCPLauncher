@@ -26,6 +26,25 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         TryAutoLogin();
+        _ = CheckForUpdatesOnStartupAsync();
+    }
+
+    private async Task CheckForUpdatesOnStartupAsync()
+    {
+        try
+        {
+            var update = await _api.CheckForUpdateAsync(App.CurrentVersion);
+            if (update != null && update.UpdateAvailable)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    var dialog = new UpdateDialog(update);
+                    dialog.Owner = this;
+                    dialog.ShowDialog();
+                });
+            }
+        }
+        catch { }
     }
 
     protected override void OnSourceInitialized(EventArgs e)
