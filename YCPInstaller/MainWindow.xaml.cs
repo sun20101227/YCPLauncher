@@ -151,7 +151,6 @@ namespace YCPInstaller
                     {
                         ProgressPanel.Visibility = Visibility.Collapsed;
                         DonePanel.Visibility = Visibility.Visible;
-                        System.Windows.MessageBox.Show("YCP电竞启动器 安装成功！", "安装完成", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                     });
                 }
                 catch (Exception ex)
