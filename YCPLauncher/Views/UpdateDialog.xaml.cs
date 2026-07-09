@@ -71,6 +71,9 @@ public partial class UpdateDialog : Window
                     TxtProgress.Text = $"正在下载 {percentage:F1}%";
                 }
             }
+            
+            // Release the file lock before executing
+            fileStream.Close();
 
             // Execute the installer
             _canClose = true;
