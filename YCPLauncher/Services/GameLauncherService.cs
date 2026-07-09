@@ -21,6 +21,11 @@ public class GameLauncherService
     {
         try
         {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                Views.LaunchLoadingDialog.ShowAndAutoClose(8000);
+            });
+
             var cs2Procs = Process.GetProcessesByName("cs2");
             if (cs2Procs.Length > 0)
             {

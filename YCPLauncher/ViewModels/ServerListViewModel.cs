@@ -61,13 +61,16 @@ public partial class ServerListViewModel : ObservableObject
                 var pinged = await Task.WhenAll(
                     result.Servers.Select(async s =>
                     {
-                        s.Ping = await PingHostAsync(s.Ip);
+                        s.Ping = await PingHostAsync(s.Ip, s.Port);
                         return s;
                     }));
                 
                 var best = pinged.OrderBy(s => s.Ping).FirstOrDefault();
-                BestServer = best;
-                HasBestServer = best != null;
+                if (best != null)
+                {
+                    BestServer = best;
+                    HasBestServer = true;
+                }
                 LastUpdated = $"最后刷新：{DateTime.Now:HH:mm:ss}";
 
                 Servers.Clear();
@@ -101,7 +104,19 @@ public partial class ServerListViewModel : ObservableObject
         IsPingRefresh = true;
         try
         {
-            await LoadServersAsync();
+            var tasks = Servers.Select(async s => {
+                s.Ping = await PingHostAsync(s.Ip, s.Port);
+                return s;
+            }).ToList();
+            await Task.WhenAll(tasks);
+            
+            // Re-sort
+            var sorted = Servers.OrderBy(s => s.Ping).ToList();
+            Servers.Clear();
+            foreach (var s in sorted) Servers.Add(s);
+            
+            BestServer = sorted.FirstOrDefault();
+            HasBestServer = BestServer != null;
         }
         finally { IsPingRefresh = false; }
     }
@@ -135,13 +150,23 @@ public partial class ServerListViewModel : ObservableObject
         catch { }
     }
 
-    private static async Task<int> PingHostAsync(string host)
+    private static async Task<int> PingHostAsync(string host, int port)
     {
         try
         {
-            using var ping = new Ping();
-            var reply = await ping.SendPingAsync(host, 3000);
-            return reply.Status == IPStatus.Success ? (int)reply.RoundtripTime : 999;
+            using var client = new System.Net.Sockets.UdpClient();
+            var a2sInfo = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0x54, 0x53, 0x6F, 0x75, 0x72, 0x63, 0x65, 0x20, 0x45, 0x6E, 0x67, 0x69, 0x6E, 0x65, 0x20, 0x51, 0x75, 0x65, 0x72, 0x79, 0x00 };
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            
+            await client.SendAsync(a2sInfo, a2sInfo.Length, host, port);
+            
+            var receiveTask = client.ReceiveAsync();
+            if (await Task.WhenAny(receiveTask, Task.Delay(2000)) == receiveTask)
+            {
+                sw.Stop();
+                return (int)sw.ElapsedMilliseconds;
+            }
+            return 999;
         }
         catch { return 999; }
     }
