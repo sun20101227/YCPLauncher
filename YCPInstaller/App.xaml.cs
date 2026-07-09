@@ -105,9 +105,11 @@ public partial class App : System.Windows.Application
             if (!System.IO.Directory.Exists(installDir))
                 System.IO.Directory.CreateDirectory(installDir);
 
-            using (System.IO.Stream stream = System.Windows.Application.GetResourceStream(new System.Uri("pack://application:,,,/payload.zip")).Stream)
-            using (System.IO.Compression.ZipArchive archive = new System.IO.Compression.ZipArchive(stream))
+            using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("YCPInstaller.payload.zip"))
             {
+                if (stream == null) throw new System.Exception("找不到资源“payload.zip”。");
+                using (System.IO.Compression.ZipArchive archive = new System.IO.Compression.ZipArchive(stream))
+                {
                 foreach (System.IO.Compression.ZipArchiveEntry entry in archive.Entries)
                 {
                     string fullPath = System.IO.Path.Combine(installDir, entry.FullName);
@@ -125,6 +127,7 @@ public partial class App : System.Windows.Application
                         }
                     }
                 }
+            }
             }
 
             // Registry & Shortcuts 
