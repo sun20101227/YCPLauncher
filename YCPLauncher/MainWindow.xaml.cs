@@ -25,6 +25,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        TxtVersion.Text = App.CurrentVersion;
         TryAutoLogin();
         _ = CheckForUpdatesOnStartupAsync();
     }

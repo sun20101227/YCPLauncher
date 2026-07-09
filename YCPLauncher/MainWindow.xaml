@@ -217,7 +217,7 @@
                         <Border Background="{DynamicResource ItemBgBrush}" CornerRadius="8" Padding="12"
                                 BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1">
                             <Grid>
-                                <TextBlock Text="1.0.4" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TxtVersion" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" VerticalAlignment="Center"/>
                                 <TextBlock Text="CS2 EDITION" Foreground="{DynamicResource TextMutedBrush}" FontSize="9" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0.5"/>
                             </Grid>
                         </Border>

@@ -18,6 +18,19 @@ namespace YCPInstaller
             InitializeComponent();
             _installDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "YCPLauncher");
             TxtInstallPath.Text = _installDir;
+            UpdateInstallButtonState();
+        }
+
+        private void UpdateInstallButtonState()
+        {
+            if (File.Exists(Path.Combine(_installDir, "YCPLauncher.exe")))
+            {
+                BtnInstall.Content = "覆盖安装";
+            }
+            else
+            {
+                BtnInstall.Content = "立即安装";
+            }
         }
 
         private void BtnBrowse_Click(object sender, RoutedEventArgs e)
@@ -40,6 +53,7 @@ namespace YCPInstaller
                         _installDir = dialog.SelectedPath;
                     }
                     TxtInstallPath.Text = _installDir;
+                    UpdateInstallButtonState();
                 }
             }
         }
@@ -74,11 +88,10 @@ namespace YCPInstaller
                     }
 
                     // Ensure dir
-                    if (Directory.Exists(_installDir))
+                    if (!Directory.Exists(_installDir))
                     {
-                        Directory.Delete(_installDir, true);
+                        Directory.CreateDirectory(_installDir);
                     }
-                    Directory.CreateDirectory(_installDir);
 
                     // Extract embedded zip
                     var assembly = Assembly.GetExecutingAssembly();
