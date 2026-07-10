@@ -104,7 +104,7 @@ public partial class UpdateDialog : Window
                                 if (currentTotal % (1024 * 1024) < bytesRead || currentTotal == totalBytes)
                                 {
                                     double percentage = (double)currentTotal / totalBytes * 100;
-                                    await Application.Current.Dispatcher.InvokeAsync(() => {
+                                    await System.Windows.Application.Current.Dispatcher.InvokeAsync(() => {
                                         DownloadProgressBar.Value = percentage;
                                         TxtProgress.Text = $"多线程拉满狂飙中 {percentage:F1}%";
                                     });
