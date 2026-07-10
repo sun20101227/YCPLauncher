@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="发现新版本" Height="400" Width="550"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="NoResize"
         Closing="Window_Closing">
     <Border CornerRadius="12" Background="#111827" BorderBrush="{StaticResource AccentBrush}" BorderThickness="1">
         <Border.Effect>

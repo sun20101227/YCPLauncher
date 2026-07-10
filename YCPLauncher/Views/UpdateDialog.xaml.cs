@@ -45,17 +45,24 @@ public partial class UpdateDialog : Window
         {
             string tempPath = Path.Combine(Path.GetTempPath(), $"YachiyoCup_Installer_v{_updateInfo.LatestVersion}.exe");
             
+            // Use GitHub mirror proxy for faster download in China
+            string downloadUrl = _updateInfo.DownloadUrl;
+            if (downloadUrl != null && downloadUrl.Contains("github.com"))
+            {
+                downloadUrl = "https://mirror.ghproxy.com/" + downloadUrl;
+            }
+
             using var client = new HttpClient();
-            using var response = await client.GetAsync(_updateInfo.DownloadUrl, HttpCompletionOption.ResponseHeadersRead);
+            using var response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
 
             var totalBytes = response.Content.Headers.ContentLength ?? -1L;
             var canReportProgress = totalBytes != -1;
 
             using var contentStream = await response.Content.ReadAsStreamAsync();
-            using var fileStream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+            using var fileStream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, 131072, true);
 
-            var buffer = new byte[8192];
+            var buffer = new byte[131072]; // 128 KB buffer for faster write
             long totalRead = 0;
             int bytesRead;
 
@@ -92,7 +99,7 @@ public partial class UpdateDialog : Window
             System.Windows.MessageBox.Show($"下载更新失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             _isDownloading = false;
             BtnUpdate.IsEnabled = true;
-            BtnUpdate.Content = "重试下载并强制更新";
+            BtnUpdate.Content = "重试下载并更新";
             ProgressGrid.Visibility = Visibility.Collapsed;
         }
     }
