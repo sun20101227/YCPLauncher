@@ -47,6 +47,12 @@ public class AppConfig
     [JsonPropertyName("api_base_url")]
     public string ApiBaseUrl { get; set; } = "https://cs2.yachiyo8000.cn";
 
+    [JsonPropertyName("chat_url")]
+    public string ChatUrl { get; set; } = "https://huyoutalk.mihuyou.online/ycp2026";
+
+    [JsonPropertyName("live_stream_url")]
+    public string LiveStreamUrl { get; set; } = "rtmp://frp-pen.com:48399/live/ycp";
+
     [JsonPropertyName("api_timeout")]
     public int ApiTimeout { get; set; } = 10;
 

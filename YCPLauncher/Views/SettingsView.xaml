@@ -69,6 +69,9 @@
                     <DoubleAnimation Storyboard.TargetName="Card3" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.4"/>
                     <ThicknessAnimation Storyboard.TargetName="Card3" Storyboard.TargetProperty="Margin" From="0,20,0,24" To="0,0,0,24" Duration="0:0:0.5" BeginTime="0:0:0.4"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
                     
+                    <DoubleAnimation Storyboard.TargetName="CardServer" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.45"/>
+                    <ThicknessAnimation Storyboard.TargetName="CardServer" Storyboard.TargetProperty="Margin" From="0,20,0,24" To="0,0,0,24" Duration="0:0:0.5" BeginTime="0:0:0.45"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
+                    
                     <DoubleAnimation Storyboard.TargetName="Card4" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.5"/>
                     <ThicknessAnimation Storyboard.TargetName="Card4" Storyboard.TargetProperty="Margin" From="0,20,0,0" To="0,0,0,0" Duration="0:0:0.5" BeginTime="0:0:0.5"><ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction></ThicknessAnimation>
                 </Storyboard>
@@ -81,8 +84,17 @@
         <StackPanel Margin="30,22,30,30">
             <!-- HEADER -->
             <StackPanel x:Name="Header" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,24" Opacity="0">
+                <Button Command="{Binding GoBackCommand}" 
+                        Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibility}}"
+                        Style="{StaticResource GhostButton}" Margin="0,0,16,0" Padding="8,4" Height="28">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="←" Margin="0,0,4,0"/>
+                        <TextBlock Text="返回登录"/>
+                    </StackPanel>
+                </Button>
                 <Rectangle Width="4" Height="22" Fill="{DynamicResource AccentBrush}"
-                           RadiusX="2" RadiusY="2" Margin="0,0,12,0"/>
+                           RadiusX="2" RadiusY="2" Margin="0,0,12,0"
+                           Visibility="{Binding IsLoggedOut, Converter={StaticResource InverseBoolToVisibility}}"/>
                 <TextBlock Text="系统设置" FontSize="18" FontWeight="Bold"
                            Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
             </StackPanel>
@@ -211,6 +223,55 @@
                                 <TextBlock Text="在后台提前挂载启动参数，大幅提升进服速度" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0"/>
                             </StackPanel>
                             <CheckBox Grid.Column="1" IsChecked="{Binding NetworkOptimization}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- CARD 3.5: Server & Network Configuration -->
+            <StackPanel x:Name="CardServer" Margin="0,0,0,24" Opacity="0">
+                <TextBlock Text="服务器配置" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="4,0,0,12"/>
+                <Border Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="12">
+                    <StackPanel>
+                        <!-- API Base URL -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,24,0" Width="180">
+                                <TextBlock Text="登录与 API 服务器" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
+                                <TextBlock Text="基础服务与玩家数据接口" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <TextBox Grid.Column="1" Text="{Binding ApiBaseUrl, UpdateSourceTrigger=PropertyChanged}" 
+                                     Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" 
+                                     BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="0,0,0,1" 
+                                     VerticalAlignment="Center" Padding="4,8" FontSize="14"/>
+                        </Grid>
+                        <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="20,0"/>
+
+                        <!-- Live Stream URL -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,24,0" Width="180">
+                                <TextBlock Text="RTMP 直播源" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
+                                <TextBlock Text="赛事实况拉流地址" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <TextBox Grid.Column="1" Text="{Binding LiveStreamUrl, UpdateSourceTrigger=PropertyChanged}" 
+                                     Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" 
+                                     BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="0,0,0,1" 
+                                     VerticalAlignment="Center" Padding="4,8" FontSize="14"/>
+                        </Grid>
+                        <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="20,0"/>
+
+                        <!-- Chat URL -->
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,24,0" Width="180">
+                                <TextBlock Text="聊天室网页地址" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
+                                <TextBlock Text="嵌入的弹幕聊天室 Web 页面" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <TextBox Grid.Column="1" Text="{Binding ChatUrl, UpdateSourceTrigger=PropertyChanged}" 
+                                     Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" 
+                                     BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="0,0,0,1" 
+                                     VerticalAlignment="Center" Padding="4,8" FontSize="14"/>
                         </Grid>
                     </StackPanel>
                 </Border>

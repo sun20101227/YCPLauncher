@@ -57,4 +57,12 @@ public partial class LoginView : UserControl
         if (parent?.Parent is Border border)
             border.SetResourceReference(Border.BorderBrushProperty, "BorderBrush2");
     }
+
+    private void OpenSettings_Click(object sender, RoutedEventArgs e)
+    {
+        if (System.Windows.Application.Current.MainWindow is MainWindow mw)
+        {
+            mw.SetContent(new SettingsView { DataContext = SettingsViewModel.Instance });
+        }
+    }
 }

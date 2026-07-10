@@ -156,5 +156,14 @@
                 </Button>
             </StackPanel>
         </helpers:RevealBorder>
+        
+        <!-- Settings Button -->
+        <Button Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,24" 
+                Style="{StaticResource GhostButton}" Padding="12,8" Click="OpenSettings_Click">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="⚙" FontSize="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                <TextBlock Text="服务器设置" FontSize="14" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

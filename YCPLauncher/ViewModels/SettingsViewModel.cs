@@ -31,6 +31,23 @@ public partial class SettingsViewModel : ObservableObject
         _launchNoVid = cfg.LaunchNoVid;
         _launchHighFreq = cfg.LaunchHighFreq;
         _launchConsole = cfg.LaunchConsole;
+
+        _apiBaseUrl = cfg.ApiBaseUrl;
+        _chatUrl = cfg.ChatUrl;
+        _liveStreamUrl = cfg.LiveStreamUrl;
+        
+        IsLoggedOut = string.IsNullOrEmpty(AuthService.LoadToken());
+    }
+
+    public bool IsLoggedOut { get; }
+
+    [RelayCommand]
+    private void GoBack()
+    {
+        if (Application.Current.MainWindow is MainWindow mw)
+        {
+            mw.NavigateToLogin();
+        }
     }
 
     [ObservableProperty] private bool _hardwareAcceleration = true;
@@ -217,6 +234,30 @@ public partial class SettingsViewModel : ObservableObject
     partial void OnReduceAnimationsChanged(bool value)
     {
         ConfigService.GetConfig().ReduceAnimations = value;
+        ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty]
+    private string _apiBaseUrl = "https://cs2.yachiyo8000.cn";
+    partial void OnApiBaseUrlChanged(string value)
+    {
+        ConfigService.GetConfig().ApiBaseUrl = value;
+        ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty]
+    private string _chatUrl = "https://huyoutalk.mihuyou.online/ycp2026";
+    partial void OnChatUrlChanged(string value)
+    {
+        ConfigService.GetConfig().ChatUrl = value;
+        ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty]
+    private string _liveStreamUrl = "rtmp://frp-pen.com:48399/live/ycp";
+    partial void OnLiveStreamUrlChanged(string value)
+    {
+        ConfigService.GetConfig().LiveStreamUrl = value;
         ConfigService.SaveConfig();
     }
 }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using Microsoft.Web.WebView2.Core;
 using LibVLCSharp.Shared;
+using YCPLauncher.Services;
 
 namespace YCPLauncher.Views;
 
@@ -27,8 +28,11 @@ public partial class LiveStreamView : System.Windows.Controls.UserControl
             _mediaPlayer = new MediaPlayer(_libVLC);
             VideoPlayer.MediaPlayer = _mediaPlayer;
 
+            var cfg = ConfigService.GetConfig();
+            string streamUrl = string.IsNullOrWhiteSpace(cfg.LiveStreamUrl) ? "rtmp://frp-pen.com:48399/live/ycp" : cfg.LiveStreamUrl;
+
             // Start playing RTMP stream
-            var media = new Media(_libVLC, new Uri("rtmp://frp-pen.com:48399/live/ycp"));
+            var media = new Media(_libVLC, new Uri(streamUrl));
             _mediaPlayer.Play(media);
 
             _mediaPlayer.Playing += (s, e) =>
@@ -51,10 +55,10 @@ public partial class LiveStreamView : System.Windows.Controls.UserControl
             var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
             await ChatWebView.EnsureCoreWebView2Async(env);
             
-            // Navigate to the correct Huyoutalk or chat page
-            // Based on user feedback, the previous /chat/ URL was returning 404.
-            // Using the original live.php or a configurable URL.
-            ChatWebView.CoreWebView2.Navigate("https://ycp.yachiyo8000.cn/live.php");
+            var cfg = ConfigService.GetConfig();
+            string chatUrl = string.IsNullOrWhiteSpace(cfg.ChatUrl) ? "https://huyoutalk.mihuyou.online/ycp2026" : cfg.ChatUrl;
+            
+            ChatWebView.CoreWebView2.Navigate(chatUrl);
         }
         catch (Exception ex)
         {

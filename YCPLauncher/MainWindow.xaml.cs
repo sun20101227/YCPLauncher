@@ -153,7 +153,7 @@ public partial class MainWindow : Window
     }
 
     // ── Navigation + Fade ────────────────────────────────────────────────
-    private void SetContent(System.Windows.Controls.UserControl view)
+    public void SetContent(System.Windows.Controls.UserControl view)
     {
         var out_ = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(150)) { EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut } };
         out_.Completed += (_, _) =>
