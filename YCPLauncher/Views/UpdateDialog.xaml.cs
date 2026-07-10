@@ -20,7 +20,18 @@ public partial class UpdateDialog : Window
         _updateInfo = updateInfo;
         
         TxtVersion.Text = $"检测到新版本: v{_updateInfo.LatestVersion}";
-        TxtReleaseNotes.Text = _updateInfo.ReleaseNotes;
+        TxtReleaseNotes.Text = StripMarkdown(_updateInfo.ReleaseNotes ?? "");
+    }
+
+    private static string StripMarkdown(string md)
+    {
+        // Remove headings markers (###, ##, #)
+        md = System.Text.RegularExpressions.Regex.Replace(md, @"^#{1,6}\s+", "", System.Text.RegularExpressions.RegexOptions.Multiline);
+        // Remove bold/italic (**text** / *text*)
+        md = System.Text.RegularExpressions.Regex.Replace(md, @"\*{1,2}(.+?)\*{1,2}", "$1");
+        // Remove inline code (`code`)
+        md = System.Text.RegularExpressions.Regex.Replace(md, @"`(.+?)`", "$1");
+        return md.Trim();
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -48,10 +59,16 @@ public partial class UpdateDialog : Window
             string downloadUrl = _updateInfo.DownloadUrl;
             if (downloadUrl != null && downloadUrl.Contains("github.com"))
             {
-                downloadUrl = "https://mirror.ghproxy.com/" + downloadUrl;
+                // Use a stable GitHub proxy to bypass SSL issues in China
+                downloadUrl = "https://ghp.ci/" + downloadUrl;
             }
 
-            using var checkClient = new HttpClient();
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+            using var checkClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(30) };
+            checkClient.DefaultRequestHeaders.UserAgent.ParseAdd("YCPLauncher/1.1.0");
             using var checkResponse = await checkClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
             checkResponse.EnsureSuccessStatusCode();
 
@@ -81,7 +98,9 @@ public partial class UpdateDialog : Window
                             long start = chunkIndex * chunkSize;
                             long end = (chunkIndex == numberOfThreads - 1) ? totalBytes - 1 : start + chunkSize - 1;
                             
-                            using var client = new HttpClient();
+                            var chunkHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
+                            using var client = new HttpClient(chunkHandler) { Timeout = TimeSpan.FromSeconds(60) };
+                            client.DefaultRequestHeaders.UserAgent.ParseAdd("YCPLauncher/1.1.0");
                             var request = new HttpRequestMessage(HttpMethod.Get, downloadUrl);
                             request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(start, end);
                             
