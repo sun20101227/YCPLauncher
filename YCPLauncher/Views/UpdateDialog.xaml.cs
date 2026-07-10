@@ -38,51 +38,108 @@ public partial class UpdateDialog : Window
         
         _isDownloading = true;
         BtnUpdate.IsEnabled = false;
-        BtnUpdate.Content = "正在下载...";
+        BtnUpdate.Content = "正在开启多线程极速下载...";
         ProgressGrid.Visibility = Visibility.Visible;
 
         try
         {
             string tempPath = Path.Combine(Path.GetTempPath(), $"YachiyoCup_Installer_v{_updateInfo.LatestVersion}.exe");
             
-            // Use GitHub mirror proxy for faster download in China
             string downloadUrl = _updateInfo.DownloadUrl;
             if (downloadUrl != null && downloadUrl.Contains("github.com"))
             {
                 downloadUrl = "https://mirror.ghproxy.com/" + downloadUrl;
             }
 
-            using var client = new HttpClient();
-            using var response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
-            response.EnsureSuccessStatusCode();
+            using var checkClient = new HttpClient();
+            using var checkResponse = await checkClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
+            checkResponse.EnsureSuccessStatusCode();
 
-            var totalBytes = response.Content.Headers.ContentLength ?? -1L;
-            var canReportProgress = totalBytes != -1;
+            long totalBytes = checkResponse.Content.Headers.ContentLength ?? -1L;
+            bool canReportProgress = totalBytes != -1;
+            
+            // Check if server supports Range requests
+            bool supportsRange = checkResponse.Headers.AcceptRanges.Contains("bytes");
 
-            using var contentStream = await response.Content.ReadAsStreamAsync();
-            using var fileStream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, 131072, true);
-
-            var buffer = new byte[131072]; // 128 KB buffer for faster write
-            long totalRead = 0;
-            int bytesRead;
-
-            while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            if (canReportProgress && supportsRange && totalBytes > 1024 * 1024)
             {
-                await fileStream.WriteAsync(buffer, 0, bytesRead);
-                totalRead += bytesRead;
-
-                if (canReportProgress)
+                int numberOfThreads = 8;
+                long chunkSize = totalBytes / numberOfThreads;
+                long totalRead = 0;
+                
+                using (var fileHandle = File.OpenHandle(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, FileOptions.Asynchronous))
                 {
-                    double percentage = (double)totalRead / totalBytes * 100;
-                    DownloadProgressBar.Value = percentage;
-                    TxtProgress.Text = $"正在下载 {percentage:F1}%";
+                    RandomAccess.SetLength(fileHandle, totalBytes);
+                    
+                    var tasks = new System.Collections.Generic.List<Task>();
+                    
+                    for (int i = 0; i < numberOfThreads; i++)
+                    {
+                        int chunkIndex = i;
+                        tasks.Add(Task.Run(async () =>
+                        {
+                            long start = chunkIndex * chunkSize;
+                            long end = (chunkIndex == numberOfThreads - 1) ? totalBytes - 1 : start + chunkSize - 1;
+                            
+                            using var client = new HttpClient();
+                            var request = new HttpRequestMessage(HttpMethod.Get, downloadUrl);
+                            request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(start, end);
+                            
+                            using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                            response.EnsureSuccessStatusCode();
+                            
+                            using var stream = await response.Content.ReadAsStreamAsync();
+                            byte[] buffer = new byte[131072]; // 128KB
+                            int bytesRead;
+                            long currentOffset = start;
+                            
+                            while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                            {
+                                await RandomAccess.WriteAsync(fileHandle, new ReadOnlyMemory<byte>(buffer, 0, bytesRead), currentOffset);
+                                currentOffset += bytesRead;
+                                
+                                long currentTotal = System.Threading.Interlocked.Add(ref totalRead, bytesRead);
+                                
+                                // Throttle UI updates to roughly every 1MB or at the very end
+                                if (currentTotal % (1024 * 1024) < bytesRead || currentTotal == totalBytes)
+                                {
+                                    double percentage = (double)currentTotal / totalBytes * 100;
+                                    await Application.Current.Dispatcher.InvokeAsync(() => {
+                                        DownloadProgressBar.Value = percentage;
+                                        TxtProgress.Text = $"多线程拉满狂飙中 {percentage:F1}%";
+                                    });
+                                }
+                            }
+                        }));
+                    }
+                    
+                    await Task.WhenAll(tasks);
                 }
             }
-            
-            // Release the file lock before executing
-            fileStream.Close();
+            else
+            {
+                // Fallback to single thread
+                using var contentStream = await checkResponse.Content.ReadAsStreamAsync();
+                using var fileStream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None, 131072, true);
 
-            // Execute the installer
+                var buffer = new byte[131072];
+                long totalRead = 0;
+                int bytesRead;
+
+                while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                {
+                    await fileStream.WriteAsync(buffer, 0, bytesRead);
+                    totalRead += bytesRead;
+
+                    if (canReportProgress)
+                    {
+                        double percentage = (double)totalRead / totalBytes * 100;
+                        DownloadProgressBar.Value = percentage;
+                        TxtProgress.Text = $"正在下载 {percentage:F1}%";
+                    }
+                }
+            }
+
             _canClose = true;
             Process.Start(new ProcessStartInfo
             {
@@ -91,7 +148,6 @@ public partial class UpdateDialog : Window
                 UseShellExecute = true
             });
 
-            // Kill launcher
             System.Windows.Application.Current.Shutdown();
         }
         catch (Exception ex)
