@@ -17,7 +17,9 @@ public partial class LiveStreamView : System.Windows.Controls.UserControl
     {
         try
         {
-            var env = await CoreWebView2Environment.CreateAsync(null, System.IO.Path.Combine(System.IO.Path.GetTempPath(), "YCPLauncher_WebView"));
+            string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string userDataFolder = System.IO.Path.Combine(appData, "YCPLauncher", "WebView2Data");
+            var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
             await PlayerWebView.EnsureCoreWebView2Async(env);
             
             PlayerWebView.CoreWebView2.Navigate("https://ycp.yachiyo8000.cn/live.php");

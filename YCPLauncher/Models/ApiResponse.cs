@@ -73,6 +73,9 @@ public class AppConfig
 
     [JsonPropertyName("launch_console")]
     public bool LaunchConsole { get; set; } = false;
+
+    [JsonPropertyName("in_game_name")]
+    public string InGameName { get; set; } = string.Empty;
 }
 
 public class ChangePasswordResponse

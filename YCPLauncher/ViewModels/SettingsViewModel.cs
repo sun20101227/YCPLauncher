@@ -31,6 +31,7 @@ public partial class SettingsViewModel : ObservableObject
         _launchNoVid = cfg.LaunchNoVid;
         _launchHighFreq = cfg.LaunchHighFreq;
         _launchConsole = cfg.LaunchConsole;
+        _inGameName = cfg.InGameName;
     }
 
     [ObservableProperty] private bool _hardwareAcceleration = true;
@@ -66,6 +67,13 @@ public partial class SettingsViewModel : ObservableObject
     partial void OnLaunchConsoleChanged(bool value)
     {
         ConfigService.GetConfig().LaunchConsole = value;
+        ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty] private string _inGameName = string.Empty;
+    partial void OnInGameNameChanged(string value)
+    {
+        ConfigService.GetConfig().InGameName = value;
         ConfigService.SaveConfig();
     }
 

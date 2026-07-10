@@ -57,6 +57,7 @@ public class GameLauncherService
             if (cfg.LaunchNoVid) extraArgs += "-novid ";
             if (cfg.LaunchHighFreq) extraArgs += "-freq 240 ";
             if (cfg.LaunchConsole) extraArgs += "-console ";
+            if (!string.IsNullOrWhiteSpace(cfg.InGameName)) extraArgs += $"+name \"{cfg.InGameName.Trim()}\" ";
 
             string connectArg = $"+connect {ip}:{port}";
 
