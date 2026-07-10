@@ -102,6 +102,11 @@ public partial class App : System.Windows.Application
         string installDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86), "YCPLauncher");
         try
         {
+            var procs = System.Diagnostics.Process.GetProcessesByName("YCPLauncher");
+            foreach (var p in procs)
+            {
+                try { p.Kill(); p.WaitForExit(); } catch { }
+            }
             if (!System.IO.Directory.Exists(installDir))
                 System.IO.Directory.CreateDirectory(installDir);
 
