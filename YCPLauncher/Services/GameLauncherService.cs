@@ -25,26 +25,8 @@ public class GameLauncherService
                 });
             });
 
-            var cfg = ConfigService.GetConfig();
-            string extraArgs = "";
-            if (cfg.LaunchNoVid) extraArgs += "-novid ";
-            if (cfg.LaunchHighFreq) extraArgs += "-freq 240 ";
-            if (cfg.LaunchConsole) extraArgs += "-console ";
-
-            var player = AuthService.LoadPlayer();
-            if (player != null && !string.IsNullOrWhiteSpace(player.Username))
-            {
-                // URI encoding for name with spaces
-                string cleanName = player.Username.Trim().Replace(" ", "_");
-                extraArgs += $"+setinfo ycp_name {cleanName} ";
-            }
-
-            // Url encode the spaces so the protocol handler doesn't truncate the string
-            string args = $"{extraArgs}+connect {ip}:{port}";
-            string encodedArgs = args.Replace(" ", "%20").Replace("\"", "%22");
-
-            // User explicitly requested: steam://rungameid/730//+connect ip:port
-            string url = $"steam://rungameid/{Cs2AppId}//{encodedArgs}";
+            // User explicitly requested EXACTLY this simple format without any smart encoding or extra parameters that might break Steam's parsing
+            string url = $"steam://rungameid/{Cs2AppId}//+connect {ip}:{port}";
 
             Process.Start(new ProcessStartInfo
             {
