@@ -57,7 +57,12 @@ public class GameLauncherService
             if (cfg.LaunchNoVid) extraArgs += "-novid ";
             if (cfg.LaunchHighFreq) extraArgs += "-freq 240 ";
             if (cfg.LaunchConsole) extraArgs += "-console ";
-            if (!string.IsNullOrWhiteSpace(cfg.InGameName)) extraArgs += $"+name \"{cfg.InGameName.Trim()}\" ";
+
+            var player = AuthService.LoadPlayer();
+            if (player != null && !string.IsNullOrWhiteSpace(player.Username))
+            {
+                extraArgs += $"+setinfo ycp_name \"{player.Username.Trim()}\" ";
+            }
 
             string connectArg = $"+connect {ip}:{port}";
 
