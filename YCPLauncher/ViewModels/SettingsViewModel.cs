@@ -132,6 +132,14 @@ public partial class SettingsViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void ViewChangelog()
+    {
+        var dialog = new YCPLauncher.Views.ChangelogDialog();
+        dialog.Owner = Application.Current.MainWindow;
+        dialog.ShowDialog();
+    }
+
+    [RelayCommand]
     private void UninstallLauncher()
     {
         try

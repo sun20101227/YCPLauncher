@@ -142,6 +142,25 @@ public class ApiService
         }
     }
 
+    public async Task<List<ReleaseInfo>?> GetAllReleasesAsync()
+    {
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.github.com/repos/sun20101227/YCPLauncher/releases");
+            request.Headers.Add("User-Agent", "YCPLauncher");
+            var response = await _http.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<ReleaseInfo>>(json, JsonOpts);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     public async Task<ChangePasswordResponse> ChangePasswordAsync(string oldPassword, string newPassword, string token)
     {
         try

@@ -117,3 +117,18 @@ public class ChangePasswordResponse
     [JsonIgnore]
     public bool IsSuccess => Code == 200;
 }
+
+public class ReleaseInfo
+{
+    [JsonPropertyName("tag_name")]
+    public string TagName { get; set; } = string.Empty;
+
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = string.Empty;
+
+    [JsonPropertyName("body")]
+    public string Body { get; set; } = string.Empty;
+
+    [JsonPropertyName("published_at")]
+    public DateTime PublishedAt { get; set; }
+}

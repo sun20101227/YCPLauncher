@@ -314,6 +314,15 @@
                         <Grid Margin="20,16">
                             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="查看更新日志" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
+                                <TextBlock Text="查看所有历史版本的更新记录" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0"/>
+                            </StackPanel>
+                            <Button Grid.Column="1" Command="{Binding ViewChangelogCommand}" Content="查看日志" Style="{StaticResource GhostButton}" Height="30" Padding="15,0" Cursor="Hand"/>
+                        </Grid>
+                        <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="20,0"/>
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                 <TextBlock Text="清理本地缓存" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
                                 <TextBlock Text="释放图片和临时文件占用的磁盘空间" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0"/>
                             </StackPanel>
