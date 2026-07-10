@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using YCPLauncher.Helpers;
 
 namespace YCPLauncher.Models;
 
@@ -44,14 +45,35 @@ public class ServersResponse
 
 public class AppConfig
 {
-    [JsonPropertyName("api_base_url")]
+    [JsonIgnore]
     public string ApiBaseUrl { get; set; } = "https://cs2.yachiyo8000.cn";
 
-    [JsonPropertyName("chat_url")]
+    [JsonPropertyName("api_base_url")]
+    public string EncryptedApiBaseUrl
+    {
+        get => CryptoHelper.Encrypt(ApiBaseUrl);
+        set => ApiBaseUrl = CryptoHelper.Decrypt(value);
+    }
+
+    [JsonIgnore]
     public string ChatUrl { get; set; } = "https://huyoutalk.mihuyou.online/ycp2026";
 
-    [JsonPropertyName("live_stream_url")]
+    [JsonPropertyName("chat_url")]
+    public string EncryptedChatUrl
+    {
+        get => CryptoHelper.Encrypt(ChatUrl);
+        set => ChatUrl = CryptoHelper.Decrypt(value);
+    }
+
+    [JsonIgnore]
     public string LiveStreamUrl { get; set; } = "rtmp://frp-pen.com:48399/live/ycp";
+
+    [JsonPropertyName("live_stream_url")]
+    public string EncryptedLiveStreamUrl
+    {
+        get => CryptoHelper.Encrypt(LiveStreamUrl);
+        set => LiveStreamUrl = CryptoHelper.Decrypt(value);
+    }
 
     [JsonPropertyName("api_timeout")]
     public int ApiTimeout { get; set; } = 10;
