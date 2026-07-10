@@ -19,19 +19,30 @@ public partial class LiveStreamView : System.Windows.Controls.UserControl
         InitializeVlc();
     }
 
-    private void InitializeVlc()
+    private async void InitializeVlc()
     {
         try
         {
-            Core.Initialize();
-            _libVLC = new LibVLC();
-            _mediaPlayer = new MediaPlayer(_libVLC);
+            // Run heavy VLC init on background thread so UI doesn't freeze
+            var (libVlc, player) = await Task.Run(() =>
+            {
+                Core.Initialize();
+                var lv = new LibVLC();
+                var mp = new MediaPlayer(lv);
+                return (lv, mp);
+            });
+
+            _libVLC = libVlc;
+            _mediaPlayer = player;
+
+            // VideoPlayer.MediaPlayer must be set on UI thread
             VideoPlayer.MediaPlayer = _mediaPlayer;
 
             var cfg = ConfigService.GetConfig();
-            string streamUrl = string.IsNullOrWhiteSpace(cfg.LiveStreamUrl) ? "rtmp://frp-pen.com:48399/live/ycp" : cfg.LiveStreamUrl;
+            string streamUrl = string.IsNullOrWhiteSpace(cfg.LiveStreamUrl)
+                ? "rtmp://frp-pen.com:48399/live/ycp"
+                : cfg.LiveStreamUrl;
 
-            // Start playing RTMP stream
             var media = new Media(_libVLC, new Uri(streamUrl));
             _mediaPlayer.Play(media);
 

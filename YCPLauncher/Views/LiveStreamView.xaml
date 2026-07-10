@@ -11,7 +11,7 @@
 
     <!-- Use DockPanel as root: it stretches to fill all available space from parent -->
     <!-- Controls bar is docked to the bottom of the video border with a fixed height so it NEVER gets clipped -->
-    <Grid Background="Transparent" Margin="24">
+    <Grid Background="Transparent" Margin="24,24,24,8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="16"/>
@@ -44,51 +44,163 @@
                 </Grid>
             </Border>
 
-            <!-- Controls bar: separate row, fixed height 52px, always fully visible -->
-            <Border Grid.Row="1" Background="#111827" Padding="12,0"
-                    BorderThickness="1,1,1,1" BorderBrush="{DynamicResource BorderBrush2}"
-                    CornerRadius="0,0,12,12">
-                <Grid>
+            <!-- ── Premium Controls Bar ── -->
+            <Border Grid.Row="1" CornerRadius="0,0,12,12" BorderThickness="1" BorderBrush="{DynamicResource BorderBrush2}">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#DD0D1117" Offset="0"/>
+                        <GradientStop Color="#F2060A0F" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid Margin="16,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="BtnPlayPause" Grid.Column="0"
-                            Width="36" Height="36" Margin="0,0,8,0"
-                            Style="{StaticResource GhostButton}"
-                            Click="BtnPlayPause_Click">
-                        <TextBlock x:Name="IconPlayPause"
-                                   Text="&#xE769;"
-                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, Arial"
-                                   Foreground="White" FontSize="14"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
+                    <!-- Buttons -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
 
-                    <Button x:Name="BtnRefresh" Grid.Column="1"
-                            Width="36" Height="36" Margin="0,0,16,0"
-                            Style="{StaticResource GhostButton}"
-                            Click="BtnRefresh_Click">
-                        <TextBlock Text="&#xE72C;"
-                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, Arial"
-                                   Foreground="White" FontSize="14"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
+                        <!-- Play/Pause: accent glow -->
+                        <Button x:Name="BtnPlayPause" Width="38" Height="38" Margin="0,0,8,0"
+                                Click="BtnPlayPause_Click" Cursor="Hand" ToolTip="播放/暂停">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bd" CornerRadius="10" BorderThickness="1" BorderBrush="#55FF6B00">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#44FF6B00" Offset="0"/>
+                                                <GradientStop Color="#22FF6B00" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bd" Property="BorderBrush" Value="#AAFF6B00"/>
+                                            <Setter TargetName="bd" Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect Color="#FF6B00" BlurRadius="14" ShadowDepth="0" Opacity="0.7"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="bd" Property="BorderBrush" Value="#DDFF6B00"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <TextBlock x:Name="IconPlayPause" Text="&#xE769;"
+                                       FontFamily="Segoe Fluent Icons,Segoe MDL2 Assets,Arial"
+                                       FontSize="15" Foreground="#FFCC88"/>
+                        </Button>
 
-                    <TextBlock Grid.Column="2"
-                               Text="&#xE767;"
-                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, Arial"
-                               VerticalAlignment="Center" Foreground="White"
-                               FontSize="16" Margin="0,0,8,0"/>
+                        <!-- Refresh: ghost -->
+                        <Button x:Name="BtnRefresh" Width="34" Height="34"
+                                Click="BtnRefresh_Click" Cursor="Hand" ToolTip="重新加载">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bd2" CornerRadius="8"
+                                            Background="Transparent" BorderThickness="1" BorderBrush="Transparent">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bd2" Property="Background" Value="#22FFFFFF"/>
+                                            <Setter TargetName="bd2" Property="BorderBrush" Value="#33FFFFFF"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="bd2" Property="Background" Value="#44FFFFFF"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <TextBlock Text="&#xE72C;"
+                                       FontFamily="Segoe Fluent Icons,Segoe MDL2 Assets,Arial"
+                                       FontSize="14" Foreground="#88FFFFFF"/>
+                        </Button>
+                    </StackPanel>
 
-                    <Slider x:Name="SldVolume" Grid.Column="3"
-                            Minimum="0" Maximum="100" Value="100"
-                            VerticalAlignment="Center"
-                            Width="120" HorizontalAlignment="Left"
-                            ValueChanged="SldVolume_ValueChanged"
-                            Foreground="{DynamicResource AccentBrush}"/>
+                    <!-- Divider -->
+                    <Rectangle Grid.Column="1" Width="1" Height="20" Fill="#22FFFFFF" Margin="12,0"/>
+
+                    <!-- Volume -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="&#xE767;"
+                                   FontFamily="Segoe Fluent Icons,Segoe MDL2 Assets,Arial"
+                                   FontSize="14" Foreground="#66FFFFFF"
+                                   VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <Slider x:Name="SldVolume" Minimum="0" Maximum="100" Value="100"
+                                Width="100" VerticalAlignment="Center"
+                                ValueChanged="SldVolume_ValueChanged">
+                            <Slider.Template>
+                                <ControlTemplate TargetType="Slider">
+                                    <Grid>
+                                        <Track x:Name="PART_Track">
+                                            <Track.DecreaseRepeatButton>
+                                                <RepeatButton Command="Slider.DecreaseLarge">
+                                                    <RepeatButton.Template>
+                                                        <ControlTemplate TargetType="RepeatButton">
+                                                            <Border Height="4" CornerRadius="2" Background="#CCFF6B00"/>
+                                                        </ControlTemplate>
+                                                    </RepeatButton.Template>
+                                                </RepeatButton>
+                                            </Track.DecreaseRepeatButton>
+                                            <Track.IncreaseRepeatButton>
+                                                <RepeatButton Command="Slider.IncreaseLarge">
+                                                    <RepeatButton.Template>
+                                                        <ControlTemplate TargetType="RepeatButton">
+                                                            <Border Height="4" CornerRadius="2" Background="#33FFFFFF"/>
+                                                        </ControlTemplate>
+                                                    </RepeatButton.Template>
+                                                </RepeatButton>
+                                            </Track.IncreaseRepeatButton>
+                                            <Track.Thumb>
+                                                <Thumb>
+                                                    <Thumb.Template>
+                                                        <ControlTemplate TargetType="Thumb">
+                                                            <Ellipse Fill="#FF6B00" Width="13" Height="13">
+                                                                <Ellipse.Effect>
+                                                                    <DropShadowEffect Color="#FF6B00" BlurRadius="8" ShadowDepth="0" Opacity="0.9"/>
+                                                                </Ellipse.Effect>
+                                                            </Ellipse>
+                                                        </ControlTemplate>
+                                                    </Thumb.Template>
+                                                </Thumb>
+                                            </Track.Thumb>
+                                        </Track>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Slider.Template>
+                        </Slider>
+                    </StackPanel>
+
+                    <!-- LIVE Badge -->
+                    <Border Grid.Column="4" CornerRadius="5" Padding="9,3" VerticalAlignment="Center">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#CC991100" Offset="0"/>
+                                <GradientStop Color="#CCFF3300" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="6" Height="6" Fill="White" Margin="0,0,5,0" VerticalAlignment="Center">
+                                <Ellipse.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0.15" Duration="0:0:0.7"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Ellipse.Triggers>
+                            </Ellipse>
+                            <TextBlock Text="LIVE" Foreground="White" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
                 </Grid>
             </Border>
         </Grid>

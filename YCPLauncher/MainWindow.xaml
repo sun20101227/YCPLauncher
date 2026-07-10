@@ -18,7 +18,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         Icon="app.ico"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResize">
     <Window.Resources>
         <ContextMenu x:Key="SysTrayMenu" Background="{DynamicResource BgSidebarBrush}" BorderBrush="{DynamicResource BorderBrush1}" BorderThickness="1">
             <ContextMenu.Template>
@@ -58,9 +58,7 @@
         </ContextMenu>
     </Window.Resources>
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="32" ResizeBorderThickness="8" CornerRadius="0" GlassFrameThickness="1" UseAeroCaptionButtons="False"/>
-    </WindowChrome.WindowChrome>
+
 
     <!-- AcrylicWindow needs the background of the root border to be transparent to show the desktop refraction -->
     <Border Background="Transparent" BorderThickness="0">
@@ -238,7 +236,7 @@
                                        FontSize="12" VerticalAlignment="Center" Margin="24,0,0,0"/>
                             
                             <!-- Window Controls -->
-                            <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,12,0">
                                 <Button Style="{StaticResource IconButton}" Click="MinBtn_Click" ToolTip="最小化" Width="36" Height="30">
                                     <TextBlock Text="&#xE921;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, Arial" Foreground="{DynamicResource TextMutedBrush}" FontSize="10"/>
                                 </Button>
