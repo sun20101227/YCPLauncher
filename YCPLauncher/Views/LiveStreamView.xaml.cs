@@ -28,7 +28,7 @@ public partial class LiveStreamView : System.Windows.Controls.UserControl
             VideoPlayer.MediaPlayer = _mediaPlayer;
 
             // Start playing RTMP stream
-            var media = new Media(_libVLC, new Uri("rtmp://ycp.yachiyo8000.cn/live/stream"));
+            var media = new Media(_libVLC, new Uri("rtmp://frp-pen.com:48399/live/ycp"));
             _mediaPlayer.Play(media);
 
             _mediaPlayer.Playing += (s, e) =>
@@ -51,8 +51,10 @@ public partial class LiveStreamView : System.Windows.Controls.UserControl
             var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
             await ChatWebView.EnsureCoreWebView2Async(env);
             
-            // Navigate to Huyoutalk or chat page
-            ChatWebView.CoreWebView2.Navigate("https://ycp.yachiyo8000.cn/chat/");
+            // Navigate to the correct Huyoutalk or chat page
+            // Based on user feedback, the previous /chat/ URL was returning 404.
+            // Using the original live.php or a configurable URL.
+            ChatWebView.CoreWebView2.Navigate("https://ycp.yachiyo8000.cn/live.php");
         }
         catch (Exception ex)
         {
