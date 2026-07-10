@@ -11,6 +11,12 @@ public partial class App : System.Windows.Application
 
     private static System.Threading.Mutex? _mutex;
 
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
     protected override void OnStartup(StartupEventArgs e)
     {
         const string appName = "YCPLauncher_SingleInstance_Mutex";
@@ -19,7 +25,20 @@ public partial class App : System.Windows.Application
 
         if (!createdNew)
         {
-            MessageBox.Show("YCP CS2 启动器已经在运行中！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            var currentProcess = System.Diagnostics.Process.GetCurrentProcess();
+            foreach (var process in System.Diagnostics.Process.GetProcessesByName(currentProcess.ProcessName))
+            {
+                if (process.Id != currentProcess.Id)
+                {
+                    IntPtr handle = process.MainWindowHandle;
+                    if (handle != IntPtr.Zero)
+                    {
+                        ShowWindow(handle, 9); // SW_RESTORE
+                        SetForegroundWindow(handle);
+                    }
+                    break;
+                }
+            }
             System.Windows.Application.Current.Shutdown();
             return;
         }
