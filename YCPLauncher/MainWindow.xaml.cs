@@ -8,6 +8,9 @@ using YCPLauncher.Services;
 using YCPLauncher.ViewModels;
 using YCPLauncher.Views;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 using YCPLauncher.Helpers;
 using Application      = System.Windows.Application;
@@ -48,11 +51,7 @@ public partial class MainWindow : Window
         catch { }
     }
 
-    protected override void OnSourceInitialized(EventArgs e)
-    {
-        base.OnSourceInitialized(e);
-        DwmHelper.ApplyNativeWindows11Styles(this);
-    }
+
 
     protected override void OnStateChanged(EventArgs e)
     {
@@ -277,4 +276,60 @@ public partial class MainWindow : Window
 
     public void ShowToast(string msg, bool err = false) => Toast.Show(msg, err);
 
+    // ── Win32 Borderless Window Maximize Fix ──────────────────────────────
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT { public int x; public int y; }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MINMAXINFO { public POINT ptReserved; public POINT ptMaxSize; public POINT ptMaxPosition; public POINT ptMinTrackSize; public POINT ptMaxTrackSize; }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MONITORINFO { public int cbSize; public RECT rcMonitor; public RECT rcWork; public uint dwFlags; }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT { public int left; public int top; public int right; public int bottom; }
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+        DwmHelper.ApplyNativeWindows11Styles(this);
+        
+        var handle = new WindowInteropHelper(this).Handle;
+        HwndSource.FromHwnd(handle)?.AddHook(WindowProc);
+    }
+
+    private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        if (msg == 0x0024) // WM_GETMINMAXINFO
+        {
+            var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO))!;
+            IntPtr monitor = MonitorFromWindow(hwnd, 2); // MONITOR_DEFAULTTONEAREST
+            if (monitor != IntPtr.Zero)
+            {
+                var monitorInfo = new MONITORINFO();
+                monitorInfo.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
+                if (GetMonitorInfo(monitor, ref monitorInfo))
+                {
+                    RECT rcWorkArea = monitorInfo.rcWork;
+                    RECT rcMonitorArea = monitorInfo.rcMonitor;
+                    
+                    mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
+                    mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
+                    mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
+                    mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                    
+                    Marshal.StructureToPtr(mmi, lParam, true);
+                    handled = true;
+                }
+            }
+        }
+        return IntPtr.Zero;
+    }
 }

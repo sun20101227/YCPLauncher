@@ -8,44 +8,97 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1080"
              Unloaded="UserControl_Unloaded">
-    <Grid Background="Transparent">
-        <Grid.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <BeginStoryboard>
-                    <Storyboard>
-                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </Grid.Triggers>
 
-        <Grid Margin="24">
-            <Grid.ColumnDefinitions>
-                <!-- Video Section -->
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="16"/>
-                <!-- Chat Section -->
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
+    <!-- Use DockPanel as root: it stretches to fill all available space from parent -->
+    <!-- Controls bar is docked to the bottom of the video border with a fixed height so it NEVER gets clipped -->
+    <Grid Background="Transparent" Margin="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
-            <!-- Video Player (LibVLCSharp) -->
-            <Border Grid.Column="0" CornerRadius="12" Background="Black" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" ClipToBounds="True">
+        <!-- ── Video + Controls ── -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <!-- Video fills all available space -->
+                <RowDefinition Height="*"/>
+                <!-- Controls bar: fixed height so it is NEVER compressed/clipped -->
+                <RowDefinition Height="52"/>
+            </Grid.RowDefinitions>
+
+            <!-- Video border (just the rounded frame, no ClipToBounds) -->
+            <Border Grid.Row="0" CornerRadius="12,12,0,0" Background="Black"
+                    BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1,1,1,0">
                 <Grid>
-                    <vlc:VideoView x:Name="VideoPlayer" />
-                    <!-- Loading Overlay for Video -->
+                    <vlc:VideoView x:Name="VideoPlayer"/>
+                    <!-- Loading Overlay -->
                     <Border x:Name="LoadingOverlay" Background="Black" Opacity="0.8">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="正在连接 RTMP 视频流..." Foreground="White" FontSize="16" Margin="0,0,0,16"/>
-                            <ProgressBar IsIndeterminate="True" Width="200" Height="4" Foreground="{DynamicResource AccentBrush}" Background="#33FFFFFF" BorderThickness="0"/>
+                            <ProgressBar IsIndeterminate="True" Width="200" Height="4"
+                                         Foreground="{DynamicResource AccentBrush}"
+                                         Background="#33FFFFFF" BorderThickness="0"/>
                         </StackPanel>
                     </Border>
                 </Grid>
             </Border>
 
-            <!-- Chat (WebView2) -->
-            <Border Grid.Column="2" CornerRadius="12" Background="{DynamicResource CardBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" ClipToBounds="True">
-                <wv2:WebView2 x:Name="ChatWebView" DefaultBackgroundColor="Transparent"/>
+            <!-- Controls bar: separate row, fixed height 52px, always fully visible -->
+            <Border Grid.Row="1" Background="#111827" Padding="12,0"
+                    BorderThickness="1,1,1,1" BorderBrush="{DynamicResource BorderBrush2}"
+                    CornerRadius="0,0,12,12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="BtnPlayPause" Grid.Column="0"
+                            Width="36" Height="36" Margin="0,0,8,0"
+                            Style="{StaticResource GhostButton}"
+                            Click="BtnPlayPause_Click">
+                        <TextBlock x:Name="IconPlayPause"
+                                   Text="&#xE769;"
+                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, Arial"
+                                   Foreground="White" FontSize="14"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Button x:Name="BtnRefresh" Grid.Column="1"
+                            Width="36" Height="36" Margin="0,0,16,0"
+                            Style="{StaticResource GhostButton}"
+                            Click="BtnRefresh_Click">
+                        <TextBlock Text="&#xE72C;"
+                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, Arial"
+                                   Foreground="White" FontSize="14"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <TextBlock Grid.Column="2"
+                               Text="&#xE767;"
+                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets, Arial"
+                               VerticalAlignment="Center" Foreground="White"
+                               FontSize="16" Margin="0,0,8,0"/>
+
+                    <Slider x:Name="SldVolume" Grid.Column="3"
+                            Minimum="0" Maximum="100" Value="100"
+                            VerticalAlignment="Center"
+                            Width="120" HorizontalAlignment="Left"
+                            ValueChanged="SldVolume_ValueChanged"
+                            Foreground="{DynamicResource AccentBrush}"/>
+                </Grid>
             </Border>
         </Grid>
+
+        <!-- ── Chat ── -->
+        <Border Grid.Column="2" CornerRadius="12"
+                Background="{DynamicResource CardBgBrush}"
+                BorderBrush="{DynamicResource BorderBrush2}"
+                BorderThickness="1" ClipToBounds="True">
+            <wv2:WebView2 x:Name="ChatWebView" DefaultBackgroundColor="Transparent"/>
+        </Border>
     </Grid>
 </UserControl>

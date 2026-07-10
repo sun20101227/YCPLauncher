@@ -46,6 +46,43 @@ public partial class LiveStreamView : System.Windows.Controls.UserControl
         }
     }
 
+    private void BtnPlayPause_Click(object sender, RoutedEventArgs e)
+    {
+        if (_mediaPlayer == null) return;
+        if (_mediaPlayer.IsPlaying)
+        {
+            _mediaPlayer.Pause();
+            IconPlayPause.Text = "\uE768"; // Play icon
+        }
+        else
+        {
+            _mediaPlayer.Play();
+            IconPlayPause.Text = "\uE769"; // Pause icon
+        }
+    }
+
+    private void BtnRefresh_Click(object sender, RoutedEventArgs e)
+    {
+        if (_mediaPlayer != null && _libVLC != null)
+        {
+            _mediaPlayer.Stop();
+            LoadingOverlay.Visibility = Visibility.Visible;
+            IconPlayPause.Text = "\uE769"; // Pause icon (since it auto-plays)
+            var cfg = ConfigService.GetConfig();
+            string streamUrl = string.IsNullOrWhiteSpace(cfg.LiveStreamUrl) ? "rtmp://frp-pen.com:48399/live/ycp" : cfg.LiveStreamUrl;
+            var media = new Media(_libVLC, new Uri(streamUrl));
+            _mediaPlayer.Play(media);
+        }
+    }
+
+    private void SldVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_mediaPlayer != null)
+        {
+            _mediaPlayer.Volume = (int)e.NewValue;
+        }
+    }
+
     private async void InitializeWebViewAsync()
     {
         try

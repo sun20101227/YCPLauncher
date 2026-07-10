@@ -7,7 +7,7 @@ namespace YCPLauncher;
 
 public partial class App : System.Windows.Application
 {
-    public static readonly string CurrentVersion = "1.0.9";
+    public static readonly string CurrentVersion = "1.1.0";
 
     private static System.Threading.Mutex? _mutex;
 

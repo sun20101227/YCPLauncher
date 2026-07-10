@@ -19,7 +19,13 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
                         <Ellipse Width="12" Height="12" Fill="#1E293B" Margin="4,0"/>
                         <Ellipse Width="12" Height="12" Fill="#1E293B" Margin="4,0"/>
-                        <Ellipse Width="12" Height="12" Fill="#1E293B" Margin="4,0"/>
+                        <Button Width="12" Height="12" Margin="4,0" Background="#EF4444" BorderThickness="0" Cursor="Hand" Click="BtnClose_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Ellipse Fill="{TemplateBinding Background}"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
                     </StackPanel>
                 </Grid>
             </Border>

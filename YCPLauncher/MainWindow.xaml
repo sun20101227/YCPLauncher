@@ -59,7 +59,7 @@
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="32" ResizeBorderThickness="8" CornerRadius="0" GlassFrameThickness="-1" UseAeroCaptionButtons="False"/>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="8" CornerRadius="0" GlassFrameThickness="1" UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
 
     <!-- AcrylicWindow needs the background of the root border to be transparent to show the desktop refraction -->

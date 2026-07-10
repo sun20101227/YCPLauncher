@@ -22,19 +22,18 @@ public partial class TerminalLaunchDialog : Window
                 if (_isClosed) break;
 
                 // Typewriter effect for each line
-                for (int i = 0; i <= log.Length; i++)
+                for (int i = 0; i < log.Length; i++)
                 {
                     if (_isClosed) break;
                     LogText.Text = LogText.Text.Substring(0, LogText.Text.Length - (LogText.Text.EndsWith("_") ? 1 : 0));
-                    LogText.Text += log.Substring(i, 1 == 0 ? 0 : 1) + "_";
+                    LogText.Text += log.Substring(i, 1) + "_";
                     LogScroll.ScrollToEnd();
                     
-                    if (i < log.Length)
-                        await Task.Delay(10); // typing speed
+                    await Task.Delay(10); // typing speed
                 }
 
                 // Remove cursor and add newline
-                LogText.Text = LogText.Text.Substring(0, LogText.Text.Length - 1) + "\n";
+                LogText.Text = LogText.Text.Substring(0, LogText.Text.Length - (LogText.Text.EndsWith("_") ? 1 : 0)) + "\n";
                 LogScroll.ScrollToEnd();
 
                 await Task.Delay(300); // Wait between lines
@@ -47,6 +46,11 @@ public partial class TerminalLaunchDialog : Window
             }
         }
         catch { }
+    }
+
+    private void BtnClose_Click(object sender, RoutedEventArgs e)
+    {
+        Close();
     }
 
     protected override void OnClosed(EventArgs e)
