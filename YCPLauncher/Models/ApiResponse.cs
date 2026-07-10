@@ -101,6 +101,9 @@ public class AppConfig
 
     [JsonPropertyName("launch_console")]
     public bool LaunchConsole { get; set; } = false;
+
+    [JsonPropertyName("launch_method")]
+    public int LaunchMethod { get; set; } = 0; // 0 = steam://rungameid (simple), 1 = legacy applaunch (-applaunch), 2 = fallback steam://connect
 }
 
 public class ChangePasswordResponse

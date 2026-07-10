@@ -31,6 +31,7 @@ public partial class SettingsViewModel : ObservableObject
         _launchNoVid = cfg.LaunchNoVid;
         _launchHighFreq = cfg.LaunchHighFreq;
         _launchConsole = cfg.LaunchConsole;
+        _launchMethod = cfg.LaunchMethod;
 
         _apiBaseUrl = cfg.ApiBaseUrl;
         _chatUrl = cfg.ChatUrl;
@@ -83,6 +84,13 @@ public partial class SettingsViewModel : ObservableObject
     partial void OnLaunchConsoleChanged(bool value)
     {
         ConfigService.GetConfig().LaunchConsole = value;
+        ConfigService.SaveConfig();
+    }
+
+    [ObservableProperty] private int _launchMethod;
+    partial void OnLaunchMethodChanged(int value)
+    {
+        ConfigService.GetConfig().LaunchMethod = value;
         ConfigService.SaveConfig();
     }
 

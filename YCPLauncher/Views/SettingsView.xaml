@@ -204,7 +204,7 @@
 
             <!-- CARD 3: Advanced Performance -->
             <StackPanel x:Name="Card3" Margin="0,0,0,24" Opacity="0">
-                <TextBlock Text="高级性能" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="4,0,0,12"/>
+                <TextBlock Text="高级性能与协议" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="Bold" Margin="4,0,0,12"/>
                 <Border Background="{DynamicResource ItemBgBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="12">
                     <StackPanel>
                         <Grid Margin="20,16">
@@ -223,6 +223,19 @@
                                 <TextBlock Text="在后台提前挂载启动参数，大幅提升进服速度" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0"/>
                             </StackPanel>
                             <CheckBox Grid.Column="1" IsChecked="{Binding NetworkOptimization}" Style="{StaticResource AnimatedToggleSwitch}" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="20,0"/>
+                        <Grid Margin="20,16">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,24,0">
+                                <TextBlock Text="一键进服协议" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
+                                <TextBlock Text="若遇到进服无响应或闪退，请尝试切换此选项" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0"/>
+                            </StackPanel>
+                            <ComboBox Grid.Column="1" SelectedIndex="{Binding LaunchMethod}" Width="220" VerticalAlignment="Center" Background="{DynamicResource BgSidebarBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush2}">
+                                <ComboBoxItem Content="模式 1 (最底层，最稳定)"/>
+                                <ComboBoxItem Content="模式 2 (经典参数注入)"/>
+                                <ComboBoxItem Content="模式 3 (通用 Steam 协议)"/>
+                            </ComboBox>
                         </Grid>
                     </StackPanel>
                 </Border>

@@ -20,18 +20,81 @@ public partial class UpdateDialog : Window
         _updateInfo = updateInfo;
         
         TxtVersion.Text = $"检测到新版本: v{_updateInfo.LatestVersion}";
-        TxtReleaseNotes.Text = StripMarkdown(_updateInfo.ReleaseNotes ?? "");
+        RenderMarkdown(TxtReleaseNotes, _updateInfo.ReleaseNotes ?? "");
     }
 
-    private static string StripMarkdown(string md)
+    private static void RenderMarkdown(System.Windows.Controls.TextBlock textBlock, string md)
     {
-        // Remove headings markers (###, ##, #)
-        md = System.Text.RegularExpressions.Regex.Replace(md, @"^#{1,6}\s+", "", System.Text.RegularExpressions.RegexOptions.Multiline);
-        // Remove bold/italic (**text** / *text*)
-        md = System.Text.RegularExpressions.Regex.Replace(md, @"\*{1,2}(.+?)\*{1,2}", "$1");
-        // Remove inline code (`code`)
-        md = System.Text.RegularExpressions.Regex.Replace(md, @"`(.+?)`", "$1");
-        return md.Trim();
+        textBlock.Inlines.Clear();
+        if (string.IsNullOrEmpty(md)) return;
+
+        var lines = md.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+        bool firstLine = true;
+
+        foreach (var line in lines)
+        {
+            if (!firstLine)
+            {
+                textBlock.Inlines.Add(new System.Windows.Documents.LineBreak());
+            }
+            firstLine = false;
+
+            string currentLine = line.TrimEnd();
+            
+            if (currentLine.StartsWith("### "))
+            {
+                textBlock.Inlines.Add(new System.Windows.Documents.Run(currentLine.Substring(4)) { FontSize = 16, FontWeight = System.Windows.FontWeights.Bold, Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(250, 250, 250)) });
+                continue;
+            }
+            if (currentLine.StartsWith("## "))
+            {
+                textBlock.Inlines.Add(new System.Windows.Documents.Run(currentLine.Substring(3)) { FontSize = 18, FontWeight = System.Windows.FontWeights.Bold, Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255)) });
+                textBlock.Inlines.Add(new System.Windows.Documents.LineBreak());
+                continue;
+            }
+            if (currentLine.StartsWith("# "))
+            {
+                textBlock.Inlines.Add(new System.Windows.Documents.Run(currentLine.Substring(2)) { FontSize = 20, FontWeight = System.Windows.FontWeights.Bold, Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255)) });
+                textBlock.Inlines.Add(new System.Windows.Documents.LineBreak());
+                continue;
+            }
+
+            if (currentLine.StartsWith("- "))
+            {
+                textBlock.Inlines.Add(new System.Windows.Documents.Run(" •  ") { FontWeight = System.Windows.FontWeights.Bold, Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 85, 0)) });
+                currentLine = currentLine.Substring(2);
+            }
+
+            // Simple bold parsing: **text**
+            var parts = System.Text.RegularExpressions.Regex.Split(currentLine, @"(\*\*.*?\*\*)");
+            foreach (var part in parts)
+            {
+                if (part.StartsWith("**") && part.EndsWith("**") && part.Length > 4)
+                {
+                    textBlock.Inlines.Add(new System.Windows.Documents.Run(part.Substring(2, part.Length - 4)) { FontWeight = System.Windows.FontWeights.Bold });
+                }
+                else if (!string.IsNullOrEmpty(part))
+                {
+                    // Simple inline code: `text`
+                    var codeParts = System.Text.RegularExpressions.Regex.Split(part, @"(`.*?`)");
+                    foreach (var cPart in codeParts)
+                    {
+                        if (cPart.StartsWith("`") && cPart.EndsWith("`") && cPart.Length > 2)
+                        {
+                            textBlock.Inlines.Add(new System.Windows.Documents.Run(cPart.Substring(1, cPart.Length - 2)) 
+                            { 
+                                FontFamily = new System.Windows.Media.FontFamily("Consolas"),
+                                Foreground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(250, 180, 100))
+                            });
+                        }
+                        else if (!string.IsNullOrEmpty(cPart))
+                        {
+                            textBlock.Inlines.Add(new System.Windows.Documents.Run(cPart));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
