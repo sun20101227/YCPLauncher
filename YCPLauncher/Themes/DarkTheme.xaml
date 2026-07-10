@@ -6,28 +6,28 @@
     <SolidColorBrush x:Key="AccentBrush"      Color="#FF6B00"/>
     
     <!-- Backgrounds -->
-    <SolidColorBrush x:Key="BgDeepBrush"      Color="#060A10"/>
-    <SolidColorBrush x:Key="BgDarkBrush"      Color="#0A0F1A"/>
-    <SolidColorBrush x:Key="BgCardBrush"      Color="#0F1623"/>
-    <SolidColorBrush x:Key="BgSidebarBrush"   Color="#A0080D18"/>
-    <SolidColorBrush x:Key="BgOverlayBrush"   Color="#8A060A10"/>
+    <SolidColorBrush x:Key="BgDeepBrush"      Color="#070709"/>
+    <SolidColorBrush x:Key="BgDarkBrush"      Color="#0B0F19"/>
+    <SolidColorBrush x:Key="BgCardBrush"      Color="#121827"/>
+    <SolidColorBrush x:Key="BgSidebarBrush"   Color="#A0070709"/>
+    <SolidColorBrush x:Key="BgOverlayBrush"   Color="#A0000000"/>
     
     <!-- Borders -->
-    <SolidColorBrush x:Key="BorderBrush1"     Color="#1A2436"/>
-    <SolidColorBrush x:Key="BorderBrush2"     Color="#111C2E"/>
+    <SolidColorBrush x:Key="BorderBrush1"     Color="#1E293B"/>
+    <SolidColorBrush x:Key="BorderBrush2"     Color="#2D3A4F"/>
     <SolidColorBrush x:Key="BorderBrushHover" Color="#FF6B00"/>
     
     <!-- Texts -->
-    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#E8F0F8"/>
-    <SolidColorBrush x:Key="TextMutedBrush"   Color="#4A5568"/>
-    <SolidColorBrush x:Key="TextDimBrush"     Color="#2A3A50"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="TextMutedBrush"   Color="#94A3B8"/>
+    <SolidColorBrush x:Key="TextDimBrush"     Color="#475569"/>
     
     <!-- Specific Elements -->
-    <SolidColorBrush x:Key="CardBgBrush"      Color="#A00A1020"/>
-    <SolidColorBrush x:Key="ItemBgBrush"      Color="#080D18"/>
-    <SolidColorBrush x:Key="ItemBgHoverBrush" Color="#0D1525"/>
-    <SolidColorBrush x:Key="ItemBorderBrush"  Color="#1A2A3A"/>
-    <SolidColorBrush x:Key="AccentBgBrush"    Color="#142033"/>
+    <SolidColorBrush x:Key="CardBgBrush"      Color="#C0121827"/>
+    <SolidColorBrush x:Key="ItemBgBrush"      Color="#151C2C"/>
+    <SolidColorBrush x:Key="ItemBgHoverBrush" Color="#1E293B"/>
+    <SolidColorBrush x:Key="ItemBorderBrush"  Color="#2D3A4F"/>
+    <SolidColorBrush x:Key="AccentBgBrush"    Color="#331A05"/>
     
     <!-- Status -->
     <SolidColorBrush x:Key="SuccessBrush"     Color="#22C55E"/>

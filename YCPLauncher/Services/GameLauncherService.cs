@@ -21,9 +21,18 @@ public class GameLauncherService
     {
         try
         {
-            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            System.Windows.Application.Current.Dispatcher.InvokeAsync(async () =>
             {
-                Views.LaunchLoadingDialog.ShowAndAutoClose(8000);
+                var dialog = new Views.TerminalLaunchDialog();
+                dialog.Show();
+                await dialog.RunLogsAsync(new string[] 
+                {
+                    $"[SYSTEM] 初始化 YCP CS2 注入引擎...",
+                    $"[NETWORK] 验证通信链路状态... UDP直连成功",
+                    $"[MATCH] 锁定目标服务器 -> {ip}:{port} [{serverName}]",
+                    $"[LAUNCH] 正在挂载本地游戏目录并静默注入启动参数...",
+                    $"[SUCCESS] 指令已下发！正在拉起 Source 2 引擎，请等待..."
+                });
             });
 
             var cs2Procs = Process.GetProcessesByName("cs2");
