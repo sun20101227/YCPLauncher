@@ -60,43 +60,59 @@ public partial class UpdateDialog : Window
             string[] proxyPrefixes = new[] {
                 "https://gh-proxy.com/",
                 "https://mirror.ghproxy.com/",
-                "https://ghp.ci/",
-                "" // direct as last resort
+                "https://ghp.ci/"
             };
 
             var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             };
-            using var checkClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(15) };
+            using var checkClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(10) };
             checkClient.DefaultRequestHeaders.UserAgent.ParseAdd("YCPLauncher/" + App.CurrentVersion);
 
             HttpResponseMessage? checkResponse = null;
             string? downloadUrl = null;
 
-            foreach (var prefix in proxyPrefixes)
+            var testUrls = new System.Collections.Generic.List<string>();
+            if (originalUrl != null && originalUrl.Contains("github.com"))
             {
+                foreach (var p in proxyPrefixes) testUrls.Add(p + originalUrl);
+            }
+            testUrls.Add(originalUrl ?? ""); // always add direct github as fallback
+
+            using var cts = new System.Threading.CancellationTokenSource();
+            var proxyTasks = testUrls.Select(async url =>
+            {
+                var req = new HttpRequestMessage(HttpMethod.Get, url);
+                var resp = await checkClient.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+                resp.EnsureSuccessStatusCode();
+                return new { Url = url, Response = resp };
+            }).ToList();
+
+            while (proxyTasks.Count > 0)
+            {
+                var completedTask = await Task.WhenAny(proxyTasks);
+                proxyTasks.Remove(completedTask);
                 try
                 {
-                    string url = (originalUrl != null && originalUrl.Contains("github.com") && !string.IsNullOrEmpty(prefix)) 
-                        ? prefix + originalUrl 
-                        : originalUrl ?? "";
-
-                    checkResponse = await checkClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-                    checkResponse.EnsureSuccessStatusCode();
-                    downloadUrl = url;
+                    var result = await completedTask;
+                    checkResponse = result.Response;
+                    downloadUrl = result.Url;
+                    cts.Cancel(); // cancel the other pending requests
                     break;
                 }
                 catch
                 {
-                    checkResponse?.Dispose();
-                    checkResponse = null;
+                    // failed, wait for the next one
                 }
             }
 
             if (checkResponse == null || downloadUrl == null)
             {
-                throw new Exception("所有下载节点均连接失败，网络证书或代理存在问题。");
+                // all failed, default to github directly anyway to let chunk downloader try
+                downloadUrl = originalUrl;
+                checkResponse = await checkClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
+                checkResponse.EnsureSuccessStatusCode();
             }
 
             long totalBytes = checkResponse.Content.Headers.ContentLength ?? -1L;
