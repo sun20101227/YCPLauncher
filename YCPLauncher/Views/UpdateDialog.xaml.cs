@@ -56,21 +56,48 @@ public partial class UpdateDialog : Window
         {
             string tempPath = Path.Combine(Path.GetTempPath(), $"YachiyoCup_Installer_v{_updateInfo.LatestVersion}.exe");
             
-            string downloadUrl = _updateInfo.DownloadUrl;
-            if (downloadUrl != null && downloadUrl.Contains("github.com"))
-            {
-                // Use a stable GitHub proxy to bypass SSL issues in China
-                downloadUrl = "https://ghp.ci/" + downloadUrl;
-            }
+            string originalUrl = _updateInfo.DownloadUrl;
+            string[] proxyPrefixes = new[] {
+                "https://gh-proxy.com/",
+                "https://mirror.ghproxy.com/",
+                "https://ghp.ci/",
+                "" // direct as last resort
+            };
 
             var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             };
-            using var checkClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(30) };
-            checkClient.DefaultRequestHeaders.UserAgent.ParseAdd("YCPLauncher/1.1.0");
-            using var checkResponse = await checkClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
-            checkResponse.EnsureSuccessStatusCode();
+            using var checkClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(15) };
+            checkClient.DefaultRequestHeaders.UserAgent.ParseAdd("YCPLauncher/" + App.CurrentVersion);
+
+            HttpResponseMessage? checkResponse = null;
+            string? downloadUrl = null;
+
+            foreach (var prefix in proxyPrefixes)
+            {
+                try
+                {
+                    string url = (originalUrl != null && originalUrl.Contains("github.com") && !string.IsNullOrEmpty(prefix)) 
+                        ? prefix + originalUrl 
+                        : originalUrl ?? "";
+
+                    checkResponse = await checkClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+                    checkResponse.EnsureSuccessStatusCode();
+                    downloadUrl = url;
+                    break;
+                }
+                catch
+                {
+                    checkResponse?.Dispose();
+                    checkResponse = null;
+                }
+            }
+
+            if (checkResponse == null || downloadUrl == null)
+            {
+                throw new Exception("所有下载节点均连接失败，网络证书或代理存在问题。");
+            }
 
             long totalBytes = checkResponse.Content.Headers.ContentLength ?? -1L;
             bool canReportProgress = totalBytes != -1;
@@ -100,7 +127,7 @@ public partial class UpdateDialog : Window
                             
                             var chunkHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator };
                             using var client = new HttpClient(chunkHandler) { Timeout = TimeSpan.FromSeconds(60) };
-                            client.DefaultRequestHeaders.UserAgent.ParseAdd("YCPLauncher/1.1.0");
+                            client.DefaultRequestHeaders.UserAgent.ParseAdd("YCPLauncher/" + App.CurrentVersion);
                             var request = new HttpRequestMessage(HttpMethod.Get, downloadUrl);
                             request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(start, end);
                             
