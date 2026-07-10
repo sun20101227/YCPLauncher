@@ -34,7 +34,7 @@
                 <ProgressBar x:Name="DownloadProgressBar" Grid.Row="1" Height="6" Minimum="0" Maximum="100" Value="0" Background="#374151" Foreground="{StaticResource AccentBrush}" BorderThickness="0"/>
             </Grid>
 
-            <Button x:Name="BtnUpdate" Content="立即下载并强制更新" Grid.Row="4" Style="{StaticResource OrangeButton}" Height="40" Click="BtnUpdate_Click"/>
+            <Button x:Name="BtnUpdate" Content="下载并更新" Grid.Row="4" Style="{StaticResource OrangeButton}" Height="40" Click="BtnUpdate_Click"/>
         </Grid>
     </Border>
 </Window>

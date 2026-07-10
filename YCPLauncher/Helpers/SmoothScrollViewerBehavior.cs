@@ -36,6 +36,8 @@ public static class SmoothScrollViewerBehavior
         }
     }
 
+    private static double _targetOffset = -1;
+
     private static void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
         if (sender is ScrollViewer scrollViewer)
@@ -44,21 +46,32 @@ public static class SmoothScrollViewerBehavior
             
             // Calculate target offset
             double scrollFactor = 80.0;
-            double targetOffset = scrollViewer.VerticalOffset - (e.Delta > 0 ? scrollFactor : -scrollFactor);
+            
+            if (_targetOffset == -1 || Math.Abs(scrollViewer.VerticalOffset - _targetOffset) > 500)
+            {
+                _targetOffset = scrollViewer.VerticalOffset;
+            }
+            
+            _targetOffset -= (e.Delta > 0 ? scrollFactor : -scrollFactor);
             
             // Clamp target offset
-            if (targetOffset < 0) targetOffset = 0;
-            if (targetOffset > scrollViewer.ScrollableHeight) targetOffset = scrollViewer.ScrollableHeight;
+            if (_targetOffset < 0) _targetOffset = 0;
+            if (_targetOffset > scrollViewer.ScrollableHeight) _targetOffset = scrollViewer.ScrollableHeight;
             
             // Animate scroll
             DoubleAnimation animation = new DoubleAnimation
             {
-                From = scrollViewer.VerticalOffset,
-                To = targetOffset,
+                To = _targetOffset,
                 Duration = TimeSpan.FromMilliseconds(250),
                 EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
             };
             
+            // Reset _targetOffset when animation completes
+            animation.Completed += (s, args) => {
+                if (scrollViewer.VerticalOffset == _targetOffset)
+                    _targetOffset = -1;
+            };
+
             scrollViewer.BeginAnimation(VerticalOffsetAnimationProperty, animation);
         }
     }

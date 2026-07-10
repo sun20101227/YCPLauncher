@@ -240,7 +240,7 @@
                                 <TextBlock Text="登录与 API 服务器" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
                                 <TextBlock Text="基础服务与玩家数据接口" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
-                            <Border Grid.Column="1" Background="{DynamicResource BgSidebarBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="8" Padding="4">
+                            <Border Grid.Column="1" HorizontalAlignment="Left" Width="360" Background="{DynamicResource BgSidebarBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="8" Padding="4">
                                 <PasswordBox x:Name="ApiPwd" PasswordChanged="ApiPwd_PasswordChanged"
                                              Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" 
                                              BorderThickness="0" VerticalAlignment="Center" Padding="8,4" FontSize="14" CaretBrush="{DynamicResource TextPrimaryBrush}"/>
@@ -255,7 +255,7 @@
                                 <TextBlock Text="RTMP 直播源" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
                                 <TextBlock Text="赛事实况拉流地址" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
-                            <Border Grid.Column="1" Background="{DynamicResource BgSidebarBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="8" Padding="4">
+                            <Border Grid.Column="1" HorizontalAlignment="Left" Width="360" Background="{DynamicResource BgSidebarBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="8" Padding="4">
                                 <PasswordBox x:Name="StreamPwd" PasswordChanged="StreamPwd_PasswordChanged"
                                              Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" 
                                              BorderThickness="0" VerticalAlignment="Center" Padding="8,4" FontSize="14" CaretBrush="{DynamicResource TextPrimaryBrush}"/>
@@ -270,7 +270,7 @@
                                 <TextBlock Text="聊天室网页地址" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14"/>
                                 <TextBlock Text="嵌入的弹幕聊天室 Web 页面" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" Margin="0,4,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
-                            <Border Grid.Column="1" Background="{DynamicResource BgSidebarBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="8" Padding="4">
+                            <Border Grid.Column="1" HorizontalAlignment="Left" Width="360" Background="{DynamicResource BgSidebarBrush}" BorderBrush="{DynamicResource BorderBrush2}" BorderThickness="1" CornerRadius="8" Padding="4">
                                 <PasswordBox x:Name="ChatPwd" PasswordChanged="ChatPwd_PasswordChanged"
                                              Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" 
                                              BorderThickness="0" VerticalAlignment="Center" Padding="8,4" FontSize="14" CaretBrush="{DynamicResource TextPrimaryBrush}"/>

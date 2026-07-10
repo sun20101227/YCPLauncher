@@ -17,16 +17,43 @@ public partial class SplashWindow : Window
         var intro = (Storyboard)FindResource("IntroAnimation");
         intro.Begin();
 
-        // Wait for 2 seconds (intro is 2.5s but we start fade out a bit early for smoothness)
-        await Task.Delay(2000);
+        _ = UpdateLoadingProgressAsync();
+
+        // Wait for 2.2 seconds to let the progress hit 100% and stay for a moment
+        await Task.Delay(2200);
 
         var outro = (Storyboard)FindResource("OutroAnimation");
         outro.Begin();
     }
 
+    private async Task UpdateLoadingProgressAsync()
+    {
+        await Task.Delay(500); // Wait for the text to fade in
+        
+        string prefix = "Connecting to Game Servers [";
+        int totalBars = 20;
+        int currentPercent = 0;
+        
+        // We have about 1.5 seconds to go from 0 to 100%
+        int steps = 40;
+        int delayPerStep = 1500 / steps;
+        
+        for (int i = 0; i <= steps; i++)
+        {
+            currentPercent = (int)((i / (double)steps) * 100);
+            int currentBars = (int)((i / (double)steps) * totalBars);
+            
+            string bars = new string('=', currentBars) + (currentBars < totalBars ? ">" : "") + new string(' ', Math.Max(0, totalBars - currentBars - 1));
+            if (currentBars == totalBars) bars = new string('=', totalBars); // Remove arrow when full
+            
+            LoadingText.Text = $"{prefix}{bars}] {currentPercent}%";
+            
+            await Task.Delay(delayPerStep);
+        }
+    }
+
     private void OutroAnimation_Completed(object sender, EventArgs e)
     {
-        // When outro is done, show the main window and close this splash window
         var mainWindow = new MainWindow();
         System.Windows.Application.Current.MainWindow = mainWindow;
         mainWindow.Show();

@@ -23,15 +23,10 @@ public partial class App : System.Windows.Application
             }
         }
 
-        if (silentMode)
+        // Check .NET 8 Desktop Runtime
+        if (!IsDotNet8Installed())
         {
-            // Execute silent installation
-            PerformSilentInstall();
-        }
-        else
-        {
-            // Check .NET 8 Desktop Runtime
-            if (!IsDotNet8Installed())
+            if (!silentMode)
             {
                 var result = System.Windows.MessageBox.Show(
                     "YCP 电竞启动器 需要 .NET 8 Desktop Runtime 才能运行。\n\n" +
@@ -49,14 +44,13 @@ public partial class App : System.Windows.Application
                         UseShellExecute = true
                     });
                 }
-                Shutdown();
-                return;
             }
-
-            InstallerSplashWindow splash = new InstallerSplashWindow();
-            splash.Show();
+            Shutdown();
+            return;
         }
 
+        InstallerSplashWindow splash = new InstallerSplashWindow(silentMode);
+        splash.Show();
     }
 
     private static bool IsDotNet8Installed()
@@ -96,7 +90,7 @@ public partial class App : System.Windows.Application
         return false;
     }
 
-    private void PerformSilentInstall()
+    public void PerformSilentInstall()
     {
         // A minimal logic of what MainWindow does during install
         string installDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86), "YCPLauncher");
