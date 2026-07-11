@@ -9,8 +9,12 @@
     <SolidColorBrush x:Key="BgDeepBrush"      Color="#070709"/>
     <SolidColorBrush x:Key="BgDarkBrush"      Color="#0B0F19"/>
     <SolidColorBrush x:Key="BgCardBrush"      Color="#121827"/>
-    <SolidColorBrush x:Key="BgSidebarBrush"   Color="#A0070709"/>
-    <SolidColorBrush x:Key="BgOverlayBrush"   Color="#A0000000"/>
+    <SolidColorBrush x:Key="BgSidebarBrush"   Color="#0A0A0A"/>
+    <SolidColorBrush x:Key="BgOverlayBrush"   Color="#40000000"/>
+    
+    <!-- Window Caption Controls -->
+    <SolidColorBrush x:Key="CaptionHoverBrush"   Color="#1AFFFFFF"/>
+    <SolidColorBrush x:Key="CaptionPressedBrush" Color="#33FFFFFF"/>
     
     <!-- Borders -->
     <SolidColorBrush x:Key="BorderBrush1"     Color="#1E293B"/>

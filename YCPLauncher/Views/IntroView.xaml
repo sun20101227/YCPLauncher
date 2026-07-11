@@ -11,13 +11,13 @@
         <Style TargetType="TextBlock" x:Key="TitleStyle">
             <Setter Property="FontFamily" Value="HarmonyOS Sans SC, MiSans, PingFang SC, Microsoft YaHei UI, Arial Black, sans-serif"/>
             <Setter Property="FontWeight" Value="Black"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="StatNumberStyle">
             <Setter Property="FontFamily" Value="Segoe UI, Microsoft YaHei UI, sans-serif"/>
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
             <Setter Property="Padding" Value="2,0,2,0"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="StatLabelStyle">
@@ -28,8 +28,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <!-- Overlay for full glass effect over the content area -->
-        <Border Background="#44000000" CornerRadius="8" Margin="24"/>
+        <!-- Main Content Area -->
         
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="24">
             <StackPanel Margin="32">
@@ -44,9 +43,6 @@
                         <TextBlock Text="EPT Masters" Foreground="{DynamicResource AccentBrush}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" />
                         
                         <TextBlock Text="YACHIYO CUP" Style="{StaticResource TitleStyle}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,8,0,0">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="{DynamicResource AccentColor}" BlurRadius="15" ShadowDepth="0" Opacity="0.6"/>
-                            </TextBlock.Effect>
                             <TextBlock.Foreground>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#FFFF6B00" Offset="0"/>
@@ -79,9 +75,6 @@
                     <helpers:RevealBorder Grid.Column="2" Style="{StaticResource TileRevealStyle}" CornerRadius="16" Padding="32,24">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="600,000" Style="{StaticResource StatNumberStyle}" Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect Color="{DynamicResource AccentColor}" BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
-                                </TextBlock.Effect>
                             </TextBlock>
                             <TextBlock Text="赛事总奖池 (VND)" Style="{StaticResource StatLabelStyle}" HorizontalAlignment="Center"/>
                         </StackPanel>
@@ -110,34 +103,34 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- DL Gaming -->
-                    <helpers:RevealBorder Grid.Column="0" Style="{StaticResource TileRevealStyle}" HoverColor="#44FF6B00" HoverRadius="200" Background="{DynamicResource ItemBgBrush}" CornerRadius="16" Padding="24,32">
+                    <helpers:RevealBorder Grid.Column="0" Style="{StaticResource TileRevealStyle}" Background="{DynamicResource ItemBgBrush}" CornerRadius="16" Padding="24,32">
                         <StackPanel>
                             <Border Width="64" Height="64" CornerRadius="32" Background="#44D40511" BorderBrush="#D40511" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,20">
                                 <TextBlock Text="DL" Foreground="#FFD40511" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <TextBlock Text="DL Gaming" Foreground="White" FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="DL Gaming" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                             <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="13" HorizontalAlignment="Center" Margin="0,6,0,0"/>
                         </StackPanel>
                     </helpers:RevealBorder>
 
                     <!-- JH Gaming -->
-                    <helpers:RevealBorder Grid.Column="2" Style="{StaticResource TileRevealStyle}" HoverColor="#44FF6B00" HoverRadius="200" Background="{DynamicResource ItemBgBrush}" CornerRadius="16" Padding="24,32">
+                    <helpers:RevealBorder Grid.Column="2" Style="{StaticResource TileRevealStyle}" Background="{DynamicResource ItemBgBrush}" CornerRadius="16" Padding="24,32">
                         <StackPanel>
                             <Border Width="64" Height="64" CornerRadius="32" Background="#441a4dcc" BorderBrush="#1a4dcc" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,20">
                                 <TextBlock Text="JH" Foreground="#FF1a4dcc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <TextBlock Text="JH Gaming" Foreground="White" FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="JH Gaming" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                             <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="13" HorizontalAlignment="Center" Margin="0,6,0,0"/>
                         </StackPanel>
                     </helpers:RevealBorder>
 
                     <!-- CY Gaming -->
-                    <helpers:RevealBorder Grid.Column="4" Style="{StaticResource TileRevealStyle}" HoverColor="#44FF6B00" HoverRadius="200" Background="{DynamicResource ItemBgBrush}" CornerRadius="16" Padding="24,32">
+                    <helpers:RevealBorder Grid.Column="4" Style="{StaticResource TileRevealStyle}" Background="{DynamicResource ItemBgBrush}" CornerRadius="16" Padding="24,32">
                         <StackPanel>
                             <Border Width="64" Height="64" CornerRadius="32" Background="#4400875a" BorderBrush="#00875a" BorderThickness="2" HorizontalAlignment="Center" Margin="0,0,0,20">
                                 <TextBlock Text="CY" Foreground="#FF00875a" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <TextBlock Text="CY Gaming" Foreground="White" FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="CY Gaming" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                             <TextBlock Text="线上直邀" Foreground="{DynamicResource TextMutedBrush}" FontSize="13" HorizontalAlignment="Center" Margin="0,6,0,0"/>
                         </StackPanel>
                     </helpers:RevealBorder>

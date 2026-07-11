@@ -5,11 +5,15 @@
     <SolidColorBrush x:Key="AccentBrush"      Color="#FF6B00"/>
     
     <!-- Backgrounds -->
-    <SolidColorBrush x:Key="BgDeepBrush"      Color="#F0F4F8"/>
+    <SolidColorBrush x:Key="BgDeepBrush"      Color="#F1F5F9"/>
     <SolidColorBrush x:Key="BgDarkBrush"      Color="#FFFFFF"/>
     <SolidColorBrush x:Key="BgCardBrush"      Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="BgSidebarBrush"   Color="#F7FAFC"/>
-    <SolidColorBrush x:Key="BgOverlayBrush"   Color="#8AFFFFFF"/>
+    <SolidColorBrush x:Key="BgSidebarBrush"   Color="#FFFFFF"/> <!-- Pure white sidebar -->
+    <SolidColorBrush x:Key="BgOverlayBrush"   Color="#F8FAFC"/> <!-- Slate-50, 100% opaque to hide the mismatched background image completely -->
+    
+    <!-- Window Caption Controls -->
+    <SolidColorBrush x:Key="CaptionHoverBrush"   Color="#1A000000"/>
+    <SolidColorBrush x:Key="CaptionPressedBrush" Color="#33000000"/>
     
     <!-- Borders -->
     <SolidColorBrush x:Key="BorderBrush1"     Color="#E2E8F0"/>
@@ -23,8 +27,8 @@
     
     <!-- Specific Elements -->
     <SolidColorBrush x:Key="CardBgBrush"      Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="ItemBgBrush"      Color="#F8FAFC"/>
-    <SolidColorBrush x:Key="ItemBgHoverBrush" Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="ItemBgBrush"      Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="ItemBgHoverBrush" Color="#E2E8F0"/>
     <SolidColorBrush x:Key="ItemBorderBrush"  Color="#E2E8F0"/>
     <SolidColorBrush x:Key="AccentBgBrush"    Color="#FFF7ED"/>
     
@@ -49,10 +53,10 @@
     <!-- Win10 Tile Reveal Style for RevealBorder -->
     <Style x:Key="TileRevealStyle" TargetType="helpers:RevealBorder">
         <Setter Property="CornerRadius" Value="12"/>
-        <Setter Property="HoverColor" Value="#22000000"/>
+        <Setter Property="HoverColor" Value="#25FF6B00"/> <!-- Warm orange glow, very visible on white -->
         <Setter Property="HoverRadius" Value="350"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="#22000000"/>
+        <Setter Property="BorderBrush" Value="#1A000000"/> <!-- Faint permanent border so cards are defined -->
         <Setter Property="Padding" Value="24"/>
         <Setter Property="Background" Value="{DynamicResource CardBgBrush}"/>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>

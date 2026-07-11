@@ -15,8 +15,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void JoinMatch()
     {
-        // 自动进入对局 - frp-leg.com:16042
-        GameLauncherService.LaunchDirect("frp-leg.com", 16042, "YCP Server");
+        NavigateToServersCommand?.Execute(null);
     }
 
     [ObservableProperty]

@@ -10,7 +10,7 @@ public class GameLauncherService
 {
     private const string Cs2AppId = "730";
 
-    public static bool LaunchDirect(string ip, int port, string serverName)
+    public static bool LaunchDirect(string ip, int port, string serverName, string customArgs = "")
     {
         try
         {
@@ -34,7 +34,7 @@ public class GameLauncherService
             if (launchMethod == 0)
             {
                 // Method 0: steam://rungameid/730//+connect ip:port (Simplest & most stable for some systems)
-                string url = $"steam://rungameid/{Cs2AppId}//+connect {ip}:{port}";
+                string url = $"steam://rungameid/{Cs2AppId}//+connect {ip}:{port} {customArgs}".Trim();
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
                 return true;
             }

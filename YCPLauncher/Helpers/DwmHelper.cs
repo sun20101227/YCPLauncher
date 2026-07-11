@@ -43,19 +43,14 @@ public static class DwmHelper
     /// Applies Windows 11 native immersive dark mode, native rounded corners, and Mica backdrop to the specified window.
     /// </summary>
     /// <param name="window">The WPF window to apply the effects to.</param>
-    public static void ApplyNativeWindows11Styles(Window window)
+    public static void ApplyNativeWindows11Styles(Window window, bool isDarkMode = true)
     {
         var hwnd = new WindowInteropHelper(window).Handle;
         if (hwnd == IntPtr.Zero)
             throw new InvalidOperationException("Window handle is not initialized. Call this method in or after SourceInitialized event.");
 
         // 1. Apply Immersive Dark Mode for native titlebar and context menus
-        int isDark = 1;
-        try
-        {
-            DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref isDark, sizeof(int));
-        }
-        catch { /* OS might not support it */ }
+        SetImmersiveDarkMode(window, isDarkMode);
 
         // 2. Enforce Native Windows 11 Rounded Corners
         int cornerPreference = (int)DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
@@ -70,6 +65,18 @@ public static class DwmHelper
         try
         {
             DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, sizeof(int));
+        }
+        catch { /* OS might not support it */ }
+    }
+
+    public static void SetImmersiveDarkMode(Window window, bool isDarkMode)
+    {
+        var hwnd = new WindowInteropHelper(window).Handle;
+        if (hwnd == IntPtr.Zero) return;
+        int isDark = isDarkMode ? 1 : 0;
+        try
+        {
+            DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref isDark, sizeof(int));
         }
         catch { /* OS might not support it */ }
     }

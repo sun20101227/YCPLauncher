@@ -7,15 +7,11 @@ namespace YCPLauncher;
 
 public partial class App : System.Windows.Application
 {
-    public static readonly string CurrentVersion = "1.1.5";
+    public static readonly string CurrentVersion = "1.1.6";
 
     private static System.Threading.Mutex? _mutex;
 
-    [System.Runtime.InteropServices.DllImport("user32.dll")]
-    private static extern bool SetForegroundWindow(IntPtr hWnd);
-
-    [System.Runtime.InteropServices.DllImport("user32.dll")]
-    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    private static System.Threading.EventWaitHandle? _wakeUpHandle;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -25,22 +21,54 @@ public partial class App : System.Windows.Application
 
         if (!createdNew)
         {
-            var currentProcess = System.Diagnostics.Process.GetCurrentProcess();
-            foreach (var process in System.Diagnostics.Process.GetProcessesByName(currentProcess.ProcessName))
+            // Try to wake up the existing instance
+            try
             {
-                if (process.Id != currentProcess.Id)
-                {
-                    IntPtr handle = process.MainWindowHandle;
-                    if (handle != IntPtr.Zero)
-                    {
-                        ShowWindow(handle, 9); // SW_RESTORE
-                        SetForegroundWindow(handle);
-                    }
-                    break;
-                }
+                var evt = System.Threading.EventWaitHandle.OpenExisting("YCPLauncher_WakeUpEvent");
+                evt.Set();
             }
+            catch { }
+            
             System.Windows.Application.Current.Shutdown();
             return;
+        }
+
+        // First instance creates the event
+        _wakeUpHandle = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset, "YCPLauncher_WakeUpEvent");
+        
+        // Listen for wake-up signals in a background thread
+        System.Threading.Tasks.Task.Run(() =>
+        {
+            while (true)
+            {
+                _wakeUpHandle.WaitOne();
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var mainWindow = System.Windows.Application.Current.MainWindow;
+                    if (mainWindow != null)
+                    {
+                        mainWindow.Show();
+                        if (mainWindow.WindowState == WindowState.Minimized)
+                        {
+                            mainWindow.WindowState = WindowState.Normal;
+                        }
+                        mainWindow.Activate();
+                        mainWindow.Topmost = true;
+                        mainWindow.Topmost = false;
+                        mainWindow.Focus();
+                    }
+                });
+            }
+        });
+
+        // Apply saved theme at startup
+        var cfg = Services.ConfigService.GetConfig();
+        string themePath = cfg.IsDarkMode ? "Themes/DarkTheme.xaml" : "Themes/LightTheme.xaml";
+        var uri = new Uri(themePath, UriKind.Relative);
+        var dict = new ResourceDictionary { Source = uri };
+        if (System.Windows.Application.Current.Resources.MergedDictionaries.Count > 0)
+        {
+            System.Windows.Application.Current.Resources.MergedDictionaries[0] = dict;
         }
 
         base.OnStartup(e);
@@ -59,6 +87,14 @@ public partial class App : System.Windows.Application
             MessageBox.Show(msg, "应用程序错误",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         };
+
+        // Manually show the main window to prevent 2nd instance flashes
+        var splash = new Views.SplashWindow();
+        splash.Show();
+        splash.Activate();
+        splash.Topmost = true;
+        splash.Topmost = false;
+        splash.Focus();
     }
 
     private static string BuildExceptionMessage(Exception? ex)

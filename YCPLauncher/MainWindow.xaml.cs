@@ -52,6 +52,10 @@ public partial class MainWindow : Window
     }
 
 
+    // ── Window Controls ──────────────────────────────────────────────────
+    private void MinBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+    private void MaxBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+    private void CloseBtn_Click(object sender, RoutedEventArgs e) => Close();
 
     protected override void OnStateChanged(EventArgs e)
     {
@@ -87,25 +91,6 @@ public partial class MainWindow : Window
     }
 
     // ── Window Chrome ──────────────────────────────────────────────────────
-    private void DragBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        if (e.ClickCount == 2)
-            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-        else DragMove();
-    }
-    private void MinBtn_Click(object sender, RoutedEventArgs e)  => WindowState = WindowState.Minimized;
-    private void MaxBtn_Click(object sender, RoutedEventArgs e) 
-    {
-        WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-    }
-    private void CloseBtn_Click(object sender, RoutedEventArgs e)
-    {
-        if (ConfigService.GetConfig().MinimizeToTray)
-            HideToTray();
-        else
-            ExitApp();
-    }
-
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     { 
         if (!_isExiting && ConfigService.GetConfig().MinimizeToTray)
@@ -210,23 +195,23 @@ public partial class MainWindow : Window
         SetNavActive(NavDashboard);
         var vm = new MainViewModel(_player!, _token, NavigateToLogin)
         {
-            NavigateToServersCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(NavigateToServerList)
+            NavigateToServersCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(NavigateToMatchmaking)
         };
         SetContent(new MainView { DataContext = vm });
     }
 
-    public void NavigateToServerList()
-    {
-        SetNavActive(NavServers);
-        var vm = new ServerListViewModel(_api, _token, _player?.DisplayName ?? "Player");
-        vm.OnServerJoined = msg => Dispatcher.Invoke(() => Toast.Show(msg));
-        SetContent(new ServerListView { DataContext = vm });
-    }
+
     
     public void NavigateToLiveStream()
     {
         SetNavActive(NavLiveStream);
         SetContent(new LiveStreamView());
+    }
+    
+    public void NavigateToMatchmaking()
+    {
+        SetNavActive(NavMatchmaking);
+        SetContent(new LobbyView());
     }
     
     public void NavigateToSettings()
@@ -241,9 +226,9 @@ public partial class MainWindow : Window
     private void NavDashboard_Click(object sender, RoutedEventArgs e)
     { if (_player != null) NavigateToMain(); }
 
-    private void NavServers_Click(object sender, RoutedEventArgs e)
-    { if (_player != null) NavigateToServerList(); }
-    
+    private void NavMatchmaking_Click(object sender, RoutedEventArgs e)
+    { if (_player != null) NavigateToMatchmaking(); }
+
     private void NavLiveStream_Click(object sender, RoutedEventArgs e)
     { if (_player != null) NavigateToLiveStream(); }
     
@@ -255,7 +240,7 @@ public partial class MainWindow : Window
     {
         IntroIndicator.Visibility     = NavIntro     == active ? Visibility.Visible : Visibility.Hidden;
         DashboardIndicator.Visibility = NavDashboard == active ? Visibility.Visible : Visibility.Hidden;
-        ServersIndicator.Visibility   = NavServers   == active ? Visibility.Visible : Visibility.Hidden;
+        MatchmakingIndicator.Visibility = NavMatchmaking == active ? Visibility.Visible : Visibility.Hidden;
         LiveStreamIndicator.Visibility= NavLiveStream== active ? Visibility.Visible : Visibility.Hidden;
         SettingsIndicator.Visibility  = NavSettings  == active ? Visibility.Visible : Visibility.Hidden;
         
@@ -266,8 +251,8 @@ public partial class MainWindow : Window
             it.Foreground = NavIntro == active ? activeBrush : inactiveBrush;
         if (NavDashboard.Content is Grid dg && dg.Children.Count > 2 && dg.Children[2] is TextBlock dt)
             dt.Foreground = NavDashboard == active ? activeBrush : inactiveBrush;
-        if (NavServers.Content is Grid sg && sg.Children.Count > 2 && sg.Children[2] is TextBlock st)
-            st.Foreground = NavServers == active ? activeBrush : inactiveBrush;
+        if (NavMatchmaking.Content is Grid mg && mg.Children.Count > 2 && mg.Children[2] is TextBlock mt)
+            mt.Foreground = NavMatchmaking == active ? activeBrush : inactiveBrush;
         if (NavLiveStream.Content is Grid lg && lg.Children.Count > 2 && lg.Children[2] is TextBlock lt)
             lt.Foreground = NavLiveStream == active ? activeBrush : inactiveBrush;
         if (NavSettings.Content is Grid seg && seg.Children.Count > 2 && seg.Children[2] is TextBlock set)
@@ -299,7 +284,7 @@ public partial class MainWindow : Window
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
-        DwmHelper.ApplyNativeWindows11Styles(this);
+        DwmHelper.ApplyNativeWindows11Styles(this, Services.ConfigService.GetConfig().IsDarkMode);
         
         var handle = new WindowInteropHelper(this).Handle;
         HwndSource.FromHwnd(handle)?.AddHook(WindowProc);

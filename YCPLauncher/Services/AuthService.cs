@@ -83,4 +83,22 @@ public static class AuthService
         try { return File.Exists(UserFile) ? File.ReadAllText(UserFile).Trim() : null; }
         catch { return null; }
     }
+
+    // ── Last Room Code ─────────────────────────────────────────────────────────
+    private static readonly string RoomCodeFile = Path.Combine(DataDir, "last_room.txt");
+
+    public static void SaveLastRoomCode(string code)
+    {
+        try { Directory.CreateDirectory(DataDir); File.WriteAllText(RoomCodeFile, code); } catch { }
+    }
+
+    public static string? LoadLastRoomCode()
+    {
+        try { return File.Exists(RoomCodeFile) ? File.ReadAllText(RoomCodeFile).Trim() : null; } catch { return null; }
+    }
+
+    public static void ClearLastRoomCode()
+    {
+        try { if (File.Exists(RoomCodeFile)) File.Delete(RoomCodeFile); } catch { }
+    }
 }

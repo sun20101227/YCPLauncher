@@ -57,6 +57,10 @@ public partial class SplashWindow : Window
         var mainWindow = new MainWindow();
         System.Windows.Application.Current.MainWindow = mainWindow;
         mainWindow.Show();
+        mainWindow.Activate();
+        mainWindow.Topmost = true;
+        mainWindow.Topmost = false;
+        mainWindow.Focus();
         this.Close();
     }
 }

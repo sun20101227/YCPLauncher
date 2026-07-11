@@ -199,14 +199,24 @@ public partial class SettingsViewModel : ObservableObject
     {
         string themePath = value ? "Themes/DarkTheme.xaml" : "Themes/LightTheme.xaml";
         var uri = new Uri(themePath, UriKind.Relative);
-        
         var dict = new ResourceDictionary { Source = uri };
         
-        Application.Current.Resources.MergedDictionaries.Clear();
-        Application.Current.Resources.MergedDictionaries.Add(dict);
+        if (Application.Current.Resources.MergedDictionaries.Count > 0)
+        {
+            Application.Current.Resources.MergedDictionaries[0] = dict;
+        }
+        else
+        {
+            Application.Current.Resources.MergedDictionaries.Add(dict);
+        }
 
         ConfigService.GetConfig().IsDarkMode = value;
         ConfigService.SaveConfig();
+
+        if (Application.Current.MainWindow != null)
+        {
+            YCPLauncher.Helpers.DwmHelper.SetImmersiveDarkMode(Application.Current.MainWindow, value);
+        }
     }
 
     partial void OnStartOnBootChanged(bool value)

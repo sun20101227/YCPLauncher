@@ -4,7 +4,6 @@
              xmlns:conv="clr-namespace:YCPLauncher.Converters"
              xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
              xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
-             StartupUri="Views\SplashWindow.xaml"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
@@ -206,6 +205,22 @@
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
+                    <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="0.95" Duration="0:0:0.05"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="0.95" Duration="0:0:0.05"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1.03" Duration="0:0:0.15"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1.03" Duration="0:0:0.15"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
                 </Style.Triggers>
             </Style>
 
@@ -262,11 +277,28 @@
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
+                    <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="0.95" Duration="0:0:0.05"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="0.95" Duration="0:0:0.05"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1.03" Duration="0:0:0.15"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1.03" Duration="0:0:0.15"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
                 </Style.Triggers>
             </Style>
 
             <!-- ── Sidebar Nav Button ─────────────────────────────── -->
             <Style x:Key="NavButton" TargetType="Button">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="Background"      Value="Transparent"/>
                 <Setter Property="Foreground"      Value="{DynamicResource TextMutedBrush}"/>
                 <Setter Property="BorderThickness" Value="0"/>
