@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YCPLauncher", "YCPLauncher\YCPLauncher.csproj", "{DBC4E929-AD47-4869-AD1F-344588AC6CC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YCPLauncher", "src\YCPLauncher\YCPLauncher.csproj", "{DBC4E929-AD47-4869-AD1F-344588AC6CC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YCPUninstaller", "YCPUninstaller\YCPUninstaller.csproj", "{48781E8E-F077-4D8D-826B-64D89E768747}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YCPUninstaller", "src\YCPUninstaller\YCPUninstaller.csproj", "{48781E8E-F077-4D8D-826B-64D89E768747}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YCPInstaller", "YCPInstaller\YCPInstaller.csproj", "{EAE92285-D1DC-4EA8-9787-63AC15E20B23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YCPInstaller", "src\YCPInstaller\YCPInstaller.csproj", "{EAE92285-D1DC-4EA8-9787-63AC15E20B23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YCPNameSync", "plugins\YCPNameSync\YCPNameSync.csproj", "{B94BFD5F-42AA-4F79-A1BD-9D8E50272843}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +32,9 @@ Global
 		{EAE92285-D1DC-4EA8-9787-63AC15E20B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAE92285-D1DC-4EA8-9787-63AC15E20B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAE92285-D1DC-4EA8-9787-63AC15E20B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B94BFD5F-42AA-4F79-A1BD-9D8E50272843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B94BFD5F-42AA-4F79-A1BD-9D8E50272843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B94BFD5F-42AA-4F79-A1BD-9D8E50272843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B94BFD5F-42AA-4F79-A1BD-9D8E50272843}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

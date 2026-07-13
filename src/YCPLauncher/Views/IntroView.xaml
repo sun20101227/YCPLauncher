@@ -1,0 +1,192 @@
+<UserControl x:Class="YCPLauncher.Views.IntroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1080">
+
+    <Grid x:Name="IntroRoot" Opacity="1">
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="IntroTranslate"/>
+        </Grid.RenderTransform>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="38,30,38,42">
+                <!-- Editorial event header -->
+                <Grid Margin="0,0,0,34">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.55*"/>
+                        <ColumnDefinition Width="36"/>
+                        <ColumnDefinition Width="0.85*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                            <Rectangle Width="28" Height="2" Fill="{DynamicResource AccentBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="YACHIYO CUP · 2026 SEASON"
+                                       FontSize="11" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextMutedBrush}"/>
+                        </StackPanel>
+                        <TextBlock Text="社区赛事中心"
+                                   FontSize="38" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"/>
+                        <TextBlock Text="面向 CS2 社区玩家的稳定比赛环境。查看赛事信息、确认参赛阵容并进入匹配大厅。"
+                                   FontSize="14" LineHeight="24" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource TextMutedBrush}"
+                                   MaxWidth="640" HorizontalAlignment="Left"
+                                   Margin="0,14,0,0"/>
+                    </StackPanel>
+
+                    <Border Grid.Column="2"
+                            Background="{DynamicResource CardBgBrush}"
+                            BorderBrush="{DynamicResource BorderBrush2}"
+                            BorderThickness="1" CornerRadius="14" Padding="22">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,18">
+                                <TextBlock Text="赛事状态" FontSize="12"
+                                           Foreground="{DynamicResource TextMutedBrush}"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Ellipse Width="7" Height="7" Fill="{DynamicResource SuccessBrush}"
+                                             Margin="0,0,7,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="报名开放" FontSize="12" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Text="双败淘汰赛" FontSize="21" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            <TextBlock Text="常规赛 BO3 · 总决赛 BO5"
+                                       FontSize="12" Margin="0,6,0,0"
+                                       Foreground="{DynamicResource TextMutedBrush}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Key facts, intentionally not card-per-number -->
+                <Border Background="{DynamicResource CardBgBrush}"
+                        BorderBrush="{DynamicResource BorderBrush2}"
+                        BorderThickness="1" CornerRadius="14"
+                        Padding="28,22" Margin="0,0,0,34">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="04" FontSize="24" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            <TextBlock Text="参赛战队" FontSize="12" Margin="0,5,0,0"
+                                       Foreground="{DynamicResource TextMutedBrush}"/>
+                        </StackPanel>
+                        <Rectangle Grid.Column="1" Fill="{DynamicResource BorderBrush2}" Margin="0,2"/>
+                        <StackPanel Grid.Column="2" Margin="28,0">
+                            <TextBlock Text="600,000 VND" FontSize="24" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            <TextBlock Text="赛事总奖池" FontSize="12" Margin="0,5,0,0"
+                                       Foreground="{DynamicResource TextMutedBrush}"/>
+                        </StackPanel>
+                        <Rectangle Grid.Column="3" Fill="{DynamicResource BorderBrush2}" Margin="0,2"/>
+                        <StackPanel Grid.Column="4" Margin="28,0,0,0">
+                            <TextBlock Text="东莞" FontSize="24" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            <TextBlock Text="线下决赛地点" FontSize="12" Margin="0,5,0,0"
+                                       Foreground="{DynamicResource TextMutedBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.35*"/>
+                        <ColumnDefinition Width="28"/>
+                        <ColumnDefinition Width="0.65*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Teams as a restrained roster -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="参赛阵容" FontSize="18" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   Margin="0,0,0,14"/>
+                        <Border Background="{DynamicResource CardBgBrush}"
+                                BorderBrush="{DynamicResource BorderBrush2}"
+                                BorderThickness="1" CornerRadius="14">
+                            <StackPanel>
+                                <Grid Margin="22,17">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="DL" FontSize="13" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="DL Gaming" FontSize="14"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    <TextBlock Grid.Column="2" Text="线上直邀" FontSize="12"
+                                               Foreground="{DynamicResource TextMutedBrush}"/>
+                                </Grid>
+                                <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="22,0"/>
+                                <Grid Margin="22,17">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="JH" FontSize="13" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="JH Gaming" FontSize="14"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    <TextBlock Grid.Column="2" Text="线下晋级" FontSize="12"
+                                               Foreground="{DynamicResource TextMutedBrush}"/>
+                                </Grid>
+                                <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="22,0"/>
+                                <Grid Margin="22,17">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="FA" FontSize="13" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Grid.Column="1" Text="Frontier Aces" FontSize="14"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    <TextBlock Grid.Column="2" Text="公开预选" FontSize="12"
+                                               Foreground="{DynamicResource TextMutedBrush}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Rules / description -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="赛制说明" FontSize="18" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   Margin="0,0,0,14"/>
+                        <Border Background="{DynamicResource CardBgBrush}"
+                                BorderBrush="{DynamicResource BorderBrush2}"
+                                BorderThickness="1" CornerRadius="14" Padding="22">
+                            <StackPanel>
+                                <TextBlock Text="小组循环积分后进入胜败者组，直至各组决出一支队伍晋级总决赛。"
+                                           FontSize="13" LineHeight="22" TextWrapping="Wrap"
+                                           Foreground="{DynamicResource TextMutedBrush}"/>
+                                <Rectangle Height="1" Fill="{DynamicResource BorderBrush2}" Margin="0,18"/>
+                                <TextBlock Text="比赛项目" FontSize="11"
+                                           Foreground="{DynamicResource TextDimBrush}"/>
+                                <TextBlock Text="Counter-Strike 2" FontSize="14" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,5,0,0"/>
+                                <TextBlock Text="比赛版本与服务器配置由赛事方统一维护。"
+                                           FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0"
+                                           Foreground="{DynamicResource TextMutedBrush}"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

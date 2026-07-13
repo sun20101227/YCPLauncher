@@ -1,82 +1,118 @@
 <div align="center">
-  <img src="YCPLauncher/Assets/logo.png" alt="Logo" width="120"/>
-  <h1>基于php和net的cs2社区服启动和管理系统</h1>
-  <p>CS2 社区服官方赛事启动器</p>
+  <img src="src/YCPLauncher/Assets/logo.png" alt="YCP Launcher" width="116"/>
 
-  ![Version](https://img.shields.io/badge/version-1.0.1-blue?style=flat-square)
-  ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey?style=flat-square)
-  ![Framework](https://img.shields.io/badge/.NET-8.0-purple?style=flat-square)
-  ![License](https://img.shields.io/badge/license-Private-red?style=flat-square)
+  # YCP Launcher
+
+  **为 CS2 社区赛事打造的 Windows 启动与比赛管理客户端**
+
+  [![Version](https://img.shields.io/badge/version-1.1.8-55C3E3?style=for-the-badge)](https://github.com/sun20101227/YCPLauncher/releases/latest)
+  ![Windows](https://img.shields.io/badge/Windows-10%20%2F%2011-147D9A?style=for-the-badge&logo=windows)
+  ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet)
+  ![Platform](https://img.shields.io/badge/Platform-x64-202E3C?style=for-the-badge)
+
+  <p>
+    赛事账号登录 · 房间匹配 · 阵营与席位管理 · CS2 一键进服 · 内置直播 · 自动更新
+  </p>
 </div>
 
 ---
 
-## 简介
+## 项目简介
 
-**基于php和net的cs2社区服启动和管理系统** 是 CS2 赛事的官方客户端程序。基于现代化的 WPF 与 .NET 8 构建，专为电竞选手打造。它集成了选手认证、赛事服务器直连、数据统计看板、以及实时直播观看等功能，为您提供稳定、流畅的一站式电竞体验。
+YCP Launcher 是 YACHIYO CUP 使用的 CS2 社区赛事客户端。它将选手认证、比赛房间、服务器分配、游戏启动、赛事直播和客户端更新整合在一个轻量的 Windows 桌面应用中。
 
-## 功能特性
+客户端基于 **WPF / .NET 8** 构建，并提供安装版、便携版以及 CounterStrikeSharp 名称同步插件。
 
-- 🎮 **一键启动 CS2** — 自动带入赛事服务器参数
-- 👤 **选手认证登录** — Token 验证，安全可靠
-- 🖥️ **服务器列表** — 实时展示赛事服务器状态
-- 📊 **选手数据面板** — 赛事数据一览无遗
-- 📡 **赛事直播嵌入** — 内置直播观看功能
-- 🔄 **自动更新** — 静默下载安装最新版本
-- 🌙 **深色 UI** — FluentWPF 亚克力毛玻璃设计
+## 核心功能
 
-## 系统要求
+| 模块 | 功能 |
+| --- | --- |
+| 账号与安全 | 赛事账号认证、DPAPI Token 加密缓存、修改密码 |
+| 比赛房间 | 创建或加入房间、选择阵营与席位、准备和主席开赛 |
+| 游戏启动 | 自动识别 Steam/CS2 路径，多阶段启动并连接赛事服务器 |
+| 数据面板 | 选手资料、比赛数据、历史战绩与赛事公告 |
+| 赛事直播 | 基于 LibVLC 的低延迟直播播放 |
+| 客户端维护 | GitHub Release 更新、安装覆盖、便携运行和完整卸载 |
+| 游戏插件 | CounterStrikeSharp 玩家名称与阵营同步 |
 
-| 项目 | 要求 |
-|------|------|
-| 操作系统 | Windows 10 / 11 (x64) |
-| 运行时 | [.NET 8 Desktop Runtime](https://aka.ms/dotnet/8.0/windowsdesktop-runtime-win-x64.exe) |
-| 磁盘空间 | 约 50 MB |
+## 界面与性能
 
-## 下载安装
+- 深色与浅色双主题
+- 动态背景与主题感知遮罩
+- 支持系统“减少动画”和低性能设备自动降级
+- 视频解码、页面轮询和导航生命周期优化
+- Windows 11 原生窗口样式与托盘驻留
 
-前往 **[Releases](https://github.com/sun20101227/YCPLauncher/releases/latest)** 页面下载最新版安装程序 `YCPInstaller.exe`，双击运行即可完成安装。
+## 下载与运行
 
-> **注意**：首次安装需要 .NET 8 Desktop Runtime，安装程序会自动检测并引导下载。
+前往仓库的 **Releases** 页面下载：
+
+- `YCPInstaller.exe`：推荐，提供安装、覆盖更新和卸载支持
+- `YCPLauncher_Portable_v1.1.8.zip`：免安装便携版
+- `YCPNameSyncPlugin_v1.1.8.zip`：CounterStrikeSharp 名称同步插件
+
+运行环境：
+
+- Windows 10 / Windows 11 x64
+- .NET 8 Desktop Runtime x64
+- Steam 与 Counter-Strike 2
+
+> 便携版必须完整解压后运行。请勿仅复制 `YCPLauncher.exe`，动态背景、LibVLC 和运行依赖需要保留在同一目录。
+
+## 从源码构建
+
+需要安装 Windows 10/11 与 .NET 8 SDK。
+
+```powershell
+git clone https://github.com/sun20101227/YCPLauncher.git
+cd YCPLauncher
+.\scripts\build.ps1
+```
+
+构建输出：
+
+```text
+artifacts/
+├── installer/YCPInstaller.exe
+├── portable/YCPLauncher/YCPLauncher.exe
+├── YCPLauncher_Portable_v1.1.8.zip
+└── app/
+```
+
+打包 CounterStrikeSharp 插件：
+
+```powershell
+.\scripts\package-plugin.ps1
+```
 
 ## 项目结构
 
-```
-YCPLauncher/          # 主程序 (WPF)
-├── Assets/           # 图片资源
-├── Converters/       # 数据绑定转换器
-├── Helpers/          # 工具类
-├── Models/           # 数据模型
-├── Services/         # 业务服务层
-├── Themes/           # 主题样式
-├── ViewModels/       # MVVM ViewModel
-└── Views/            # XAML 视图
-
-YCPUninstaller/       # 卸载程序 (WinForms)
-YCPInstaller/         # 安装程序 (WPF)
-ycp-php/              # 服务端 API (PHP)
-ycp-website/          # 官网 (Next.js)
-build_all.ps1         # 一键构建脚本
+```text
+.
+├── src/
+│   ├── YCPLauncher/       # WPF 主程序
+│   ├── YCPInstaller/      # WPF 安装与更新程序
+│   └── YCPUninstaller/    # WinForms 卸载程序
+├── plugins/
+│   └── YCPNameSync/       # CounterStrikeSharp 插件
+├── tools/
+│   ├── ProxyTest/         # GitHub 下载链路测试
+│   └── TestPath/          # Steam / CS2 路径诊断
+├── scripts/               # 构建、打包和 GitHub Release 脚本
+├── docs/                  # 发布说明与历史资料
+└── Directory.Build.props  # 全局版本及程序集信息
 ```
 
-## 构建指南
+PHP 服务端和旧版网站项目不在此仓库维护。本仓库仅包含 Windows 客户端、安装器、卸载器、游戏插件和相关构建工具。
 
-```powershell
-# 需要 .NET 8 SDK
-.\build_all.ps1
-# 安装包输出：.\SetupOutput\YCPInstaller.exe
-# 主程序文件：.\YCPLauncher\dist\
-```
+## 发布流程
 
-## 技术栈
+版本号统一维护在 `Directory.Build.props`。完整构建和 GitHub Release 流程请参阅：
 
-- **框架**：C# / WPF / .NET 8.0
-- **架构**：MVVM (`CommunityToolkit.Mvvm`)
-- **UI**：`FluentWPF`（亚克力背景）、`Hardcodet.NotifyIcon.Wpf`（托盘图标）
-- **编译目标**：`win-x64`
+[`docs/打包与发布说明.md`](docs/打包与发布说明.md)
 
 ---
 
 <div align="center">
-  <sub>© 2026 YACHIYO CUP. All rights reserved.</sub>
+  <sub>© 2026 YACHIYO CUP · Built for the community</sub>
 </div>

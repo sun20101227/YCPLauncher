@@ -1,0 +1,369 @@
+<UserControl x:Class="YCPLauncher.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:YCPLauncher.Helpers"
+             mc:Ignorable="d"
+             Background="Transparent"
+             Loaded="LoginView_Loaded">
+
+    <UserControl.Resources>
+        <Style x:Key="FieldIconStyle" TargetType="TextBlock">
+            <Setter Property="Width" Value="42"/>
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type Border}}}"
+                             Value="True">
+                    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource AncestorType={x:Type Border}}}"
+                             Value="True">
+                    <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="LoginFieldContainerStyle" TargetType="{x:Type Border}">
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Background" Value="{DynamicResource ItemBgBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush2}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="9"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource ItemBgHoverBrush}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushHover}"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentBgBrush}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource FocusRingBrush}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.45"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="LoginFieldDividerStyle" TargetType="{x:Type Rectangle}">
+            <Setter Property="Width" Value="1"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Margin" Value="42,0,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Fill" Value="{DynamicResource BorderBrush1}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource AncestorType={x:Type Border}}}"
+                             Value="True">
+                    <Setter Property="Fill" Value="{DynamicResource FocusRingBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="LoginTextBoxStyle"
+               TargetType="{x:Type TextBox}"
+               BasedOn="{StaticResource CenteredTextBoxStyle}">
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Background="Transparent"
+                                      BorderThickness="0"
+                                      Focusable="False"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LoginPasswordBoxStyle"
+               TargetType="{x:Type PasswordBox}"
+               BasedOn="{StaticResource CenteredPasswordBoxStyle}">
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Background="Transparent"
+                                      BorderThickness="0"
+                                      Focusable="False"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="InlineLinkButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                                <Setter Property="Background" Value="{DynamicResource AccentBgBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="54,48,54,42">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.12*"/>
+            <ColumnDefinition Width="0.88*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="IdentityBlock"
+              Grid.Column="0"
+              Margin="22,0,56,16"
+              VerticalAlignment="Center"
+              Opacity="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,28">
+                <Border Width="54"
+                        Height="54"
+                        CornerRadius="16"
+                        Background="{DynamicResource BgSidebarBrush}"
+                        BorderBrush="{DynamicResource BorderBrush1}"
+                        BorderThickness="1">
+                    <Image Source="/Assets/logo.png"
+                           Width="40"
+                           Height="40"
+                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Border>
+                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="YACHIYO CUP"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource TextPrimaryBrush}"/>
+                    <TextBlock Text="COUNTER-STRIKE 2"
+                               Margin="0,3,0,0"
+                               FontSize="9"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource AccentBrush}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="为赛场而生，"
+                           FontSize="36"
+                           FontWeight="Light"
+                           Foreground="{DynamicResource TextPrimaryBrush}"/>
+                <TextBlock Text="不止于启动。"
+                           Margin="0,-2,0,0"
+                           FontSize="36"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource TextPrimaryBrush}"/>
+                <Rectangle Width="44"
+                           Height="3"
+                           Margin="0,24,0,18"
+                           HorizontalAlignment="Left"
+                           Fill="{DynamicResource AccentBrush}"/>
+                <TextBlock MaxWidth="430"
+                           HorizontalAlignment="Left"
+                           Text="赛事信息、房间匹配与直播入口集中于同一面板，让注意力留在比赛本身。"
+                           TextWrapping="Wrap"
+                           LineHeight="23"
+                           FontSize="13"
+                           Foreground="{DynamicResource TextMutedBrush}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2"
+                        Margin="0,42,0,0"
+                        Orientation="Horizontal">
+                <TextBlock Text="SEASON 2026"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource TextDimBrush}"/>
+                <Rectangle Width="22"
+                           Height="1"
+                           Margin="12,0"
+                           VerticalAlignment="Center"
+                           Fill="{DynamicResource BorderBrush2}"/>
+                <TextBlock Text="YACHIYO ESPORTS"
+                           FontSize="10"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextDimBrush}"/>
+            </StackPanel>
+        </Grid>
+
+        <Border x:Name="LoginCard"
+                Grid.Column="1"
+                Width="372"
+                MaxHeight="570"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="{DynamicResource BgSidebarBrush}"
+                BorderBrush="{DynamicResource BorderBrush1}"
+                BorderThickness="1"
+                CornerRadius="18"
+                Padding="34,32,34,28"
+                Opacity="1">
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="LoginCardTranslate"/>
+            </Border.RenderTransform>
+
+            <StackPanel>
+                <TextBlock Text="欢迎回来"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource TextPrimaryBrush}"/>
+                <TextBlock Text="使用赛事账号继续"
+                           Margin="0,6,0,28"
+                           FontSize="12"
+                           Foreground="{DynamicResource TextMutedBrush}"/>
+
+                <TextBlock Text="账号"
+                           Margin="2,0,0,8"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextDimBrush}"/>
+                <Border x:Name="UserBorder"
+                        Margin="0,0,0,18"
+                        Style="{StaticResource LoginFieldContainerStyle}">
+                    <Grid>
+                        <TextBlock Text="&#xE77B;" Style="{StaticResource FieldIconStyle}"/>
+                        <Rectangle Style="{StaticResource LoginFieldDividerStyle}"/>
+                        <TextBox x:Name="UsernameBox"
+                                 Margin="54,0,14,0"
+                                 Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource LoginTextBoxStyle}"
+                                 KeyDown="Input_KeyDown"
+                                 AutomationProperties.Name="账号"/>
+                    </Grid>
+                </Border>
+
+                <TextBlock Text="密码"
+                           Margin="2,0,0,8"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextDimBrush}"/>
+                <Border x:Name="PassBorder"
+                        Margin="0,0,0,20"
+                        Style="{StaticResource LoginFieldContainerStyle}">
+                    <Grid>
+                        <TextBlock Text="&#xE72E;" Style="{StaticResource FieldIconStyle}"/>
+                        <Rectangle Style="{StaticResource LoginFieldDividerStyle}"/>
+                        <PasswordBox x:Name="PasswordBox"
+                                     Margin="54,0,14,0"
+                                     Style="{StaticResource LoginPasswordBoxStyle}"
+                                     PasswordChanged="PasswordBox_PasswordChanged"
+                                     KeyDown="Password_KeyDown"
+                                     AutomationProperties.Name="密码"/>
+                    </Grid>
+                </Border>
+
+                <Border Margin="0,0,0,12"
+                        Padding="10,8"
+                        Background="#10DC2626"
+                        CornerRadius="7"
+                        Visibility="{Binding ErrorMessage, Converter={StaticResource NullToVisibilityInverse}}">
+                    <TextBlock Text="{Binding ErrorMessage}"
+                               Foreground="{DynamicResource ErrorBrush}"
+                               FontSize="11"
+                               TextWrapping="Wrap"/>
+                </Border>
+
+                <Button x:Name="LoginBtn"
+                        Height="50"
+                        Margin="0,2,0,18"
+                        Command="{Binding LoginCommand}"
+                        Style="{StaticResource OrangeButton}">
+                    <Grid>
+                        <Grid Visibility="{Binding IsLoading, Converter={StaticResource InverseBoolToVisibility}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="进入赛事面板"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="13"
+                                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="1"
+                                       Margin="0,0,17,0"
+                                       Text="&#xE72A;"
+                                       FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <ProgressBar Width="86"
+                                     Height="3"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     IsIndeterminate="True"
+                                     BorderThickness="0"
+                                     Foreground="White"
+                                     Background="#44FFFFFF"
+                                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibility}}"/>
+                    </Grid>
+                </Button>
+
+                <Grid>
+                    <TextBlock Text="连接遇到问题？"
+                               VerticalAlignment="Center"
+                               FontSize="11"
+                               Foreground="{DynamicResource TextDimBrush}"/>
+                    <Button HorizontalAlignment="Right"
+                            Style="{StaticResource InlineLinkButtonStyle}"
+                            Click="OpenSettings_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE713;"
+                                       Margin="0,0,6,0"
+                                       FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="服务器设置"
+                                       FontSize="11"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

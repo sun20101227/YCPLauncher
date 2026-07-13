@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <Version>1.1.8</Version>
+    <AssemblyVersion>1.1.8.0</AssemblyVersion>
+    <FileVersion>1.1.8.0</FileVersion>
+    <Authors>YACHIYO CUP</Authors>
+    <Company>YACHIYO CUP</Company>
+    <Product>YCP Launcher</Product>
+    <RepositoryUrl>https://github.com/sun20101227/YCPLauncher</RepositoryUrl>
+  </PropertyGroup>
+</Project>

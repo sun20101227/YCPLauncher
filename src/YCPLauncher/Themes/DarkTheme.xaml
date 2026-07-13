@@ -1,0 +1,95 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:helpers="clr-namespace:YCPLauncher.Helpers">
+    <!-- Cool graphite console surfaces with a restrained signal-cyan accent. -->
+    <SolidColorBrush x:Key="AccentBrush" Color="#55C3E3"/>
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="#70D2EC"/>
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="#38A5C7"/>
+    <SolidColorBrush x:Key="AccentForegroundBrush" Color="#07151C"/>
+    <SolidColorBrush x:Key="PrimaryHoverOverlayBrush" Color="#18FFFFFF"/>
+    <SolidColorBrush x:Key="PrimaryPressedOverlayBrush" Color="#18030C12"/>
+
+    <LinearGradientBrush x:Key="WallpaperBaseBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#0A111A" Offset="0"/>
+        <GradientStop Color="#101A26" Offset="0.55"/>
+        <GradientStop Color="#17202D" Offset="1"/>
+    </LinearGradientBrush>
+    <sys:Double x:Key="AmbientVideoOpacity">0.28</sys:Double>
+    <LinearGradientBrush x:Key="AmbientMaskBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#D00A111A" Offset="0"/>
+        <GradientStop Color="#BA101A26" Offset="0.52"/>
+        <GradientStop Color="#D817202D" Offset="1"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="BgDeepBrush" Color="#EA0A111A"/>
+    <SolidColorBrush x:Key="BgDarkBrush" Color="#E7111A25"/>
+    <SolidColorBrush x:Key="BgCardBrush" Color="#D2182431"/>
+    <SolidColorBrush x:Key="BgSidebarBrush" Color="#E50C1520"/>
+    <SolidColorBrush x:Key="BgOverlayBrush" Color="#9B07111C"/>
+
+    <SolidColorBrush x:Key="CaptionHoverBrush" Color="#187CCCE4"/>
+    <SolidColorBrush x:Key="CaptionPressedBrush" Color="#287CCCE4"/>
+
+    <SolidColorBrush x:Key="BorderBrush1" Color="#2B91A4B8"/>
+    <SolidColorBrush x:Key="BorderBrush2" Color="#477F94AA"/>
+    <SolidColorBrush x:Key="BorderBrushHover" Color="#8A6DB8D0"/>
+    <SolidColorBrush x:Key="CardHoverBorderBrush" Color="#7055C3E3"/>
+    <SolidColorBrush x:Key="FocusRingBrush" Color="#C455C3E3"/>
+
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F1F6FA"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="#B5C1CD"/>
+    <SolidColorBrush x:Key="TextDimBrush" Color="#8291A0"/>
+
+    <SolidColorBrush x:Key="CardBgBrush" Color="#C4172330"/>
+    <SolidColorBrush x:Key="CardHoverBrush" Color="#DC1C2B3A"/>
+    <SolidColorBrush x:Key="ItemBgBrush" Color="#99202E3C"/>
+    <SolidColorBrush x:Key="ItemBgHoverBrush" Color="#C0283A4A"/>
+    <SolidColorBrush x:Key="ItemBorderBrush" Color="#347F94A8"/>
+    <SolidColorBrush x:Key="AccentBgBrush" Color="#2E55C3E3"/>
+
+    <SolidColorBrush x:Key="ControlHoverBrush" Color="#1B8FB9D0"/>
+    <SolidColorBrush x:Key="ControlPressedBrush" Color="#2B78A9C1"/>
+    <SolidColorBrush x:Key="NavigationHoverBrush" Color="#168FB9D0"/>
+    <SolidColorBrush x:Key="NavigationPressedBrush" Color="#2578A9C1"/>
+    <SolidColorBrush x:Key="NavigationActiveBrush" Color="#2755C3E3"/>
+
+    <SolidColorBrush x:Key="MediaSurfaceBrush" Color="#E008111B"/>
+    <SolidColorBrush x:Key="MediaPlaceholderBrush" Color="#CA111D29"/>
+    <SolidColorBrush x:Key="MediaControlsBrush" Color="#EC0D1722"/>
+
+    <SolidColorBrush x:Key="SuccessBrush" Color="#55C892"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="#E0B45A"/>
+    <SolidColorBrush x:Key="ErrorBrush" Color="#F0787F"/>
+
+    <Color x:Key="CardRevealColor">#2474D5ED</Color>
+
+    <!-- Compatibility glows stay low-opacity to avoid bloom-heavy rendering. -->
+    <RadialGradientBrush x:Key="GlowAccentBrush">
+        <GradientStop Color="#1255C3E3" Offset="0"/>
+        <GradientStop Color="#0055C3E3" Offset="1"/>
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="GlowBlueBrush">
+        <GradientStop Color="#0D687EF4" Offset="0"/>
+        <GradientStop Color="#00687EF4" Offset="1"/>
+    </RadialGradientBrush>
+
+    <Color x:Key="ShadowColor">#68030910</Color>
+    <Color x:Key="PopupShadowColor">#8202080E</Color>
+
+    <Style x:Key="TileRevealStyle" TargetType="helpers:RevealBorder">
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="HoverColor" Value="{DynamicResource CardRevealColor}"/>
+        <Setter Property="HoverRadius" Value="180"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ItemBorderBrush}"/>
+        <Setter Property="Padding" Value="24"/>
+        <Setter Property="Background" Value="{DynamicResource CardBgBrush}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource CardHoverBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource CardHoverBorderBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
